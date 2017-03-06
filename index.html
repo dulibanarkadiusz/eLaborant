@@ -12,6 +12,8 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/panel-group.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -38,7 +40,7 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Arkadiusz Duliban <b class="caret"></b></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Arkadiusz Duliban <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="#"><i class="fa fa-fw fa-user"></i> Profil</a>
@@ -55,10 +57,14 @@
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+                <ul class="{{active || 'test'}} nav navbar-nav side-nav">
+                    <li>
+                        <a ui-sref="last-problems"><i class="fa fa-fw"></i> Problemy</a>                        
+                    </li>
                     <li>
                         <a ui-sref="users-list"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
                     </li>
+
                     <li>
                         <a ui-sref="settings"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
@@ -73,6 +79,16 @@
                             </li>
                         </ul>
                 </ul>
+                
+                <nav class="{{active}}" ng-click="$event.preventDefault()">
+
+            <!-- When a link in the menu is clicked, we set the active variable -->
+
+            <a href="#" class="home" ng-click="active='home'">Home</a>
+    
+            <a href="#" class="about" ng-click="active='about'">About</a>
+            <a href="#" class="contact" ng-click="active='contact'">Contact</a>
+        </nav>
             </div>
             <!-- /.navbar-collapse -->
         </nav>
@@ -163,6 +179,9 @@
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script>
+    
+    </script>
+    <script>
     var exampleApp = angular.module('exampleApp', ["ui.router"])
     exampleApp.config(function($stateProvider, $urlRouterProvider) {
     //
@@ -177,6 +196,10 @@
       .state('users-list', {
         url: "/users",
         templateUrl: "users-list.html"
+      })
+      .state('last-problems', {
+        url: "/last-problems",
+        templateUrl: "last-problems.html"
       })
       .state('settings', {
         url: "/settings",
@@ -193,7 +216,8 @@
         url: "/profile",
         templateUrl: "settings.profile.html",
         controller: function($scope) {
-          $scope.profile = "i'm the profile view"
+          $scope.profile = "i'm the profile view",
+          $scope.className="red"
         }
       })
       .state('home', {
@@ -208,10 +232,10 @@
   //http://librivox.org/api/feed/audiobooks/author/Melville?format=jsonp&callback=JSON_CALLBACK
   exampleApp.controller('customersCtrl', function ($scope, $http) {
       $http.get('http://serwis365.pl/api/getFreeTime.php').success(function (response) {
-            alert(response);
           $scope.myData = response;
       });
   });
+
   </script>
 </body>
 </html>
