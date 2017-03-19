@@ -7,26 +7,55 @@
                 	<div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true">
                  		<div class="panel panel-default">
                     		<div class="panel-heading" role="tab" id="headingOne">
-                      			<div class="panel-title accordion-toggle" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" >
-                        			<div class="row">
-	                   					<div class="col-lg-3">6.03.2016 08:39:23</div>
-	                   					<div class="col-lg-3">Arkadiusz Duliban</div>
-	                   					<div class="col-lg-3">KOMPUTER4 (MS308)</div>
-	                   					<div class="col-lg-3"></div>
-	                   				</div>
-	                   				<div class="row">
-	                   					<div class="col-lg-6"><strong>Opis:</strong> 6.03.2016 08:39:23</div>
-	                   					<div class="col-lg-6">Arkadiusz Duliban</div>
-	                   				</div>
+                      			<div class="row panel-title accordion-toggle" role="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" >
+                   					<div class="col-xs-6 col-sm-6 col-md-2"><strong># 1083</strong><br><span class="badge">4 minutes ago</span></div>
+                   					<div class="hidden-xs col-sm-3 col-md-2">Arkadiusz Duliban</div>
+                   					<div class="col-xs-6 col-sm-3 col-md-2">KOMPUTER4 (MS308)</div>
+                   					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum...</i></div>
+                   					<div class="col-sm-1 col-md-1">
+                   						<button ui-sref="problem({id: '1083'})" class="btn btn-xs btn-primary btn-preview pull-right"><i class="fa fa-share fa-1" aria-hidden="true"></i></button> 
+                   						<span class="problem-progress pull-right"><i class="fa fa-flag-checkered" aria-hidden="true"></i> 0/2 </span>
+                   					</div>
                       			</div>
-                    		</div><!-- /.panel-heading -->
-                   			<div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">		
+                    		</div>
+                   			<div id="collapseOne" class="panel-collapse collapse problem-tasks">		
+                   				<div class="row task">
+                   					<div class="col-xs-1"> <i class="fa fa-square-o" aria-hidden="true"></i></div>
+                   					<div class="col-xs-1"> <i class="fa fa-circle" aria-hidden="true"></i> </div>
+                   					<div class="col-xs-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> 5 dni</div>
+                   					<div class="col-xs-3"> <i class="fa fa-wrench" aria-hidden="true"></i> Arkadiusz Duliban</div>
+                   					<div class="col-xs-5 problem-desc">Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum orem ipsum dolor sit amet, consectetur adipiscing elit...</div>
+                   				</div>
+                   				<div class="row task">
+                   					<div class="col-xs-1"> <i class="fa fa-check-square-o" aria-hidden="true"></i></div>
+                   					<div class="col-xs-1" style="color: green;"> <i class="fa fa-circle" aria-hidden="true"></i> </div>
+                   					<div class="col-xs-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> 12 dni</div>
+                   					<div class="col-xs-3"> <i class="fa fa-wrench" aria-hidden="true"></i> Arkadiusz Duliban</div>
+                   					<div class="col-xs-5 problem-desc">Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum orem ipsum dolor sit amet, consectetur adipiscing elit...</div>
+                   				</div>
+                      		</div>
+                    	</div>
+                 		<div class="panel panel-default">
+                    		<div class="panel-heading" role="tab" id="headingOne">
+                      			<div class="row panel-title accordion-toggle" role="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" >
+                   					<div class="col-xs-6 col-sm-2"><strong># 1082</strong><br><span class="badge">5 hours ago</span></div>
+                   					<div class="col-xs-6 col-sm-2">Waldemar Xiński</div>
+                   					<div class="col-xs-6 col-sm-2">KOMPUTER6 (MS308)</div>
+                   					<div class="col-sm-5 problem-desc"><i>Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum orem ipsum dolor sit amet, consectetur adipiscing elit...</i></div>
+                   					<div class="col-xs-6 col-sm-1">
+                   						<button class="btn btn-primary pull-right"><i class="fa fa-fw icon-zoom-in"></i></button>
+                   						<span class="problem-progress pull-right"><i class="fa fa-flag-checkered" aria-hidden="true"></i> 0/2</span>
+                   					</div>
+                      			</div>
+                    		</div>
+                   			<div id="collapseTwo" class="panel-collapse collapse">		
                    				<div class="row">
                    					<div class="col-lg-4"><strong>Uwagi:</strong></div>
                    					<div class="col-lg-6"></div>
                    				</div>
-                      		</div><!-- /.panel-body -->
-                    	</div><!-- /.panel-collapse -->
+                      		</div>
+                    	</div>
+
                   	</div><!-- /.panel -->
                 </div><!-- /.panel-group -->
         	</div><!-- /.panel-body -->
