@@ -2,9 +2,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="js/multiselect.js"></script>
-<link href="css/multi-select.css" rel="stylesheet">
-
 
 <div ng-controller="problem">
     <a ui-sref="last-problems">Powrót</a>
@@ -93,6 +90,7 @@
     </div>
 </div>
 
+
 <div class="modal fade" data-backdrop="static" data-keyboard="true" id="addTask" role="dialog">
     <div class="modal-dialog modal-md">
         <div class="modal-content" ng-controller="addTaskFormController">
@@ -103,57 +101,36 @@
             <form name="addTaskForm" ng-submit="processForm()">
                 <div class="modal-body">  
 
-                    <div class="form-group" ng-class="{'has-error': addTaskForm.name.$invalid && addTaskForm.name.$touched}">
+                    <div class="form-group" ng-class="{'has-error': addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched}">
                         <label for="dateRealization" class="control-label">Termin realizacji:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-bell-o" aria-hidden="true"></i></span>
-                            <input type='text' name='dateRealization' class="form-control" id='datetimepicker4' placeholder="YYYY-MM-DD HH:mm:ss" />
+                            <input type='text' ng-change="change()" name='dateRealization' ng-model="dateRealization" class="form-control" id='datetimepicker4' placeholder="YYYY-MM-DD HH:mm:ss" />
                         </div>
-                        <div ng-show="addTaskForm.name.$invalid && addTaskForm.name.$touched" class="help-block with-errors">
-                            Podaj poprawną nazwę laboratorium od 2 do 10 znaków
+                        <div ng-show="addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched" class="help-block with-errors">
+                            Podaj poprawną datę 
                         </div>
+                        {{ dateRealization }}
                     </div>
 
-                    <div class="form-group" ng-class="{'has-error': addLabForm.building.$invalid && addLabForm.building.$touched}">
+                    <div class="form-group" ng-class="{'has-error': addTaskForm.priority.$invalid && addTaskForm.priority.$touched}">
                         <label for="dateRealization" class="control-label">Priorytet:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-home" aria-hidden="true"></i></span>
-                            <select class="form-control" name="building" ng-model="lab.building" required>
-                                <option value="MS">Wydział Matematyki Stosowanej</option>
-                                <option value="LB">Laboratorium Budownictwa</option>
+                            <select class="form-control" name="priority" ng-model="task.priority" required>
+                                <option ng-repeat="n in [] | range:5" value="{{n+1}}">{{n+1}}</option>
                             </select>
                         </div>
-                        <div ng-show="addLabForm.building.$invalid && addLabForm.building.$touched" class="help-block with-errors">Uzupełnij pole</div>
+                        <div ng-show="addTaskForm.building.$invalid && addTaskForm.building.$touched" class="help-block with-errors">Uzupełnij pole</div>
                     </div>
 
-                    <div class="form-group" ng-class="{'has-error': addLabForm.owner.$invalid && addLabForm.owner.$touched}">
-                        <label for="owner" class="control-label">Osoba odpowiedzialna</label>
-                        <div class="input-group" ng-controller="usersList">
-                            <span class="input-group-addon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                            <select class="form-control" name="owner" ng-model="lab.owner" required> 
-                                <option ng-repeat="x in myData" value="{{x.id}}">{{x.firstname}} {{x.surname}}</option>
-                            </select>
-                        </div>
-                        <div ng-show="addLabForm.owner.$invalid && addLabForm.owner.$touched" class="help-block with-errors">Uzupełnij pole</div>
-                    </div>
+                    <multiselect id="selected" ng-model="lab.selection" options="options" search-filter="searchFilter" show-search="true" id-prop="id" display-prop="name">
+                    </multiselect>
 
-                    <div ng-controller="assistantList">
-                        <select id='pre-selected-options' multiple='multiple'>
-                            <option ng-repeat="assistant in assistantsData" value="{{assistant.name}}">1 {{assistant.name}}</option>
-                        </select>
-                    </div>
-  <!-- ends -->
-  <!-- jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-  <!-- Bootstrap JavaScript -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-  <script src="js/multiselect.js"></script>
-  <script type="text/javascript">
-  // run pre selected options
-
-  </script>
-                <button id="test">Test</button>
-
+                    <pre>
+                    {{ task | json}}
+                    opt: {{ options }}
+                </pre>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
