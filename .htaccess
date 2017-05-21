@@ -1,0 +1,8 @@
+RewriteEngine On 
+Options FollowSymLinks
+
+RewriteBase /elaborant
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /elaborant/#/$1 [L]

@@ -1,0 +1,29 @@
+<head> <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- load momentJS (required for angular-moment) -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+
+<!-- load angular-moment -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.9.0/angular-moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+
+
+</head>
+<body>
+<div class="container" ng-controller="timeController as main">
+
+  <div class="jumbotron">
+    <h2>Display Time Relatively in Angular</h2>
+    <p>The time is {{ main.time }}</p>
+  </div>
+  
+  <div class="well">
+    <h2>Relative Time <small>(directive)</small></h2>    
+    <time am-time-ago="main.time" title="{{ main.time | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}"></time>
+  </div>
+  
+ 
+</div>
+</body>

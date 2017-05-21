@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="pl" ng-app="exampleApp">
+<html lang="pl" ng-app="elaborant">
 <head>
-
+    <base href="/eLaborant/index.html">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,11 +13,25 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/panel-group.css" rel="stylesheet">
+    <link href="css/multi-select.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="js/validator.js"></script>
+    <script src="js/multiselect.js"></script>
+    <script src="js/bootstrap-datetimepicker.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+
+
 
 </head>
 
@@ -61,6 +75,9 @@
                     <li class="last-problems" ng-click="active='last-problems'">
                         <a ui-sref="last-problems"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy</a>                        
                     </li>
+                    <li class="last-tasks" ng-click="active='last-tasks'">
+                        <a ui-sref="last-tasks"><i class="fa fa-tasks" aria-hidden="true"></i> Zadania</a>
+                    </li>
                     <li class="users-list" ng-click="active='users-list'">
                         <a ui-sref="users-list"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
                     </li>
@@ -82,94 +99,216 @@
                         </ul>
                 </ul>
             </div>
-            <!-- /.navbar-collapse -->
         </nav>
 
         <div id="page-wrapper">
 
             <div class="container-fluid">
-                 <div class="row">
-                  <div class="span12">
-                    <div ui-view></div>        
-                  </div>
-                </div>   
-              </div>
+                <div class="row">
+                    <div class="span12">
+                        <div ui-view></div>   
 
+                        <script>
+                            $('.picker').datetimepicker({
+                            });
+                        </script>
+                </div>   
             </div>
 
         </div>
 
     </div>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
     <script>
+
+    var elaborantApp = angular.module('elaborant', ["ui.router", "angularMoment"]);
+    var apiUrl = "http://157.158.16.186:8081/api/";
+    var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
+
+    elaborantApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+        $urlRouterProvider.otherwise("/index");
+
+        $stateProvider
+        .state('index', {
+            url: "/index",
+            templateUrl: "home.html"
+        })
+        .state('users-list', {
+            url: "/users",
+            templateUrl: "users-list.html"
+        })
+        .state('last-problems', {
+            url: "/last-problems/",
+            templateUrl: "last-problems.html"
+        })
+        .state('last-tasks', {
+            url: "/last-tasks",
+            templateUrl: "last-tasks.html"
+        })
+        .state('problem', {
+            url: "/problem/:id?",
+            templateUrl: "problem.html"
+        })
+        .state('laboratories', {
+            url: "/laboratories",
+            templateUrl: "laboratories.html"
+        })
+        .state('settings', {
+            url: "/settings",
+            templateUrl: "settings.html"
+        })
+        .state('settings.account', {
+            url: "/account",
+            templateUrl: "settings.account.html",
+            controller: function($scope) {
+                $scope.account = "i'm the account view"
+            }
+        })
+        .state('settings.profile', {
+            url: "/profile",
+            templateUrl: "settings.profile.html",
+            controller: function($scope) {
+                $scope.profile = "i'm the profile view"
+            }
+        })
+        .state('home', {
+            url: "/home",
+            templateUrl: "home.html"
+        });
+        
+        $locationProvider.html5Mode(true);
+    });
+    </script>
+
+    <script>
+    elaborantApp.controller('usersList', function ($scope, $http) {
+        $scope.dataLoaded = false;
+        $http.get('api/pracownicy.html').success(function (response) {
+            $scope.myData = response;
+            $scope.dataLoaded = true;
+        });
+    });
+
+    elaborantApp.controller('labList', function ($scope, $http) {
+        $scope.dataLoaded = false;
+        $http.get('api/lab.html').success(function (response) {
+            $scope.myData = response;
+            $scope.dataLoaded = true;
+        });
+    });
+
+    elaborantApp.controller('roleList', function ($scope, $http) {
+        $scope.dataLoaded = false;
+        $http.get('api/role.html').success(function (response) {
+            $scope.myData = response;
+            $scope.dataLoaded = true;
+        });
+    });
+
+    elaborantApp.controller('taskList', function ($scope, $stateParams, $http) {
+        $scope.dataLoaded = false;
+        $http.get('api/role.html').success(function (response) {
+            $scope.myData = response;
+            $scope.dataLoaded = true;
+        });
+    });
+
+    elaborantApp.controller('assistantList', function ($scope, $http){
+        $scope.dataLoaded = false;
+        $http.get('api/laboranci.html').success(function (response) {
+            $scope.assistantsData = response;
+            $scope.assistantsDataLoaded = true;
+        });
+
+        $('#pre-selected-options').multiSelect();
+    });
+
+    elaborantApp.filter('labelPriority', function(){
+        return function(text){
+            switch(text){
+                case "1": return "label-default"; 
+                case "2": return "label-primary";
+                case "3": return "label-info";
+                case "4": return "label-success";
+                case "5": return "label-warning";
+                default: return "label-danger"; 
+            }
+        };
+    })
+
+    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http) {
+        $scope.dataLoaded = false;
+        amMoment.changeLocale('pl');
+
+        $scope.loadData = function() {
+            $http.get(apiUrl+'problems')
+            .success(function (serverResponse) {
+                $scope.myData = serverResponse.response;
+                $scope.dataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+        };
+
+        $scope.loadData();
+    });
+
+    elaborantApp.controller('problem', function($scope, amMoment, $stateParams, $http) {
+        $scope.problemid = $stateParams.id;
+        amMoment.changeLocale('pl');
+        $scope.problemDataLoaded = false;
+
+        $http.get('api/problem-'+$scope.problemid+'.html').success(function (response) {
+            $scope.problemData = response;
+            $scope.problemDataLoaded = true;
+        });
+        $http.get('api/task-for-'+$scope.problemid+'.html').success(function (response) {
+            $scope.taskData = response;
+            console.log(response);
+            $scope.dataLoaded = true;
+        });
+    }); 
     
+    elaborantApp.controller('addTaskFormController', function($scope, $http){
+        $(function () {
+                $('#datetimepicker4').datetimepicker({
+                    locale: 'pl',
+                    sideBySide: true,
+                    format: 'YYYY-MM-DD HH:mm:00'
+                });
+        });
+        $('#datetimepicker1').datetimepicker();
+        $('#test').click(function(e){
+            var val = $('#pre-selected-options').val();
+            alert(val);
+        });
+    });
+
+    elaborantApp.controller('addLabFormController', function formController($scope, $http) {
+        $scope.processForm = function() {
+            $http
+            .post('url', $scope.lab)
+            .success(function(data, status){
+                alert('success');
+                if (data.result){
+                    alert(data.result);
+                }
+                else{
+                    alert('status');
+                }
+            })
+            .error(function(data, status, headers, config){
+                alert("error " + status);
+            });
+        };
+    });
     </script>
     <script>
-    var exampleApp = angular.module('exampleApp', ["ui.router"])
-    exampleApp.config(function($stateProvider, $urlRouterProvider) {
-
-    $urlRouterProvider.otherwise("/index");
-
-    $stateProvider
-      .state('index', {
-        url: "/index",
-      })
-      .state('users-list', {
-        url: "/users",
-        templateUrl: "users-list.html"
-      })
-      .state('last-problems', {
-        url: "/last-problems/",
-        templateUrl: "last-problems.html"
-      })
-      .state('problem', {
-        url: "/problem/:id?",
-        templateUrl: "problem.html",
-        controller: function($scope, $stateParams) {
-            $scope.problemid = $stateParams.id;
-        } 
-      })
-      .state('laboratories', {
-        url: "/laboratories",
-        templateUrl: "laboratories.html"
-      })
-      .state('settings', {
-        url: "/settings",
-        templateUrl: "settings.html"
-      })
-      .state('settings.account', {
-        url: "/account",
-        templateUrl: "settings.account.html",
-        controller: function($scope) {
-          $scope.account = "i'm the account view"
-        }
-      })
-      .state('settings.profile', {
-        url: "/profile",
-        templateUrl: "settings.profile.html",
-        controller: function($scope) {
-          $scope.profile = "i'm the profile view"
-        }
-      })
-
-      .state('home', {
-        url: "/home",
-        templateUrl: "home.html"
-      });
-
-  });
-  </script>
-  <script>
-  //var app = angular.module('myApp', []);
-  //../api/getOrders.php?user=227&status=0
-  //http://librivox.org/api/feed/audiobooks/author/Melville?format=jsonp&callback=JSON_CALLBACK
-  exampleApp.controller('customersCtrl', function ($scope, $http) {
-      $http.get('http://serwis365.pl/api/getFreeTime.php').success(function (response) {
-          $scope.myData = response;
-      });
-  });
-
-  </script>
+        $(document).on('click', '.no-collapsable', function(e){
+            e.stopPropagation();
+        });
+    </script>
 </body>
 </html>

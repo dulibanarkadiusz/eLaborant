@@ -25,6 +25,10 @@ ul.settings .settings a{
 	text-align: right;
 }
 
+.task-buttons button:even{
+	padding: 0 2%;
+}
+
 .problem-tasks:first-child{
 	margin-top: 10px;
 }
@@ -48,3 +52,25 @@ ul.settings .settings a{
 .table-striped button{
 	margin: 0 2px;
 }
+
+.task-content{
+	margin-top: 10px;
+}
+
+.preloader {
+    padding: 50px;
+    background: url('../img/preloader.gif') no-repeat 50% 50% transparent;
+}
+
+div < .ng-valid.ng-dirty{
+	border-color: #3c763d;
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+.ng-invalid.ng-dirty{
+  	border-color: #a94442;
+  	box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+div:has(input){
+	background-color: red;
+}
+
