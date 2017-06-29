@@ -42,7 +42,7 @@
         <div class="panel-heading"><h4>Zadania<button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" data-toggle="modal" data-target="#addTask"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowe zadanie</button></h4></div>
 
         <div class="task">
-            <div class="panel-body" ng-repeat="task in taskData">
+            <div class="panel-body panel-task" ng-repeat="task in taskData">
                 <div class="row">
                     <div class="col-xs-1 cols-sm-1 col-md-1">
                         <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority}}">{{task.priority}}</span>
@@ -56,11 +56,7 @@
                         </div>
                     </div>
                     <div class="col-xs-4 col-sm-3 col-md-2">
-                    <!--    
-                    <a href="" title="xx" bs-tooltip>xxx</a>
-                            <span ng-repeat="x in task.userExecuteTasksById">{{x.surname}}</span>
-                            -->
-                        <a data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
+                        <a ng-show="task.userExecuteTasksById.length>0" data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
                             <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
                         </a>
                     </div>
@@ -91,11 +87,6 @@
                                 <strong>Zadanie wykonuje {{task.userExecuteTasksById.length | executorsIntToString}}</strong>
                                 <table class="table table-condensed">
                                     <tbody>
-                                        <!--<thead>
-                                            <tr>
-                                                <th>Zadanie wykonuje {{task.userExecuteTasksById.length | executorsIntToString}}</th>
-                                            </tr>
-                                        </thead>-->
                                         <tr ng-repeat="executor in task.userExecuteTasksById">
                                             <td>{{ executor.firstname }} {{ executor.surname }}</td>
                                         </tr>

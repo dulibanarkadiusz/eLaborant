@@ -57,6 +57,10 @@ ul.settings .settings a{
 	margin-top: 10px;
 }
 
+.input-group-addon{
+	min-width: 40px;
+}
+
 .infoMessage{
 	padding: 10px;
 	text-align: center;
@@ -66,12 +70,29 @@ ul.settings .settings a{
 	white-space: pre-line;
 }
 
+.tooltip-inner{
+	white-space: pre-wrap;
+}
+
 .task{
 	margin-bottom: 5px;
 }
 
 .clickable{
 	cursor: pointer;
+}
+
+.padding-5{
+	padding: 5px;
+}
+
+.panel-task{
+	margin-bottom: 5px;
+	border-bottom: 1px solid #d8d8d8;
+}
+
+.panel-body, .panel-header{
+	padding: 5px;
 }
 
 .modal{

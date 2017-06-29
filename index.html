@@ -79,7 +79,7 @@
                         <a ui-sref="users-list"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
                     </li>
                     <li class="laboratories" ng-click="active='laboratories'">
-                        <a ui-sref="laboratories"><i class="fa fa-fw fa-cubes"></i> Laboratoria</a>
+                        <a ui-sref="laboratories"><i class="fa fa-fw fa-building-o"></i> Laboratoria</a>
                     </li>
                     <li class="computers" ng-click="active='computers'">
                         <a ui-sref="computers"><i class="fa fa-fw fa-laptop"></i> Komputery</a>
@@ -190,7 +190,11 @@
     <script src="js/controllers.js"></script>
     <script>
     //$(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip();   
+        $('[data-toggle="tooltip"]').tooltip();  
+        $('body').on('click', function(){
+            //alert('x');
+            $('.tooltip').tooltip('hide');
+        });
     //});
 </script>
 </body>

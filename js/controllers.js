@@ -41,7 +41,7 @@
 
     elaborantApp.controller('computersList', function ($scope, $http) {
         $scope.dataLoaded = false;
-        $scope.loadData = function() {
+        functionRefresh = $scope.loadData = function() {
             $http.get(apiUrl + 'computers')
             .success(function (serverResponse) {
                 $scope.computersListData = serverResponse.response;
@@ -222,7 +222,7 @@
                     var task = $scope.taskData[i];
                     task.executorsString = "";
                     for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
-                        task.executorsString += task.userExecuteTasksById[j].firstname;
+                        task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
                     }
                 }
                 console.log($scope.taskData);
@@ -291,6 +291,7 @@
         };
     });
 
+
     elaborantApp.controller('addTaskFormController', function($scope, $http, $sce, $filter, $stateParams){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
@@ -351,6 +352,9 @@
             .success(function (success) {
                 functionRefresh();
                 $('#addTask').modal('hide');
+                $scope.task = {};
+                $scope.task.priority = "3";
+                $scope.task.status = "2";
             })
             .error(function (response) {
                 $scope.IsResponseError = true;
@@ -369,28 +373,11 @@
         for (var i=0; i < JSONresponse.errors.length; i++ ){
             responseString += JSONresponse.errors[i].message + "\n";
         }
-        return responseString;
+        return responseString.trim();
     }
-/*
-    elaborantApp.controller('addLabFormController', function formController($scope, $http) {
-        $scope.processForm = function() {
-            $http
-            .post('url', $scope.lab)
-            .success(function(data, status){
-                alert('success');
-                if (data.result){
-                    alert(data.result);
-                }
-            })
-            .error(function(data, status, headers, config){
-                alert("error " + status);
-            });
-        };
-    });*/
-
 
     elaborantApp.controller('addLabFormController', function($scope, $http, $sce, $filter, $stateParams){
-        $scope.lab = [];
+        $scope.lab = {};
         $scope.lab.building = "MS";
 
         $scope.usersList = function() {
@@ -419,6 +406,48 @@
             .success(function (success) {
                 functionRefresh();
                 $('#addLab').modal('hide');
+                $scope.lab = {};
+                $scope.lab.building = "MS";
+            })
+            .error(function (response) {
+                $scope.IsResponseError = true;
+                $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
+            });
+
+        });
+        
+    });
+
+    var test;
+    elaborantApp.controller('addComputerFormController', function($scope, $http, $sce, $filter, $stateParams){
+        $scope.computer = {};
+
+        $scope.labList = function() {
+            $http.get(apiUrl + 'laboratories')
+            .success(function (serverResponse) {
+                $scope.labListData = serverResponse.response;
+                $scope.dataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+        };
+        $scope.labList();
+
+
+        $('button[type=submit]').on('click', function(e){
+            var dataAddTask = jQuery.extend({}, $scope.task);
+            alert('text');
+            $http({
+              method: 'POST',
+              url: apiUrl + "computers/",
+              data: JSON.parse(JSON.stringify($scope.computer))
+            })
+            .success(function (success) {
+                functionRefresh();
+                $('#addComputer').modal('hide');
+                $scope.computer = {};
             })
             .error(function (response) {
                 $scope.IsResponseError = true;

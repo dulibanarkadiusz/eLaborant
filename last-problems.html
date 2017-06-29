@@ -8,14 +8,13 @@
                 	<div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='lastProblems'>
                     <div ng-hide="dataLoaded" class="preloader">
                     </div>
-                    <!--<a href="#" ng-click="loadData()">Reload</a>-->
                     <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
                       
                     </div>
-                 		<div class="panel panel-default" ng-repeat="x in myData">
+                 		<div class="panel panel-default" role="button" ui-sref="problem({id: '{{x.id}}'})" ng-repeat="x in myData">
                     		<div class="panel-heading" role="tab" id="headingOne">
                       			<!--<div class="row panel-title accordion-toggle" role="button" data-toggle="collapse" data-target="#spoilerTaskFor{{x.id}}" aria-expanded="true" >-->
-                            <div class="row panel-title accordion-toggle" role="button" aria-expanded="true" ui-sref="problem({id: '{{x.id}}'})">
+                            <div class="row panel-title accordion-toggle" aria-expanded="true">
 
                    					<div class="col-xs-6 col-sm-6 col-md-2"><strong>#{{x.id}}</strong><br>
                               <span class="badge">
