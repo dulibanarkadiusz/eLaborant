@@ -1,0 +1,55 @@
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+        <h2>Zadania</h2>
+        <div class="filter-menu">
+            <div class="panel-body">
+                <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='taskList'>
+                
+                    <div ng-hide="dataLoaded" class="preloader">
+                    </div>
+                    
+                    <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
+                    </div>
+
+                    <div class="task" ng-repeat="task in taskListData">
+                        <div class="panel panel-default">
+                            <script>$('[data-toggle="tooltip"]').tooltip();</script>
+                            <div class="panel-heading"><a ui-sref="problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a></div>
+                            <div class="panel-body">
+                                <div class="col-sm-1 col-md-1">
+                                    <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority | priortyDescription}} ({{task.priority}})">{{task.priority}}</span>
+                                </div>
+                                <div class="col-sm-5 col-md-3">
+                                    <div title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
+                                        <i class="fa fa-clock-o" aria-hidden="true"></i> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                    </div>
+                                    <div title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
+                                        <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-2">
+                                    <a data-toggle="modal" data-target="#addUser-{{task.id}}">
+                                        <span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span>
+                                    </a>
+                                </div>
+                                <div class="col-sm-6 col-md-3" title="Bieżący status: {{task.state}}"> 
+                                    {{task.state}}
+                                </div>
+                                <div class="col-sm-6 col-md-3" title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname }}">
+                                    <b>{{task.author.firstname + " " + task.author.surname }}</b>
+                                </div>
+
+                                <div class="col-sm-12 task-content">
+                                    {{task.content}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.panel -->
+            </div><!-- /.panel-group -->
+        </div><!-- /.panel-body -->
+    </div><!-- /.filter-menu -->  
+</div>  

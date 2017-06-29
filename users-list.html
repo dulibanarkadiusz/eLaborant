@@ -11,17 +11,17 @@
                 <thead>
                     <tr>
                         <th>Imię i nazwisko</th>
-                        <th>E-mail</th>
-                        <th>Nr tel.</th>
+                        <!--<th>E-mail</th>
+                        <th>Nr tel.</th>-->
                         <th>Rola</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="x in myData">
-                        <td>{{ x.firstname }} {{x.surname}}</td>
-                        <td>{{ x.email }}</td>
-                        <td>{{ x.phoneNumber }}</td>
-                        <td>{{ x.role}}</td>
+                    <tr ng-repeat="user in usersListData">
+                        <td>{{ user.firstname }} {{user.surname}}</td>
+                        <!--<td>{{ x.email }}</td>
+                        <td>{{ x.phoneNumber }}</td>-->
+                        <td>{{ x.role.name }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -29,6 +29,83 @@
     </div>
 </div>
 
+
+<div class="modal fade" data-backdrop="static" data-keyboard="true" id="addUser" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" ng-controller="addTaskFormController">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dodaj użytkownika</h4>
+            </div>
+            <form name="addUserForm" ng-submit="processForm()">
+                <div class="modal-body"> 
+                    <div ng-show="IsResponseError">
+                        <div class="alert alert-danger"><strong>Błąd przy dodawaniu użytkownika:</strong>
+                            {{ResponseErrorMessage}}
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addUserForm.name.$invalid}">
+                        <label for="name" class="control-label">Imię i nazwisko:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                            <input type='text' name='name' ng-model="user.name" class="form-control" ng-pattern="/^[A-zÀ-ž\s]{2,}[ -][A-zÀ-ž\s]{2,}$/" required />
+                        </div>
+                        <div ng-show="addUserForm.name.$invalid && addUserForm.name.$touched" class="help-block with-errors">
+                            Proszę podać imię oraz nazwisko
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addUserForm.email.$invalid}">
+                        <label for="email" class="control-label">E-mail:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-at" aria-hidden="true"></i></span>
+                            <input type="email" name="email" class="form-control" ng-model="user.email" placeholder="imie.nazwisko@polsl.pl" required>
+                        </div>
+                        <div ng-show="addUserForm.email.$invalid && addUserForm.email.$touched" class="help-block with-errors">
+                            Proszę podać poprawny adres e-mail
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addUserForm.phone.$invalid}">
+                        <label for="phone" class="control-label">Numer telefonu:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                            <input type="text" name="phone" class="form-control" ng-model="user.phone" ng-pattern="/^([0-9]{9,})/" required>
+                        </div>
+                        <div ng-show="addUserForm.phone.$invalid && addUserForm.phone.$touched" class="help-block with-errors">
+                            Proszę podać numer telefonu (bez separatorów)
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addUserForm.role.$invalid}">
+                        <label for="role" class="control-label">Rola:</label>
+                        <div class="input-group" ng-controller='roleList'>
+                            <span class="input-group-addon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+                            <select class="form-control" name="role" ng-model="user.role" required> 
+                                <option ng-repeat="x in myData" value="{{x.id}}">{{x.name}}</option>
+                            </select>
+                        </div>
+                        <div ng-show="addUserForm.role.$invalid && addUserForm.role.$touched" class="help-block with-errors">
+                            Proszę wybrać element z listy
+                        </div>
+                    </div>
+
+                    <pre>
+                    {{ user | json }}
+                    </pre>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-success" ng-disabled="addUserForm.$invalid">Dodaj</button>
+                </div>
+            </form>
+        </div>   
+    </div>
+</div>
+
+<!--
 <div class="modal fade" data-backdrop="static" data-keyboard="true" id="addUser" role="dialog">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
@@ -36,12 +113,13 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Dodaj użytkownika</h4>
             </div>
-            <form name="addUserForm" ng-submit="submitForm()" ng-controller="formController">
+            <form name="addUserForm" ng-submit="submitForm()" ng-controller="addUserFormController">
                 <div class="modal-body">  
+
                     <div name="t" class="form-group" ng-class="{'has-error': addUserForm.name.$invalid && addUserForm.name.$touched}">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user" aria-hidden="true"></i></span>
-                            <input type="text" name="name" id="x2" class="form-control" ng-model="lab.name" ng-pattern="/^[A-zÀ-ž\s]{2,}[ -][A-zÀ-ž\s]{2,}$/" placeholder="Imię i nazwisko" required>
+                            <input type="text" name="name" id="x2" class="form-control" ng-model="user.name" ng-pattern="/^[A-zÀ-ž\s]{2,}[ -][A-zÀ-ž\s]{2,}$/" placeholder="Imię i nazwisko" required>
                         </div>
                         <div ng-show="addUserForm.name.$invalid && addUserForm.name.$touched" class="help-block with-errors">
                             Podaj poprawne imię i nazwisko
@@ -50,7 +128,7 @@
                     <div name="t" class="form-group" ng-class="{'has-error': addUserForm.email.$invalid && addUserForm.email.$touched}">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-at" aria-hidden="true"></i></span>
-                            <input type="email" name="email" id="x2" class="form-control" ng-model="lab.email"  placeholder="E-mail" required>
+                            <input type="email" name="email" id="x2" class="form-control" ng-model="user.email"  placeholder="E-mail" required>
                         </div>
                         <div ng-show="addUserForm.email.$invalid && addUserForm.email.$touched" class="help-block with-errors">
                             Podaj poprawny adres e-mail
@@ -59,7 +137,7 @@
                     <div name="t" class="form-group" ng-class="{'has-error': addUserForm.phone.$invalid && addUserForm.phone.$touched}">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>
-                            <input type="text" name="phone" id="x2" class="form-control" ng-model="lab.phone" placeholder="Nr telefonu" ng-pattern="/^([0-9]{9,})/" required>
+                            <input type="text" name="phone" id="x2" class="form-control" ng-model="user.phone" placeholder="Nr telefonu" ng-pattern="/^([0-9]{9,})/" required>
                         </div>
                         <div ng-show="addUserForm.phone.$invalid && addUserForm.phone.$touched" class="help-block with-errors">
                             Podaj poprawny numer telefonu, bez separatorów
@@ -69,7 +147,7 @@
                         <label for="role" class="control-label">Rola użytkownika</label>
                         <div class="input-group" ng-controller="roleList">
                             <span class="input-group-addon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                            <select class="form-control" name="role" ng-model="lab.role" required> 
+                            <select class="form-control" name="role" ng-model="user.role" required> 
                                 <option ng-repeat="x in myData" value="{{x.id}}">{{x.name}}</option>
                             </select>
                         </div>
@@ -86,3 +164,4 @@
         </div>   
     </div>
 </div>
+-->

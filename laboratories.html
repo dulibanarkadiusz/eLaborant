@@ -6,26 +6,23 @@
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
-                        <th>Numer</th>
                         <th>Budynek</th>
+                        <th>Numer</th>
                         <th>Opiekun</th>
-                        <th> </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="x in myData">
-                        <td>{{ x.roomNo }}</td>
-                        <td>{{ x.building }}</td>
-                        <td>{{ x.owner }}</td>
-                        <td>
-                            <button title="Edytuj" class="btn btn-xs pull-right"><i class="fa fa-pencil" aria-hidden="true"></i></button>
-                        </td>
+                    <tr ui-sref="laboratory({id: '{{lab.id}}'})" class="clickable" ng-repeat="lab in labListData">
+                        <td>{{ lab.building }}</td>
+                        <td>{{ lab.roomNo }}</td>
+                        <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
 
 
 <div class="modal fade" data-backdrop="static" data-keyboard="true" id="addLab" role="dialog">
@@ -36,19 +33,26 @@
                 <h4 class="modal-title">Dodaj laboratorium</h4>
             </div>
             <form name="addLabForm" ng-submit="processForm()">
-                <div class="modal-body">  
+                <div class="modal-body"> 
+                    <div ng-show="IsResponseError">
+                        <div class="alert alert-danger"><strong>Błąd przy dodawaniu laboratorium:</strong>
+                            {{ResponseErrorMessage}}
+                        </div>
+                    </div>
 
-                    <div name="t" class="form-group" ng-class="{'has-error': addLabForm.name.$invalid && addLabForm.name.$touched}">
+                    <div class="form-group" ng-class="{'has-error': addLabForm.roomNo.$invalid}">
+                        <label for="roomNo" class="control-label">Nazwa laboratorium:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                            <input type="text" name="name" id="x2" class="form-control" ng-model="lab.name" ng-pattern="/^[A-zÀ-ž\s]{2,10}$/" placeholder="Nazwa laboratorium" required>
+                            <input type="text" name="roomNo" class="form-control" ng-model="lab.roomNo" ng-pattern="/^[0-9A-zÀ-ž\s]{2,10}$/" placeholder="Nazwa laboratorium" required>
                         </div>
-                        <div ng-show="addLabForm.name.$invalid && addLabForm.name.$touched" class="help-block with-errors">
+                        <div ng-show="addLabForm.roomNo.$invalid && addLabForm.roomNo.$touched" class="help-block with-errors">
                             Podaj poprawną nazwę laboratorium od 2 do 10 znaków
                         </div>
                     </div>
 
-                    <div class="form-group" ng-class="{'has-error': addLabForm.building.$invalid && addLabForm.building.$touched}">
+                    <div class="form-group" ng-class="{'has-error': addLabForm.building.$invalid}">
+                        <label for="building" class="control-label">Wydział:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-home" aria-hidden="true"></i></span>
                             <select class="form-control" name="building" ng-model="lab.building" required>
@@ -56,29 +60,29 @@
                                 <option value="LB">Laboratorium Budownictwa</option>
                             </select>
                         </div>
-                        <div ng-show="addLabForm.building.$invalid && addLabForm.building.$touched" class="help-block with-errors">Uzupełnij pole</div>
+                        <div ng-show="addLabForm.building.$invalid && addLabForm.building.$touched" class="help-block with-errors">
+                            Proszę wybrać wydział
+                        </div>
                     </div>
 
-                    <div class="form-group" ng-class="{'has-error': addLabForm.owner.$invalid && addLabForm.owner.$touched}">
-                        <label for="owner" class="control-label">Osoba odpowiedzialna</label>
-                        <div class="input-group" ng-controller="usersList">
+                    <div class="form-group" ng-class="{'has-error': addLabForm.idOwner.$invalid}">
+                        <label for="idOwner" class="control-label">Opiekun:</label>
+                        <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                            <select class="form-control" name="owner" ng-model="lab.owner" required> 
-                                <option ng-repeat="x in myData" value="{{x.id}}">{{x.firstname}} {{x.surname}}</option>
+                            <select class="form-control" name="idOwner" ng-model="lab.idOwner" required> 
+                                <option ng-repeat="x in usersListData" value="{{x.id}}">{{x.firstname}} {{x.surname}}</option>
                             </select>
                         </div>
-                        <div ng-show="addLabForm.owner.$invalid && addLabForm.owner.$touched" class="help-block with-errors">Uzupełnij pole</div>
+                        <div ng-show="addLabForm.idOwner.$invalid && addLabForm.idOwner.$touched" class="help-block with-errors">
+                            Proszę wybrać opiekuna laboratorium
+                        </div>
                     </div>
-
+                    
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                    <button type="submit" class="btn btn-success" ng-disabled="addLabForm.$invalid">Dodaj</button>
+                    <button type="submit" class="btn btn-success" ng-disabled="addUserForm.$invalid">Dodaj</button>
                 </div>
-
-                <pre>
-                    {{ lab | json}}
-                </pre>
             </form>
         </div>   
     </div>

@@ -33,7 +33,7 @@ ul.settings .settings a{
 	margin-top: 10px;
 }
 
-.problem-tasks .task{
+.problem-tasks .task, .prevLink{
 	margin: 7px 0;
 }
 
@@ -53,13 +53,38 @@ ul.settings .settings a{
 	margin: 0 2px;
 }
 
-.task-content{
+.task-content, .margin-top{
 	margin-top: 10px;
+}
+
+.infoMessage{
+	padding: 10px;
+	text-align: center;
+}
+
+.alert{
+	white-space: pre-line;
+}
+
+.task{
+	margin-bottom: 5px;
+}
+
+.clickable{
+	cursor: pointer;
+}
+
+.modal{
+	overflow-y: auto;
 }
 
 .preloader {
     padding: 50px;
     background: url('../img/preloader.gif') no-repeat 50% 50% transparent;
+}
+
+.ng-scope .row{
+	margin: 0 2px;
 }
 
 div < .ng-valid.ng-dirty{

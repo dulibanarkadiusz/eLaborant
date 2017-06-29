@@ -17,15 +17,16 @@
     <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="js/validator.js"></script>
     <script src="js/angular-bootstrap-multiselect.js"></script>
-   <!--  <script src="http://bentorfs.github.io/angular-bootstrap-multiselect/bower_components/angular-bootstrap-multiselect/dist/angular-bootstrap-multiselect.min.js"></script> 
-   <script src="js/multiselect.js"></script>-->
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -80,6 +81,10 @@
                     <li class="laboratories" ng-click="active='laboratories'">
                         <a ui-sref="laboratories"><i class="fa fa-fw fa-cubes"></i> Laboratoria</a>
                     </li>
+                    <li class="computers" ng-click="active='computers'">
+                        <a ui-sref="computers"><i class="fa fa-fw fa-laptop"></i> Komputery</a>
+                    </li>
+                    <!--
                     <li class="settings" ng-click="active='settings'">
                         <a ui-sref="settings"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
@@ -93,18 +98,19 @@
                                 <a href="#">Dropdown Item</a>
                             </li>
                         </ul>
+                    </li>
+                    -->
                 </ul>
             </div>
         </nav>
 
         <div id="page-wrapper">
-
             <div class="container-fluid">
                 <div class="row">
                     <div class="span12">
                         <div ui-view></div> 
                     </div> 
-                </div>   
+                </div> 
             </div>
 
         </div>
@@ -113,9 +119,11 @@
 
     <script>
 
-    var elaborantApp = angular.module('elaborant', ["ui.router", "angularMoment", "btorfs.multiselect"]);
+
+    var elaborantApp = angular.module('elaborant', ["ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
     var apiUrl = "http://157.158.16.186:8081/api/";
     var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
+    var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
 
     elaborantApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider.otherwise("/index");
@@ -145,6 +153,14 @@
             url: "/laboratories",
             templateUrl: "laboratories.html"
         })
+        .state('laboratory', {
+            url: "/laboratory/:id?",
+            templateUrl: "laboratory.html"
+        })
+        .state('computers', {
+            url: "/computers",
+            templateUrl: "list-computers.html"
+        })
         .state('settings', {
             url: "/settings",
             templateUrl: "settings.html"
@@ -171,243 +187,11 @@
         $locationProvider.html5Mode(true);
     });
     </script>
-
+    <script src="js/controllers.js"></script>
     <script>
-    elaborantApp.controller('usersList', function ($scope, $http) {
-        $scope.dataLoaded = false;
-        $http.get('api/pracownicy.html').success(function (response) {
-            $scope.myData = response;
-            $scope.dataLoaded = true;
-        });
-    });
-
-    elaborantApp.controller('labList', function ($scope, $http) {
-        $scope.dataLoaded = false;
-        $http.get('api/lab.html').success(function (response) {
-            $scope.myData = response;
-            $scope.dataLoaded = true;
-        });
-    });
-
-    elaborantApp.controller('roleList', function ($scope, $http) {
-        $scope.dataLoaded = false;
-        $http.get('api/role.html').success(function (response) {
-            $scope.myData = response;
-            $scope.dataLoaded = true;
-        });
-    });
-
-    elaborantApp.controller('taskList', function ($scope, $stateParams, $http) {
-        $scope.dataLoaded = false;
-        $http.get('api/role.html').success(function (response) {
-            $scope.myData = response;
-            $scope.dataLoaded = true;
-        });
-    });
-
-    elaborantApp.controller('assistantList', function ($scope, $http){
-        $scope.dataLoaded = false;
-        $http.get('api/laboranci.html').success(function (response) {
-            $scope.assistantsData = response;
-            $scope.assistantsDataLoaded = true;
-        });
-
-    });
-
-    elaborantApp.filter('labelPriority', function(){
-        return function(text){
-            switch(text){
-                case "1": return "label-default"; 
-                case "2": return "label-primary";
-                case "3": return "label-info";
-                case "4": return "label-success";
-                case "5": return "label-warning";
-                default: return "label-danger"; 
-            }
-        };
-    });
-
-    elaborantApp.filter('range', function() {
-        return function(input, total) {
-        total = parseInt(total);
-
-        for (var i=0; i<total; i++) {
-          input.push(i);
-        }
-
-        return input;
-      };
-    });
-
-
-    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http) {
-        $scope.dataLoaded = false;
-        amMoment.changeLocale('pl');
-
-        $scope.loadData = function() {
-            //$http.get(apiUrl+'problems')
-            $http.get('api/last-problems.html')
-            .success(function (serverResponse) {
-                $scope.myData = serverResponse;
-                //$scope.myData = serverResponse.response;
-                $scope.dataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.loadData();
-    });
-
-    elaborantApp.controller('problem', function($scope, amMoment, $stateParams, $http) {
-        $scope.problemid = $stateParams.id;
-        amMoment.changeLocale('pl');
-        $scope.problemDataLoaded = false;
-
-        $http.get('api/problem-'+$scope.problemid+'.html').success(function (response) {
-            $scope.problemData = response;
-            $scope.problemDataLoaded = true;
-        });
-
-        $http.get('api/task-for-'+$scope.problemid+'.html').success(function (response) {
-            $scope.taskData = response;
-            $scope.dataLoaded = true;
-        });
-    }); 
-    
-    elaborantApp.controller('addTaskFormController', function($scope, $http){
-        var datetimepicker = $('#datetimepicker4');
-         $scope.change = function() {
-                alert('');
-              };
-
-
-
-        $(function () {
-                
-                datetimepicker.datetimepicker({
-                    locale: 'pl',
-                    sideBySide: true,
-                    format: 'YYYY-MM-DD HH:mm:00'
-                });
-                
-                $('.bootstrap-datetimepicker-widget').on('click', function(){
-                    alert(' ');
-                    datetimepicker.trigger('change');
-                });
-
-
-        });
-        $scope.dateRealization = new Date();
-        //$scope.options 
-        var test = [
-            {
-                "id": "1",
-                "name": "France",
-                "capital": "Paris"
-            },
-            {
-                "id": "2",
-                "name": "United Kingdom",
-                "capital": "London"
-            },
-            {
-                "id": "3",
-                "name": "Germany",
-                "capital": "Berlin"
-            }
-        ];
-
-        $scope.options = [];
-
-
-        var json = []; 
-        var tmp = [];
-        $http.get('api/laboranci.html').success(function (response) {
-            $scope.assistantsData = response;
-            $scope.assistantsDataLoaded = true;
-
-
-            json = response;
-            //json = JSON.stringify(response);
-            //json = JSON.parse(response);
-
-            var xx = {
-                "id": "3",
-                "name": "Germany",
-                "capital": "Berlin"
-            };
-            for(var i=0; i < test.length; i++){
-                tmp.push({
-                "id": test[i].id,
-                "name": test[i].name,
-                "capital": test[i].capital
-            });
-           
-            }
-
-            $scope.options = tmp;
-            //alert(tmp.length);
-        
-        });
-        
-/*
-var xx = {
-                "id": "3",
-                "name": "Germany",
-                "capital": "Berlin"
-            };
-
-        $scope.options = [
-            {
-                "id": "1",
-                "name": "France",
-                "capital": "Paris"
-            },
-            {
-                "id": "2",
-                "name": "United Kingdom",
-                "capital": "London"
-            },
-            {
-                "id": "3",
-                "name": "Germany",
-                "capital": "Berlin"
-            }
-        ];
-
-        $scope.options.push(xx);*/
-
-        //$scope.options.updateOptions();
-        //$scope.options.refresh();
-
-    });
-
-    elaborantApp.controller('addLabFormController', function formController($scope, $http) {
-        $scope.processForm = function() {
-            $http
-            .post('url', $scope.lab)
-            .success(function(data, status){
-                alert('success');
-                if (data.result){
-                    alert(data.result);
-                }
-                else{
-                    alert('status');
-                }
-            })
-            .error(function(data, status, headers, config){
-                alert("error " + status);
-            });
-        };
-    });
-    </script>
-    <script>
-        $(document).on('click', '.no-collapsable', function(e){
-            e.stopPropagation();
-        });
-    </script>
+    //$(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    //});
+</script>
 </body>
 </html>

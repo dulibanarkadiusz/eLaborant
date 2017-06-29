@@ -3,113 +3,76 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-<div ng-controller="problem">
+<div ng-controller="laboratory">
     <div class="prevLink">
-        <a ui-sref="last-problems">Powrót do listy problemów</a>
+
     </div>
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-repeat="lab in labData">
         <div class="panel-heading">
-            <h3>Problem #{{problemid}}
-                <!--<button class="btn btn-warning btn-xs pull-right" title="Edytuj problem">Edytuj</button>-->
+            <h3> Laboratorium {{lab.building + lab.roomNo}}
             </h3>
         </div>
-        <div ng-hide="problemDataLoaded" class="preloader">
+        <div ng-hide="labDataLoaded" class="preloader">
         </div>
         <div class="panel-body">
-            <div class="row" ng-repeat="x in problemData">
-                <div class="col-xs-12 col-md-8">
+            <div class="row">
+                <div class="col-md-12">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Lokalizacja: </div>
-                        <div class="col-xs-12 col-sm-6">{{x.computer.name}} {{x.laboratory.building}}{{x.laboratory.roomNo}}</div>
+                        <div class="col-xs-12 col-sm-4 textToRight">Sala: </div>
+                        <div class="col-xs-12 col-sm-8">{{lab.roomNo}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Zgłaszający: </div>
-                        <div class="col-xs-12 col-sm-6">{{x.author.firstname}} {{x.author.surname}}</div>
+                        <div class="col-xs-12 col-sm-4 textToRight">Wydział: </div>
+                        <div class="col-xs-12 col-sm-8">{{lab.building | buildingFullname}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Data zgłoszenia: </div>
-                        <div class="col-xs-12 col-sm-6 ba"><time class="badge" title="{{ x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">{{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm '}}</time></div>
+                        <div class="col-xs-12 col-sm-4 textToRight">Opiekun: </div>
+                        <div class="col-xs-12 col-sm-8 ba">{{lab.owner.firstname}} {{lab.owner.surname}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Opis problemu: </div>
-                        <div class="col-xs-12 col-sm-6">{{x.content}}</div>
+                        <div class="margin-top">
+                            <div class="col-xs-12 col-sm-4 textToRight">Liczba komputerów: </div>
+                            <div class="col-xs-12 col-sm-8 ba">{{computersCount}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div id="task-list" class="panel panel-default">
-        <div class="panel-heading"><h4>Zadania<button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" data-toggle="modal" data-target="#addTask"><i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowe zadanie</button></h4></div>
+        
+        <div class="panel-heading">
+            <h4>
+                Komputery
+                <!--<button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" data-toggle="modal" data-target="#addTask">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowe zadanie
+                </button>-->
+            </h4>
+        </div>
 
-        <div class="task">
-            <div class="panel-body" ng-repeat="task in taskData">
-                <div class="row">
-                    <div class="col-xs-1 cols-sm-1 col-md-1">
-                        <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority}}">{{task.priority}}</span>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-3">
-                        <div title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
-                            <i class="fa fa-clock-o" aria-hidden="true"></i> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}
-                        </div>
-                        <div title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
-                            <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
-                        </div>
-                    </div>
-                    <div class="col-xs-4 col-sm-3 col-md-2">
-                    <!--    
-                    <a href="" title="xx" bs-tooltip>xxx</a>
-                            <span ng-repeat="x in task.userExecuteTasksById">{{x.surname}}</span>
-                            -->
-                        <a data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
-                            <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
-                        </a>
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-3" title="Bieżący status: {{task.state}}"> 
-                        {{task.state}}
-                    </div>
-                    <div class="col-xs-4 col-sm-4 col-md-2" title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname}}">
-                        <b>{{task.author.firstname + " " + task.author.surname}}</b>
-                    </div>
-                    
-                    <div class="textToRight col-xs-3 col-sm-3 col-md-1 task-buttons no-collapsable">
-                        <!--<button class="btn btn-warning btn-xs pull-right" data-toggle="modal" data-target="#editProblemModal" title="Edytuj zadanie"><i class="fa fa-pencil" aria-hidden="true"></i></button>-->
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 task-content">
-                        {{task.content}}
-                    </div>
-                </div>
-                <div class="modal fade" id="addUser-{{task.id}}" role="dialog">
-                    <div class="modal-dialog modal-md">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Wykonawcy zadania #{{task.id}}</h4>
-                            </div>
-                            <div class="modal-body">
-                                <strong>Zadanie wykonuje {{task.userExecuteTasksById.length | executorsIntToString}}</strong>
-                                <table class="table table-condensed">
-                                    <tbody>
-                                        <!--<thead>
-                                            <tr>
-                                                <th>Zadanie wykonuje {{task.userExecuteTasksById.length | executorsIntToString}}</th>
-                                            </tr>
-                                        </thead>-->
-                                        <tr ng-repeat="executor in task.userExecuteTasksById">
-                                            <td>{{ executor.firstname }} {{ executor.surname }}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <table ng-show="dataLoaded" class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Kod</th>
+                    <th>Nazwa</th>
+                    <th>Adres IP</th>
+                    <th>MAC</th>
+                    <th>Laboratorium</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="computer in computersData">
+                    <td>{{ computer.barcode}}</td>
+                    <td>{{ computer.name }}</td>
+                    <td>{{ computer.ip }}</td>
+                    <td>{{ computer.mac }}</td>
+                    <td>{{ computer.laboratory.building + computer.laboratory.roomNo }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-            </div>
-            <div class="row infoMessage">
-                {{ message }}
-            </div>
+        <div class="row infoMessage">
+            {{ message }}
         </div>
     </div>
 </div>
