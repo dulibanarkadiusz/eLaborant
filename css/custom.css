@@ -1,5 +1,8 @@
 ul.last-problems .last-problems a,
 ul.users-list .users-list a,
+ul.last-tasks .last-tasks a,
+ul.computers .computers a,
+ul.laboratories .laboratories a,
 ul.settings .settings a{ 
 	color: #fff !important;
 	background-color:#000 !important;
