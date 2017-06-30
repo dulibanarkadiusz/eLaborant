@@ -1,10 +1,5 @@
     var functionRefresh; 
     elaborantApp.controller('usersList', function ($scope, $http) {
-        /*$scope.dataLoaded = false;
-        $http.get('api/pracownicy.html').success(function (response) {
-            $scope.myData = response;
-            $scope.dataLoaded = true;
-        });*/
         $scope.dataLoaded = false;
         $scope.loadData = function() {
             $http.get(apiUrl + 'users')
@@ -54,22 +49,6 @@
         };
 
         $scope.loadData();
-    });
-
-    elaborantApp.controller('stateList', function ($scope, $http) {
-        $scope.dataLoaded = false;
-        $http.get('api/states.html').success(function (response) {
-            $scope.statesData = response;
-            $scope.dataLoaded = true;
-        });
-    });
-
-    elaborantApp.controller('roleList', function ($scope, $http) {
-        $scope.dataLoaded = false;
-        $http.get('api/role.html').success(function (response) {
-            $scope.myData = response;
-            $scope.dataLoaded = true;
-        });
     });
 
     elaborantApp.controller('taskList', function ($scope, $injector, $sce, amMoment, $http) {
@@ -189,32 +168,13 @@
         $scope.loadData();
     });
 
-    /*
-    elaborantApp.controller('lastTasks', function ($scope, $injector, $sce, amMoment, $http) {
-        $scope.dataLoaded = false;
-        amMoment.changeLocale('pl');
-
-        $scope.loadData = function() {
-            $http.get(apiUrl + 'tasks')
-            .success(function (serverResponse) {
-                $scope.taskListData = serverResponse.response;
-                $scope.dataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.loadData();
-    });*/
-
     elaborantApp.controller('problem', function($scope, amMoment, $stateParams, $http) {
         $scope.problemid = $stateParams.id;
         amMoment.changeLocale('pl');
         $scope.problemDataLoaded = false;
 
         functionRefresh = $scope.loadData = function() {
+            $scope.message = "";
             $http.get(apiUrl + 'problems/'+$scope.problemid).success(function (serverResponse) {
                 $scope.problemData = new Array(serverResponse.response);
                 $scope.problemDataLoaded = true;
@@ -255,6 +215,7 @@
         $scope.computersCount = 0;
 
         functionRefresh = $scope.loadData = function() {
+            $scope.message = "";
             $http.get(apiUrl + 'laboratories/'+$scope.labid).success(function (serverResponse) {
                 $scope.labData = new Array(serverResponse.response);
                 console.log($scope.labData);
@@ -275,8 +236,6 @@
                         break;
                 }
             });
-
-            //$('[data-toggle="tooltip"]').tooltip();
         }
 
         $scope.loadData();
@@ -299,7 +258,7 @@
     });
 
 
-    elaborantApp.controller('addTaskFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
         $scope.idAuthor = 5;
@@ -318,6 +277,7 @@
             format: 'YYYY-MM-DDTHH:mm'
         });
         
+        /*
         $scope.options = [];
         $http.get('api/laboranci.html').success(function (response) {
             $scope.assistantsData = response;
@@ -329,10 +289,41 @@
                     "name": response[i].firstname + " " + response[i].surname
                 });
             }
-        });
+        });*/
+        $scope.options = [];
+        $http.get(apiUrl + 'users')
+            .success(function (serverResponse) {
+                var response = serverResponse.response;
+                $scope.assistantsDataLoaded = true;
+
+                console.log(response);
+
+                for(var i=0; i < response.length; i++){
+                    $scope.options.push({
+                        "id": response[i].id,
+                        "name": response[i].firstname + " " + response[i].surname
+                    });
+                }
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+
+        
+        $http.get(apiUrl + 'states')
+            .success(function (serverResponse) {
+                $scope.statesData = serverResponse.response;
+                $scope.statesDataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
 
         $scope.task.priority = "3";
         $scope.task.status = "2";
+        $scope.task.userExecuteTasksById = [];
 
         $('button[type=submit]').on('click', function(e){
             $scope.idAuthor = 5;
@@ -342,14 +333,16 @@
             dataAddTask.idProblem = parseInt($scope.problemid);
             
             // testowo 
-            dataAddTask.userExecuteTasksById = [];
+            /*dataAddTask.userExecuteTasksById = [];
             var exs = $scope.task.userExecuteTasksById;
             if (exs != null ){
                 for(var i=0; i < exs.length; i++){
                     dataAddTask.userExecuteTasksById.push(exs[i].id);
                 }
-            }
+            }*/
             //
+            $('#addTask').modal('hide');
+            functionRefresh();
 
             $http({
               method: 'POST',
@@ -362,6 +355,7 @@
                 $scope.task = {};
                 $scope.task.priority = "3";
                 $scope.task.status = "2";
+                $scope.task.userExecuteTasksById = [];
             })
             .error(function (response) {
                 $scope.IsResponseError = true;
