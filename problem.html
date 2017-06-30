@@ -84,14 +84,19 @@
                                 <h4 class="modal-title">Wykonawcy zadania #{{task.id}}</h4>
                             </div>
                             <div class="modal-body">
-                                <strong>Zadanie wykonuje {{task.userExecuteTasksById.length | executorsIntToString}}</strong>
-                                <table class="table table-condensed">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Imię i nazwisko laboranta</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr ng-repeat="executor in task.userExecuteTasksById">
                                             <td>{{ executor.firstname }} {{ executor.surname }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <p class="textToRight">Łącznie: {{task.userExecuteTasksById.length | executorsIntToString}}</p>
                             </div>
                         </div>
                     </div>

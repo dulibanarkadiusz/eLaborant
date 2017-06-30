@@ -100,7 +100,6 @@
 
     elaborantApp.controller('nav', function($scope, $state){
         $(function(){
-            console.log('state ' + $state.current.name);
             $scope.active = $state.current.name;
         });
     });
@@ -211,7 +210,6 @@
                         task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
                     }
                 }
-                console.log($scope.taskData);
             })
             .error(function(error, status) {
                 switch(status){
@@ -237,7 +235,6 @@
             $scope.message = "";
             $http.get(apiUrl + 'laboratories/'+$scope.labid).success(function (serverResponse) {
                 $scope.labData = new Array(serverResponse.response);
-                console.log($scope.labData);
                 $scope.labDataLoaded = true;
             });
 
@@ -314,8 +311,6 @@
             .success(function (serverResponse) {
                 var response = serverResponse.response;
                 $scope.assistantsDataLoaded = true;
-
-                console.log(response);
 
                 for(var i=0; i < response.length; i++){
                     $scope.options.push({
