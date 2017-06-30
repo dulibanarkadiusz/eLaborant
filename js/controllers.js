@@ -53,22 +53,41 @@
 
     elaborantApp.controller('taskList', function ($scope, $injector, $sce, amMoment, $http) {
         $scope.dataLoaded = false;
+        $scope.pageSize = 10;
+        $scope.pages = [];
         amMoment.changeLocale('pl');
 
-        $scope.loadData = function() {
-            $http.get(apiUrl + 'tasks')
+        $scope.loadData = function(pageNumber) {
+            if (pageNumber<0)
+                return false;
+
+            $http.get(apiUrl + 'tasks?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.taskListData = serverResponse.response;
+                var pagesCount = Math.ceil(serverResponse.totalElements/$scope.pageSize);
+                $scope.pages = getPagesArray(pagesCount);
                 $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.totalElements;
+                $scope.currentPage = pageNumber;
             })
             .error(function(data, status){
                 $scope.responseError = true;
                 $scope.errorMessage = $sce.trustAsHtml(errorMessage);
             });
         };
+        $scope.loadData(0);
 
-        $scope.loadData();
+
     });
+
+    function getPagesArray(pagesCount){
+        var array = [];
+        for (var i=0; i<pagesCount; i++){
+            array.push(i);
+        }
+
+        return array;
+    }
 
     elaborantApp.controller('assistantList', function ($scope, $http){
         $scope.dataLoaded = false;
@@ -346,7 +365,7 @@
 
             $http({
               method: 'POST',
-              url: "http://157.158.16.186:8081/api/tasks/",
+              url: apiUrl + "tasks/",
               data: JSON.parse(JSON.stringify(dataAddTask))
             })
             .success(function (success) {

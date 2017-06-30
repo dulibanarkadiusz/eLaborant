@@ -10,8 +10,32 @@
                 
                     <div ng-hide="dataLoaded" class="preloader">
                     </div>
+
+                    <p>Liczba zadań w bazie: {{totalElements}}</p>
                     
                     <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            &nbsp;<br>
+                            <ul class="pagination">
+                                <li ng-class="currentPage==0 ? 'disabled' : ''">
+                                    <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                                </li>
+                                <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
+                                    <a href="#" ng-click="loadData(x)">{{x+1}}</a>
+                                </li>
+                                <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                                    <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4 form-group">
+                            Wyników na stronę:
+                            <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
+                            </select>
+                        </div>
                     </div>
 
                     <div class="task" ng-repeat="task in taskListData">
@@ -50,6 +74,7 @@
                             </div>
                         </div>
                     </div>
+
                 </div><!-- /.panel -->
             </div><!-- /.panel-group -->
         </div><!-- /.panel-body -->
