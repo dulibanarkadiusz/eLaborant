@@ -4,6 +4,9 @@
         <div ng-hide="dataLoaded" class="preloader">
         </div>
         <div ng-show="dataLoaded" class="table-responsive">
+            <p>
+                Liczba laboratoriów: {{totalElements}}
+            </p>
             <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addLab"><i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj nowe laboratorium</button>
             <table class="table table-hover table-striped">
                 <thead>

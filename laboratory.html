@@ -22,7 +22,7 @@
                         <div class="col-xs-12 col-sm-8">{{lab.roomNo}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-4 textToRight">Wydział: </div>
+                        <div class="col-xs-12 col-sm-4 textToRight">Budynek: </div>
                         <div class="col-xs-12 col-sm-8">{{lab.building | buildingFullname}}</div>
                     </div>
                     <div class="row">
@@ -76,96 +76,3 @@
         </div>
     </div>
 </div>
-
-
-<div class="modal fade" data-backdrop="static" data-keyboard="true" id="addTask" role="dialog">
-    <div class="modal-dialog modal-md">
-        <div class="modal-content" ng-controller="addTaskFormController">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Dodaj zadanie</h4>
-            </div>
-            <form name="addTaskForm" ng-submit="processForm()">
-                <div class="modal-body"> 
-                    <div ng-show="IsResponseError">
-                        <div class="alert alert-danger"><strong>Błąd przy dodawaniu zadania:</strong>
-                            {{ResponseErrorMessage}}
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addTaskForm.dateRealization.$invalid}">
-                        <label for="dateRealization" class="control-label">Termin realizacji:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-bell-o" aria-hidden="true"></i></span>
-                            <input type='datetime-local' name='dateRealization' ng-model="task.dateRealization" class="form-control" id='datetimepicker4' min="{{minDate}}" required />
-                        </div>
-                        <div ng-show="addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched" class="help-block with-errors">
-                            Termin musi być poprawną datą i dotyczyć przyszłości
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addTaskForm.priority.$invalid}">
-                        <label for="priority" class="control-label">Priorytet zadania:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-sort-amount-desc" aria-hidden="true"></i></span>
-                            <select class="form-control" name="priority" ng-model="task.priority" required>
-                                <option ng-repeat="n in [] | range:5" value="{{n+1}}">{{n+1}} - {{n+1 | priortyDescription}}</option>
-                            </select>
-                        </div>
-                        <div ng-show="addTaskForm.priority.$invalid && addTaskForm.priority.$touched" class="help-block with-errors">
-                            Uzupełnij pole
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-controller="stateList" ng-class="{'has-error': addTaskForm.status.$invalid}">
-                        <label for="status" class="control-label">Status zadania:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                            <select class="form-control" name="idState" ng-model="task.status" required>
-                                <option ng-repeat="status in statesData" value="{{status.id}}">{{status.name}}</option>
-                            </select>
-                        </div>
-                        <div ng-show="addTaskForm.status.$invalid && addTaskForm.status.$touched" class="help-block with-errors">
-                            Uzupełnij pole
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="(task.userExecuteTasksById == null || task.userExecuteTasksById.length==0) ? 'has-error': 'has-error2'">
-                        <label for="executorsList" class="control-label">Osoby odpowiedzialne za realizację:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-wrench" aria-hidden="true"></i></span>
-                            <multiselect class="form-control" name="userExecuteTasksById" id="selected" ng-model="task.userExecuteTasksById" options="options" search-filter="searchFilter" show-search="true" id-prop="id" display-prop="name" required>
-                            </multiselect>
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addTaskForm.content.$invalid}">
-                        <label for="content" class="control-label">Opis zadania:</label>
-                        <div class="input-group" style="z-index:0">
-                            <span class="input-group-addon"><i class="fa fa-pencil" aria-hidden="true"></i></span>
-                            <textarea class="form-control" name="content" ng-model="task.content" ng-minlength="10" ng-maxlength="2000" required>
-                            </textarea>
-                        </div>
-                        <div ng-show="addTaskForm.content.$invalid && addTaskForm.content.$touched" class="help-block with-errors">
-                            Treść zadania musi wynosić przynajmniej 10 znaków i być krótsza niż 2000 znaków. 
-                        </div>
-                    </div>
-
-                    <!--
-                    <pre>
-                        {{ task | json}}
-                    </pre>
-                    -->
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                    <button type="submit" class="btn btn-success" ng-disabled="addTaskForm.$invalid">Dodaj</button>
-                </div>
-            </form>
-        </div>   
-    </div>
-</div>
-<script>
-        $('[data-toggle="tooltip"]').tooltip();   
-</script>

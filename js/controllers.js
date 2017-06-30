@@ -1,11 +1,14 @@
     var functionRefresh; 
     elaborantApp.controller('usersList', function ($scope, $http) {
         $scope.dataLoaded = false;
+        $scope.totalElements = 0;
+
         $scope.loadData = function() {
             $http.get(apiUrl + 'users')
             .success(function (serverResponse) {
                 $scope.usersListData = serverResponse.response;
                 $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.totalElements;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -18,11 +21,14 @@
 
     elaborantApp.controller('labList', function ($scope, $sce, $http) {
         $scope.dataLoaded = false;
+        $scope.totalElements = 0;
+
         $scope.loadData = function() {
             $http.get(apiUrl + 'laboratories')
             .success(function (serverResponse) {
                 $scope.labListData = serverResponse.response;
                 $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.totalElements;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -36,11 +42,14 @@
 
     elaborantApp.controller('computersList', function ($scope, $http) {
         $scope.dataLoaded = false;
+        $scope.totalElements = 0;
+
         functionRefresh = $scope.loadData = function() {
             $http.get(apiUrl + 'computers')
             .success(function (serverResponse) {
                 $scope.computersListData = serverResponse.response;
                 $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.totalElements;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -169,7 +178,7 @@
             $http.get(apiUrl + 'problems')
             .success(function (serverResponse) {
                 $scope.myData = serverResponse.response;
-                //$scope.myData = serverResponse.response;
+                $scope.totalElements = serverResponse.totalElements;
                 $scope.dataLoaded = true;
             })
             .error(function(data, status){
@@ -190,6 +199,7 @@
         $scope.problemid = $stateParams.id;
         amMoment.changeLocale('pl');
         $scope.problemDataLoaded = false;
+        $scope.tasksCount = 0;
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
@@ -201,6 +211,7 @@
             $http.get(apiUrl + 'tasks/?query=idProblem%3D'+$scope.problemid)
             .success(function (serverResponse) {
                 $scope.taskData = serverResponse.response;
+                $scope.tasksCount = serverResponse.totalElements;
                 
                 $scope.dataLoaded = true;
                 for (var i = 0; i < $scope.taskData.length; i++ ){

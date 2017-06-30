@@ -1,15 +1,20 @@
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-lg-12" ng-controller='lastProblems'>
   		<h2>Zgłoszone problemy</h2>
       
   		<div class="filter-menu">
+      
+      <p class="counter">
+        Liczba zgłoszonych problemów: {{totalElements}}
+      </p>
+
 			<div class="panel panel-default">
 				<div class="panel-body">
-                	<div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='lastProblems'>
+                	<div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true">
                     <div ng-hide="dataLoaded" class="preloader">
                     </div>
+
                     <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
-                      
                     </div>
                  		<div class="panel panel-default" role="button" ui-sref="problem({id: '{{x.id}}'})" ng-repeat="x in myData">
                     		<div class="panel-heading" role="tab" id="headingOne">

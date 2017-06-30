@@ -1,8 +1,10 @@
 ul.last-problems .last-problems a,
+ul.problem .last-problems a,
 ul.users-list .users-list a,
 ul.last-tasks .last-tasks a,
 ul.computers .computers a,
 ul.laboratories .laboratories a,
+ul.laboratory .laboratories a,
 ul.settings .settings a{ 
 	color: #fff !important;
 	background-color:#000 !important;
@@ -79,6 +81,12 @@ ul.settings .settings a{
 
 .task{
 	margin-bottom: 5px;
+}
+
+.counter{
+	margin-top: -20px;
+	margin-left: -10px;
+	padding: 10px 0;
 }
 
 .clickable{
