@@ -100,6 +100,13 @@
 
     });
 
+    elaborantApp.controller('nav', function($scope, $state){
+        $(function(){
+            console.log('state ' + $state.current.name);
+            $scope.active = $state.current.name;
+        });
+    });
+
     elaborantApp.filter('labelPriority', function(){
         return function(text){
             switch(text){

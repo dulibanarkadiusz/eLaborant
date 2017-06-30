@@ -67,13 +67,13 @@
                 </li>
             </ul>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div ng-controller="nav" class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="{{active || 'last-problems'}} nav navbar-nav side-nav">
                     <li class="last-problems" ng-click="active='last-problems'">
                         <a ui-sref="last-problems"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy</a>                        
                     </li>
                     <li class="last-tasks" ng-click="active='last-tasks'">
-                        <a ui-sref="last-tasks"><i class="fa fa-tasks" aria-hidden="true"></i> Zadania</a>
+                        <a ui-sref="last-tasks"><i class="fa fa-tasks"></i> Zadania</a>
                     </li>
                     <li class="users-list" ng-click="active='users-list'">
                         <a ui-sref="users-list"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
@@ -183,19 +183,16 @@
             url: "/home",
             templateUrl: "home.html"
         });
-        
+
         $locationProvider.html5Mode(true);
     });
     </script>
     <script src="js/controllers.js"></script>
     <script>
-    //$(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();  
         $('body').on('click', function(){
-            //alert('x');
             $('.tooltip').tooltip('hide');
         });
-    //});
-</script>
+    </script>
 </body>
 </html>
