@@ -229,20 +229,28 @@
         $scope.loadData();
     });
 
-    elaborantApp.controller('problem', function($scope, amMoment, $stateParams, $http) {
+    elaborantApp.controller('problem', function($scope, $sce, amMoment, $stateParams, $http) {
         $scope.problemid = $stateParams.id;
         amMoment.changeLocale('pl');
         $scope.problemDataLoaded = false;
         $scope.tasksCount = 0;
+        $scope.errorDataLoaded = '';
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
             $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
             $scope.pages = [];
-            $http.get(apiUrl + 'problems/'+$scope.problemid).success(function (serverResponse) {
-                $scope.problemData = new Array(serverResponse.response);
-                $scope.problemDataLoaded = true;
-            });
+            $http.get(apiUrl + 'problems/'+$scope.problemid)
+                .success(function (serverResponse) {
+                    $scope.problemData = new Array(serverResponse.response);
+                    $scope.problemDataLoaded = true;
+                })
+                .error(function(error, status){
+                    if (status==404)
+                        $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Taki problem nie istnieje.'));
+                    else
+                        $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
+                });
 
             $scope.loadTasks = function(pageNumber = 0){
                 $http.get(apiUrl + 'tasks/?query=idProblem%3D'+$scope.problemid+',page=' + pageNumber + ",pageSize=" + $scope.pageSize)
@@ -280,16 +288,26 @@
     }); 
 
 
-    elaborantApp.controller('laboratory', function($scope, $stateParams, $http) {
+    elaborantApp.controller('laboratory', function($scope, $sce, $stateParams, $http) {
         $scope.labid = $stateParams.id;
         $scope.labDataLoaded = false;
         $scope.computersCount = 0;
+        $scope.errorDataLoaded = '';
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
             $http.get(apiUrl + 'laboratories/'+$scope.labid).success(function (serverResponse) {
                 $scope.labData = new Array(serverResponse.response);
                 $scope.labDataLoaded = true;
+            })
+            .error(function(error, status){
+                if (status==404){
+                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
+                }
+                else{
+                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
+                }
+                return;
             });
 
 

@@ -5,74 +5,81 @@
 
 <div ng-controller="laboratory">
     <div class="prevLink">
-
     </div>
-    <div class="panel panel-default" ng-repeat="lab in labData">
-        <div class="panel-heading">
-            <h3> Laboratorium {{lab.building + lab.roomNo}}
-            </h3>
-        </div>
-        <div ng-hide="labDataLoaded" class="preloader">
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 textToRight">Sala: </div>
-                        <div class="col-xs-12 col-sm-8">{{lab.roomNo}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 textToRight">Budynek: </div>
-                        <div class="col-xs-12 col-sm-8">{{lab.building | buildingFullname}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 textToRight">Opiekun: </div>
-                        <div class="col-xs-12 col-sm-8 ba">{{lab.owner.firstname}} {{lab.owner.surname}}</div>
-                    </div>
-                    <div class="row">
-                        <div class="margin-top">
-                            <div class="col-xs-12 col-sm-4 textToRight">Liczba komputerów: </div>
-                            <div class="col-xs-12 col-sm-8 ba">{{computersCount}}</div>
+
+    <div ng-hide="labDataLoaded || errorDataLoaded!=''" class="preloader">
+    </div>
+
+    <div ng-bind-html="errorDataLoaded"></div>
+
+    <div ng-show="labDataLoaded">
+        <div class="panel panel-default" ng-repeat="lab in labData">
+            <div class="panel-heading">
+                <h3> Laboratorium {{lab.building + lab.roomNo}}
+                </h3>
+            </div>
+            
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 textToRight">Sala: </div>
+                            <div class="col-xs-12 col-sm-8">{{lab.roomNo}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 textToRight">Budynek: </div>
+                            <div class="col-xs-12 col-sm-8">{{lab.building | buildingFullname}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 textToRight">Opiekun: </div>
+                            <div class="col-xs-12 col-sm-8 ba">{{lab.owner.firstname}} {{lab.owner.surname}}</div>
+                        </div>
+                        <div class="row">
+                            <div class="margin-top">
+                                <div class="col-xs-12 col-sm-4 textToRight">Liczba komputerów: </div>
+                                <div class="col-xs-12 col-sm-8 ba">{{computersCount}}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="task-list" class="panel panel-default">
-        
-        <div class="panel-heading">
-            <h4>
-                Komputery
-                <!--<button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" data-toggle="modal" data-target="#addTask">
-                    <i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowe zadanie
-                </button>-->
-            </h4>
-        </div>
+        <div id="task-list" class="panel panel-default">
+            
+            <div class="panel-heading">
+                <h4>
+                    Komputery
+                    <!--<button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" data-toggle="modal" data-target="#addTask">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowe zadanie
+                    </button>-->
+                </h4>
+            </div>
 
-        <table ng-show="dataLoaded" class="table table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Kod</th>
-                    <th>Nazwa</th>
-                    <th>Adres IP</th>
-                    <th>MAC</th>
-                    <th>Laboratorium</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="computer in computersData">
-                    <td>{{ computer.barcode}}</td>
-                    <td>{{ computer.name }}</td>
-                    <td>{{ computer.ip }}</td>
-                    <td>{{ computer.mac }}</td>
-                    <td>{{ computer.laboratory.building + computer.laboratory.roomNo }}</td>
-                </tr>
-            </tbody>
-        </table>
+            <table ng-show="dataLoaded" class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Kod</th>
+                        <th>Nazwa</th>
+                        <th>Adres IP</th>
+                        <th>MAC</th>
+                        <th>Laboratorium</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="computer in computersData">
+                        <td>{{ computer.barcode}}</td>
+                        <td>{{ computer.name }}</td>
+                        <td>{{ computer.ip }}</td>
+                        <td>{{ computer.mac }}</td>
+                        <td>{{ computer.laboratory.building + computer.laboratory.roomNo }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-        <div class="row infoMessage">
-            {{ message }}
+            <div class="row infoMessage">
+                {{ message }}
+            </div>
         </div>
     </div>
 </div>
