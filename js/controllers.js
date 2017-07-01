@@ -95,11 +95,21 @@
                 $scope.totalElements = serverResponse.totalElements;
                 $scope.currentPage = pageNumber;
                 localStorage.pageSize = $scope.pageSize;
+
+                for (var i = 0; i < $scope.taskListData.length; i++ ){
+                        var task = $scope.taskListData[i];
+                        task.executorsString = "";
+                        for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
+                            task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
+                        }
+                    }
             })
             .error(function(data, status){
                 $scope.responseError = true;
                 $scope.errorMessage = $sce.trustAsHtml(errorMessage);
             });
+
+            $('[data-toggle="tooltip"]').tooltip(); 
         };
         $scope.loadData(0);
 
@@ -456,7 +466,6 @@
 
         $('button[type=submit]').on('click', function(e){
             var dataAddTask = jQuery.extend({}, $scope.task);
-            alert('text');
             $http({
               method: 'POST',
               url: apiUrl + "laboratories/",
@@ -497,7 +506,6 @@
 
         $('button[type=submit]').on('click', function(e){
             var dataAddTask = jQuery.extend({}, $scope.task);
-            alert('text');
             $http({
               method: 'POST',
               url: apiUrl + "computers/",

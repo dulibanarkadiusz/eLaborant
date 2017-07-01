@@ -130,15 +130,18 @@ ul.settings .settings a{
 
 .pagination{
 	margin: 0;
+	clear: both;
 }
 
 .paginationPageSize{
 	text-align: right;
+		display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 }
 
 .paginationPageSize select{
 	max-width: 120px;
-	float: right;
 }
 
 h2{

@@ -61,16 +61,16 @@
                             <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
                         </div>
                     </div>
-                    <div class="col-xs-4 col-sm-3 col-md-2">
+                    <div class="col-xs-3 col-sm-3 col-md-2">
                         <a ng-show="task.userExecuteTasksById.length>0" data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
                             <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
                         </a>
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-3" title="Bieżący status: {{task.state}}"> 
-                        {{task.state}}
+                        <i class="fa fa-flag"></i> {{task.state}}
                     </div>
                     <div class="col-xs-4 col-sm-4 col-md-2" title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname}}">
-                        <b>{{task.author.firstname + " " + task.author.surname}}</b>
+                        <b><i class="fa fa-user-plus"></i> {{task.author.firstname + " " + task.author.surname}}</b>
                     </div>
                     
                     <div class="textToRight col-xs-3 col-sm-3 col-md-1 task-buttons no-collapsable">
