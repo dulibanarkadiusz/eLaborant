@@ -30,6 +30,10 @@ ul.settings .settings a{
 	text-align: right;
 }
 
+#task-list{
+	margin-bottom: 70px;
+}
+
 .task-buttons button:even{
 	padding: 0 2%;
 }

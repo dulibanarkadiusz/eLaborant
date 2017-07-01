@@ -227,32 +227,41 @@
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
+            $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
+            $scope.pages = [];
             $http.get(apiUrl + 'problems/'+$scope.problemid).success(function (serverResponse) {
                 $scope.problemData = new Array(serverResponse.response);
                 $scope.problemDataLoaded = true;
             });
 
-            $http.get(apiUrl + 'tasks/?query=idProblem%3D'+$scope.problemid)
-            .success(function (serverResponse) {
-                $scope.taskData = serverResponse.response;
-                $scope.tasksCount = serverResponse.totalElements;
-                
-                $scope.dataLoaded = true;
-                for (var i = 0; i < $scope.taskData.length; i++ ){
-                    var task = $scope.taskData[i];
-                    task.executorsString = "";
-                    for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
-                        task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
+            $scope.loadTasks = function(pageNumber = 0){
+                $http.get(apiUrl + 'tasks/?query=idProblem%3D'+$scope.problemid+',page=' + pageNumber + ",pageSize=" + $scope.pageSize)
+                .success(function (serverTaskResponse) {
+                    $scope.taskData = serverTaskResponse.response;
+                    $scope.tasksCount = serverTaskResponse.totalElements;
+                    $scope.pages = getPagesArray(serverTaskResponse.totalPages);
+                    $scope.currentPage = pageNumber;
+                    localStorage.pageSize = $scope.pageSize;
+                    
+                    $scope.dataLoaded = true;
+                    for (var i = 0; i < $scope.taskData.length; i++ ){
+                        var task = $scope.taskData[i];
+                        task.executorsString = "";
+                        for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
+                            task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
+                        }
                     }
-                }
-            })
-            .error(function(error, status) {
-                switch(status){
-                    case 404: 
-                        $scope.message = "Brak zadań do wyświetlenia.";
-                        break;
-                }
-            });
+                })
+                .error(function(error, status) {
+                    switch(status){
+                        case 404: 
+                            $scope.message = "Brak zadań do wyświetlenia.";
+                            break;
+                    }
+                });
+            }
+
+            $scope.loadTasks();
 
             $('[data-toggle="tooltip"]').tooltip(); 
         }
