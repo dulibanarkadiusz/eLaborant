@@ -1,0 +1,122 @@
+<div class="row">
+    <div class="col-lg-12" ng-controller="labList">
+        <h2>Laboratoria</h2>
+        <div ng-hide="dataLoaded" class="preloader">
+        </div>
+        <div ng-show="dataLoaded" class="table-responsive">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    Liczba laboratoriów: {{totalElements}}
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addLab"><i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj nowe laboratorium</button>
+                </div>
+            </div>
+
+            <div class="row pagination-container">
+                <div class="col-xs-12 col-sm-9">
+                    <br>
+                    <ul class="pagination">
+                        <li ng-class="currentPage==0 ? 'disabled' : ''">
+                            <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                        </li>
+                        <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
+                            <a href="#" ng-click="loadData(x)">{{x+1}}</a>
+                        </li>
+                        <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                            <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+                    Wyników na stronę:
+                    <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
+                    </select>
+                </div>
+            </div>
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Budynek</th>
+                        <th>Numer</th>
+                        <th>Opiekun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ui-sref="laboratory({id: '{{lab.id}}'})" class="clickable" ng-repeat="lab in labListData">
+                        <td>{{ lab.building }}</td>
+                        <td>{{ lab.roomNo }}</td>
+                        <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" data-backdrop="static" data-keyboard="true" id="addLab" role="dialog">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content" ng-controller="addLabFormController">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Dodaj laboratorium</h4>
+            </div>
+            <form name="addLabForm" ng-submit="processForm()">
+                <div class="modal-body"> 
+                    <div ng-show="IsResponseError">
+                        <div class="alert alert-danger"><strong>Błąd przy dodawaniu laboratorium:</strong>
+                            {{ResponseErrorMessage}}
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addLabForm.roomNo.$invalid}">
+                        <label for="roomNo" class="control-label">Nazwa laboratorium:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                            <input type="text" name="roomNo" class="form-control" ng-model="lab.roomNo" ng-pattern="/^[0-9A-zÀ-ž\s]{2,10}$/" placeholder="Nazwa laboratorium" required>
+                        </div>
+                        <div ng-show="addLabForm.roomNo.$invalid && addLabForm.roomNo.$touched" class="help-block with-errors">
+                            Podaj poprawną nazwę laboratorium od 2 do 10 znaków
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addLabForm.building.$invalid}">
+                        <label for="building" class="control-label">Wydział:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-home" aria-hidden="true"></i></span>
+                            <select class="form-control" name="building" ng-model="lab.building" required>
+                                <option value="MS">Wydział Matematyki Stosowanej</option>
+                                <option value="LB">Laboratorium Budownictwa</option>
+                            </select>
+                        </div>
+                        <div ng-show="addLabForm.building.$invalid && addLabForm.building.$touched" class="help-block with-errors">
+                            Proszę wybrać wydział
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': addLabForm.idOwner.$invalid}">
+                        <label for="idOwner" class="control-label">Opiekun laboratorium:</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
+                            <select class="form-control" name="idOwner" ng-model="lab.idOwner" required> 
+                                <option ng-repeat="x in usersListData" value="{{x.id}}">{{x.firstname}} {{x.surname}}</option>
+                            </select>
+                        </div>
+                        <div ng-show="addLabForm.idOwner.$invalid && addLabForm.idOwner.$touched" class="help-block with-errors">
+                            Proszę wybrać opiekuna laboratorium
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                    <button type="submit" class="btn btn-success" ng-disabled="addUserForm.$invalid">Dodaj</button>
+                </div>
+            </form>
+        </div>   
+    </div>
+</div>

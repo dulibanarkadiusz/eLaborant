@@ -15,12 +15,13 @@
     <link href="css/panel-group.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
     <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
+    <link href="fonts/font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
-      <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
+    
+    <<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
@@ -144,15 +145,15 @@
         })
         .state('users-list', {
             url: "/users",
-            templateUrl: "users-list.html"
+            templateUrl: "list-users.html"
         })
         .state('last-problems', {
             url: "/last-problems/",
-            templateUrl: "last-problems.html"
+            templateUrl: "list-problems.html"
         })
         .state('last-tasks', {
             url: "/last-tasks",
-            templateUrl: "last-tasks.html"
+            templateUrl: "list-tasks.html"
         })
         .state('problem', {
             url: "/problem/:id?",
@@ -160,7 +161,7 @@
         })
         .state('laboratories', {
             url: "/laboratories",
-            templateUrl: "laboratories.html"
+            templateUrl: "list-laboratories.html"
         })
         .state('laboratory', {
             url: "/laboratory/:id?",
@@ -170,28 +171,6 @@
             url: "/computers",
             templateUrl: "list-computers.html"
         })
-        .state('settings', {
-            url: "/settings",
-            templateUrl: "settings.html"
-        })
-        .state('settings.account', {
-            url: "/account",
-            templateUrl: "settings.account.html",
-            controller: function($scope) {
-                $scope.account = "i'm the account view"
-            }
-        })
-        .state('settings.profile', {
-            url: "/profile",
-            templateUrl: "settings.profile.html",
-            controller: function($scope) {
-                $scope.profile = "i'm the profile view"
-            }
-        })
-        .state('home', {
-            url: "/home",
-            templateUrl: "home.html"
-        });
 
         $locationProvider.html5Mode(true);
     });
