@@ -7,8 +7,29 @@
 
     <div ng-show="dataLoaded" class="table-responsive">
         <p>
-            Liczba użytkowników w systemie: {{totalElements}}
+            Liczba użytkowników: {{totalElements}}
         </p>
+
+        <div class="col-xs-12 col-sm-9">
+            <br>
+            <ul class="pagination">
+                <li ng-class="currentPage==0 ? 'disabled' : ''">
+                    <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                </li>
+                <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
+                    <a href="#" ng-click="loadData(x)">{{x+1}}</a>
+                </li>
+                <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                    <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+            Wyników na stronę:
+            <select class="form-control paginationPageSize" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
+            </select>
+        </div>
+    </div>
         <!--<button class="btn btn-success pull-right" data-toggle="modal" data-target="#addUser"><i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj użytkownika</button>-->
             <table class="table table-hover table-striped">
                 <thead>

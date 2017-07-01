@@ -1,14 +1,20 @@
     var functionRefresh; 
+    var defaultPageSize = 10;
     elaborantApp.controller('usersList', function ($scope, $http) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
+        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
+        $scope.pages = [];
 
-        $scope.loadData = function() {
-            $http.get(apiUrl + 'users')
+        $scope.loadData = function(pageNumber = 0) {
+            $http.get(apiUrl + 'users?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.usersListData = serverResponse.response;
                 $scope.dataLoaded = true;
                 $scope.totalElements = serverResponse.totalElements;
+                $scope.pages = getPagesArray(serverResponse.totalPages);
+                $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -22,13 +28,18 @@
     elaborantApp.controller('labList', function ($scope, $sce, $http) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
+        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
+        $scope.pages = [];
 
-        $scope.loadData = function() {
-            $http.get(apiUrl + 'laboratories')
+        $scope.loadData = function(pageNumber = 0) {
+            $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.labListData = serverResponse.response;
                 $scope.dataLoaded = true;
                 $scope.totalElements = serverResponse.totalElements;
+                $scope.pages = getPagesArray(serverResponse.totalPages);
+                $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -43,13 +54,18 @@
     elaborantApp.controller('computersList', function ($scope, $http) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
+        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
+        $scope.pages = [];
 
-        functionRefresh = $scope.loadData = function() {
-            $http.get(apiUrl + 'computers')
+        functionRefresh = $scope.loadData = function(pageNumber = 0) {
+            $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.computersListData = serverResponse.response;
                 $scope.dataLoaded = true;
                 $scope.totalElements = serverResponse.totalElements;
+                $scope.pages = getPagesArray(serverResponse.totalPages);
+                $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -62,8 +78,9 @@
 
     elaborantApp.controller('taskList', function ($scope, $injector, $sce, amMoment, $http) {
         $scope.dataLoaded = false;
-        $scope.pageSize = 10;
+        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
+
         amMoment.changeLocale('pl');
 
         $scope.loadData = function(pageNumber) {
@@ -73,11 +90,11 @@
             $http.get(apiUrl + 'tasks?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.taskListData = serverResponse.response;
-                var pagesCount = Math.ceil(serverResponse.totalElements/$scope.pageSize);
-                $scope.pages = getPagesArray(pagesCount);
+                $scope.pages = getPagesArray(serverResponse.totalPages);
                 $scope.dataLoaded = true;
                 $scope.totalElements = serverResponse.totalElements;
                 $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
             })
             .error(function(data, status){
                 $scope.responseError = true;
@@ -171,15 +188,22 @@
 
     elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http) {
         $scope.dataLoaded = false;
+        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
+        $scope.pages = [];
+
         amMoment.changeLocale('pl');
 
-        $scope.loadData = function() {
+        $scope.loadData = function(pageNumber = 0) {
             //$http.get(apiUrl+'problems')
-            $http.get(apiUrl + 'problems')
+            $http.get(apiUrl + 'problems?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.myData = serverResponse.response;
                 $scope.totalElements = serverResponse.totalElements;
                 $scope.dataLoaded = true;
+
+                $scope.pages = getPagesArray(serverResponse.totalPages);
+                $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
             })
             .error(function(data, status){
                 $scope.responseError = true;

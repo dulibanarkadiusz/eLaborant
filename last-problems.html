@@ -3,10 +3,28 @@
   		<h2>Zgłoszone problemy</h2>
       
   		<div class="filter-menu">
-      
-      <p class="counter">
-        Liczba zgłoszonych problemów: {{totalElements}}
-      </p>
+
+      <div class="row">
+          <div class="col-xs-12 col-sm-9">
+              <br>
+              <ul class="pagination">
+                  <li ng-class="currentPage==0 ? 'disabled' : ''">
+                      <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                  </li>
+                  <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
+                      <a href="#" ng-click="loadData(x)">{{x+1}}</a>
+                  </li>
+                  <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                      <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
+                  </li>
+              </ul>
+          </div>
+          <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+              Wyników na stronę:
+              <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
+              </select>
+          </div>
+      </div>
 
 			<div class="panel panel-default">
 				<div class="panel-body">
@@ -16,42 +34,37 @@
 
                     <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
                     </div>
-                 		<div class="panel panel-default" role="button" ui-sref="problem({id: '{{x.id}}'})" ng-repeat="x in myData">
-                    		<div class="panel-heading" role="tab" id="headingOne">
-                      			<!--<div class="row panel-title accordion-toggle" role="button" data-toggle="collapse" data-target="#spoilerTaskFor{{x.id}}" aria-expanded="true" >-->
-                            <div class="row panel-title accordion-toggle" aria-expanded="true">
 
-                   					<div class="col-xs-6 col-sm-6 col-md-2"><strong>#{{x.id}}</strong><br>
-                              <span class="badge">
-                                <time am-time-ago="x.dateNotification" title="{{ x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm ' }}"></time>
-                              </span>
-                            </div>
-                   					<div class="hidden-xs col-sm-3 col-md-2">{{x.author.firstname}} {{x.author.surname}}</div>
-                   					<div class="col-xs-6 col-sm-3 col-md-2">{{x.computer.name}} {{x.laboratory.roomNo}}</div>
-                   					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>{{x.content}}</i></div>
-                   					<div class="col-sm-1 col-md-1">
-                   						<button ui-sref="problem({id: '{{x.id}}'})" class="btn btn-xs btn-primary btn-preview pull-right"><i class="fa fa-share fa-1" aria-hidden="true"></i></button> 
-                   					</div>
-                      			</div>
-                    		</div>
-                   			<div id="spoilerTaskFor{{x.id}}" class="panel-collapse collapse problem-tasks">		
-                   				<div class="row task">
-                   					<div class="col-xs-1"> <i class="fa fa-square-o" aria-hidden="true"></i></div>
-                   					<div class="col-xs-1"> <i class="fa fa-circle" aria-hidden="true"></i> </div>
-                   					<div class="col-xs-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> 5 dni</div>
-                   					<div class="col-xs-3"> <i class="fa fa-wrench" aria-hidden="true"></i> Arkadiusz Duliban</div>
-                   					<div class="col-xs-5 problem-desc">Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum orem ipsum dolor sit amet, consectetur adipiscing elit...</div>
-                   				</div>
-                   				<div class="row task">
-                   					<div class="col-xs-1"> <i class="fa fa-check-square-o" aria-hidden="true"></i></div>
-                   					<div class="col-xs-1" style="color: green;"> <i class="fa fa-circle" aria-hidden="true"></i> </div>
-                   					<div class="col-xs-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> 12 dni</div>
-                   					<div class="col-xs-3"> <i class="fa fa-wrench" aria-hidden="true"></i> Arkadiusz Duliban</div>
-                   					<div class="col-xs-5 problem-desc">Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum orem ipsum dolor sit amet, consectetur adipiscing elit...</div>
-                   				</div>
+                    <div ng-show="dataLoaded">
+                   		<div class="panel panel-default" role="button" ui-sref="problem({id: '{{x.id}}'})" ng-repeat="x in myData">
+                      		<div class="panel-heading" role="tab" id="headingOne">
+                        			<!--<div class="row panel-title accordion-toggle" role="button" data-toggle="collapse" data-target="#spoilerTaskFor{{x.id}}" aria-expanded="true" >-->
+                              <div class="row panel-title accordion-toggle" aria-expanded="true">
+
+                     					<div class="col-xs-6 col-sm-6 col-md-2"><strong>#{{x.id}}</strong><br>
+                                <span class="badge">
+                                  <time am-time-ago="x.dateNotification" title="{{ x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm ' }}"></time>
+                                </span>
+                              </div>
+                     					<div class="hidden-xs col-sm-3 col-md-2">{{x.author.firstname}} {{x.author.surname}}</div>
+                     					<div class="col-xs-6 col-sm-3 col-md-2">{{x.computer.name}} ({{x.computer.laboratory.building + x.computer.laboratory.roomNo}}) {{x.laboratory.building}}{{x.laboratory.roomNo}}</div>
+                     					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>{{x.content}}</i></div>
+                     					<div class="col-sm-1 col-md-1">
+                     						<button ui-sref="problem({id: '{{x.id}}'})" class="btn btn-xs btn-primary btn-preview pull-right"><i class="fa fa-share fa-1" aria-hidden="true"></i></button> 
+                     					</div>
+                        			</div>
                       		</div>
-                    	</div>
-                  	</div><!-- /.panel -->
+                     			<div id="spoilerTaskFor{{x.id}}" class="panel-collapse collapse problem-tasks">		
+                     				<div class="row task">
+                     					<div class="col-xs-1"> <i class="fa fa-square-o" aria-hidden="true"></i></div>
+                     					<div class="col-xs-1"> <i class="fa fa-circle" aria-hidden="true"></i> </div>
+                     					<div class="col-xs-2"> <i class="fa fa-clock-o" aria-hidden="true"></i> 5 dni</div>
+                     					<div class="col-xs-3"> <i class="fa fa-wrench" aria-hidden="true"></i> Arkadiusz Duliban</div>
+                     					<div class="col-xs-5 problem-desc">Praesent imperdiet elit arcu, ac facilisis metus tincidunt a. Sed hendrerit eu erat at bibendum orem ipsum dolor sit amet, consectetur adipiscing elit...</div>
+                        		</div>
+                      	</div>
+                    	</div><!-- /.panel -->
+                    </div>
                 </div><!-- /.panel-group -->
         	</div><!-- /.panel-body -->
 		</div><!-- /.panel -->

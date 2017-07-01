@@ -119,8 +119,22 @@ ul.settings .settings a{
 	margin: 0 2px;
 }
 
+.pagination-container{
+	clear: both;
+	padding-top: 20px;
+}
+
 .pagination{
 	margin: 0;
+}
+
+.paginationPageSize{
+	text-align: right;
+}
+
+.paginationPageSize select{
+	max-width: 120px;
+	float: right;
 }
 
 h2{

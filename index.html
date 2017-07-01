@@ -30,9 +30,10 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
    <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>-->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
-    <script src="https://raw.githack.com/begriffs/angular-paginate-anything/master/dist/paginate-anything-tpls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.3.3/ng-table.min.js"></script>
 
 </head>
 
@@ -124,7 +125,7 @@
     <script>
 
 
-    var elaborantApp = angular.module('elaborant', ['bgf.paginateAnything', "ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
+    var elaborantApp = angular.module('elaborant', ['ngTable', "ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
     var apiUrl = "http://157.158.16.186:8081/api/";
     var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';

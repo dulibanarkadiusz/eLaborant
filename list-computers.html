@@ -5,12 +5,39 @@
         <div ng-hide="dataLoaded" class="preloader"></div>
 
         <div ng-show="dataLoaded" class="table-responsive">
-            <p>
-                Liczba komputerów: {{totalElements}}
-            </p>
-            <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addComputer">
-                <i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj komputer
-            </button>
+            <div class="row">
+                <div class="col-md-6">
+                    Liczba komputerów: {{totalElements}}
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addComputer">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj komputer
+                    </button>
+                </div>
+            </div>
+
+            <div class="row pagination-container">
+                <div class="col-xs-12 col-sm-9">
+                    <br>
+                    <ul class="pagination">
+                        <li ng-class="currentPage==0 ? 'disabled' : ''">
+                            <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                        </li>
+                        <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
+                            <a href="#" ng-click="loadData(x)">{{x+1}}</a>
+                        </li>
+                        <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                            <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+                    Wyników na stronę:
+                    <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
+                    </select>
+                </div>
+            </div>
+
             <table class="table table-hover table-striped">
                 <thead>
                     <tr>
@@ -102,6 +129,7 @@
                             <select class="form-control" name="idLaboratory" ng-init="computer.idLaboratory = computer.idLaboratory || labListData[0].id" ng-model="computer.idLaboratory" required> 
                                 <option ng-repeat="lab in labListData" value="{{lab.id}}">{{lab.building + lab.roomNo}}</option>
                             </select>
+                            <!--<select ng-options="lab.id as lab.roomNo for lab in labListData" ng-model="computer.idLaboratory"></select> {{computer.idLaboratory}}-->
                         </div>
                         <div ng-show="addComputerForm.idLaboratory.$invalid && addComputerForm.idLaboratory.$touched" class="help-block with-errors">
                             Proszę wybrać element z listy

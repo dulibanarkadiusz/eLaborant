@@ -11,89 +11,90 @@
                     <div ng-hide="dataLoaded" class="preloader">
                     </div>
 
-                    <p>Liczba zadań w bazie: {{totalElements}}</p>
-                    
                     <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-8">
-                            &nbsp;<br>
-                            <ul class="pagination">
-                                <li ng-class="currentPage==0 ? 'disabled' : ''">
-                                    <a href="#" ng-click="loadData(currentPage - 1)">«</a>
-                                </li>
-                                <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
-                                    <a href="#" ng-click="loadData(x)">{{x+1}}</a>
-                                </li>
-                                <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
-                                    <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-md-4 form-group">
-                            Wyników na stronę:
-                            <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="task" ng-repeat="task in taskListData">
-                        <div class="panel panel-default">
-                            <script>$('[data-toggle="tooltip"]').tooltip();</script>
-                            <div class="panel-heading padding-5">
-                                <a ui-sref="problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
+                    <div ng-show="dataLoaded">
+                        <p>Liczba zadań w bazie: {{totalElements}}</p>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-9">
+                                &nbsp;<br>
+                                <ul class="pagination">
+                                    <li ng-class="currentPage==0 ? 'disabled' : ''">
+                                        <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                                    </li>
+                                    <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
+                                        <a href="#" ng-click="loadData(x)">{{x+1}}</a>
+                                    </li>
+                                    <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                                        <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="panel-body padding-5">
-                                <div class="col-sm-1 col-md-1">
-                                    <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority | priortyDescription}} ({{task.priority}})">{{task.priority}}</span>
-                                </div>
-                                <div class="col-sm-5 col-md-3">
-                                    <div title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
-                                        <i class="fa fa-clock-o" aria-hidden="true"></i> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}
-                                    </div>
-                                    <div title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
-                                        <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 col-sm-3 col-md-2">
-                                    <a ng-show="task.userExecuteTasksById.length>0" data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
-                                        <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-3" title="Bieżący status: {{task.state}}"> 
-                                    {{task.state}}
-                                </div>
-                                <div class="col-sm-6 col-md-3" title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname }}">
-                                    <b>{{task.author.firstname + " " + task.author.surname }}</b>
-                                </div>
-
-                                <div class="col-sm-12 task-content">
-                                    {{task.content}}
-                                </div>
+                            <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+                                Wyników na stronę:
+                                <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
+                                </select>
                             </div>
                         </div>
-                        <div class="modal fade" id="addUser-{{task.id}}" role="dialog">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Wykonawcy zadania #{{task.id}}</h4>
+
+                        <div class="task" ng-repeat="task in taskListData">
+                            <div class="panel panel-default">
+                                <script>$('[data-toggle="tooltip"]').tooltip();</script>
+                                <div class="panel-heading padding-5">
+                                    <a ui-sref="problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
+                                </div>
+                                <div class="panel-body padding-5">
+                                    <div class="col-sm-1 col-md-1">
+                                        <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority | priortyDescription}} ({{task.priority}})">{{task.priority}}</span>
                                     </div>
-                                    <div class="modal-body">
-                                        <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th>Imię i nazwisko laboranta</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="executor in task.userExecuteTasksById">
-                                                    <td>{{ executor.firstname }} {{ executor.surname }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <p class="textToRight">Łącznie: {{task.userExecuteTasksById.length | executorsIntToString}}</p>
+                                    <div class="col-sm-5 col-md-3">
+                                        <div title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                        </div>
+                                        <div title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
+                                            <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-3 col-md-2">
+                                        <a ng-show="task.userExecuteTasksById.length>0" data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
+                                            <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-6 col-md-3" title="Bieżący status: {{task.state}}"> 
+                                        {{task.state}}
+                                    </div>
+                                    <div class="col-sm-6 col-md-3" title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname }}">
+                                        <b>{{task.author.firstname + " " + task.author.surname }}</b>
+                                    </div>
+
+                                    <div class="col-sm-12 task-content">
+                                        {{task.content}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="addUser-{{task.id}}" role="dialog">
+                                <div class="modal-dialog modal-md">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Wykonawcy zadania #{{task.id}}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Imię i nazwisko laboranta</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="executor in task.userExecuteTasksById">
+                                                        <td>{{ executor.firstname }} {{ executor.surname }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <p class="textToRight">Łącznie: {{task.userExecuteTasksById.length | executorsIntToString}}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
