@@ -195,7 +195,7 @@
       };
     });
 
-
+    var lastProblemsLoad;
     elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http) {
         $scope.dataLoaded = false;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
@@ -203,7 +203,7 @@
 
         amMoment.changeLocale('pl');
 
-        $scope.loadData = function(pageNumber = 0) {
+        lastProblemsLoad = $scope.loadData = function(pageNumber = 0) {
             //$http.get(apiUrl+'problems')
             $http.get(apiUrl + 'problems?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
@@ -494,6 +494,67 @@
                 $('#addLab').modal('hide');
                 $scope.lab = {};
                 $scope.lab.building = "MS";
+            })
+            .error(function (response) {
+                $scope.IsResponseError = true;
+                $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
+            });
+
+        });
+        
+    });
+
+    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams){
+        $scope.problem = {};
+
+        $scope.labList = function() {
+            $http.get(apiUrl + 'laboratories')
+            .success(function (serverResponse) {
+                $scope.labListData = serverResponse.response;
+                $scope.labDataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+        };
+        $scope.labList();
+
+
+        $scope.computersList = function() {
+            $http.get(apiUrl + 'computers?query=idLaboratory%3D'+ $scope.problem.idLaboratory)
+            .success(function (serverResponse) {
+                $scope.computersListData = serverResponse.response;
+                $scope.computersDataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.computersListData = {};
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+        };
+
+        $('button[type=submit]').on('click', function(e){
+            $scope.data = {};
+            $scope.data.content = $scope.problem.content;
+            $scope.data.idAuthor = 5;
+            if ($scope.problem.source == 'computer'){
+                $scope.data.idComputer = parseInt($scope.problem.idComputer);
+            }
+            else{
+                $scope.data.idLaboratory = parseInt($scope.problem.idLaboratory);
+            }
+
+            console.log($scope.data);
+            $http({
+              method: 'POST',
+              url: apiUrl + "problems/",
+              data: JSON.parse(JSON.stringify($scope.data))
+            })
+            .success(function (success) {
+                lastProblemsLoad();
+                $('#addProblem').modal('hide');
+                $scope.problem = {};
             })
             .error(function (response) {
                 $scope.IsResponseError = true;
