@@ -10,6 +10,7 @@
 
     <title>eLaborant - panel administracyjny</title>
 
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/sb-admin.css" rel="stylesheet">
     <link href="css/panel-group.css" rel="stylesheet">
@@ -18,22 +19,14 @@
     <link href="fonts/font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script> <!-- amMoment-->
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="js/validator.js"></script>
     <script src="js/angular-bootstrap-multiselect.js"></script>
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.3.3/ng-table.min.js"></script>
-
 </head>
 
 <body>
@@ -121,7 +114,7 @@
     <script>
 
 
-    var elaborantApp = angular.module('elaborant', ['ngTable', "ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
+    var elaborantApp = angular.module('elaborant', ["ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
     var apiUrl = "http://157.158.16.186:8081/api/";
     var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
