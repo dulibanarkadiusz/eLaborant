@@ -23,28 +23,28 @@
             <div class="row" ng-repeat="x in problemData">
                 <div class="col-xs-12 col-md-8">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Lokalizacja: </div>
-                        <div class="col-xs-12 col-sm-6">
+                        <div class="col-xs-6 col-sm-6 textToRight">Lokalizacja: </div>
+                        <div class="col-xs-6 col-sm-6">
                             <a ui-sref="computer({id: '{{x.computer.id}}'})">{{x.computer.name}}</a>
                             <a ui-sref="laboratory({id: '{{x.laboratory.id}}'})"> {{x.laboratory.building}}{{x.laboratory.roomNo}}</a>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Zgłaszający: </div>
-                        <div class="col-xs-12 col-sm-6">{{x.author.firstname}} {{x.author.surname}}</div>
+                        <div class="col-xs-6 col-sm-6 textToRight">Zgłaszający: </div>
+                        <div class="col-xs-6 col-sm-6">{{x.author.firstname}} {{x.author.surname}}</div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Data zgłoszenia: </div>
-                        <div class="col-xs-12 col-sm-6 ba"><time class="badge" title="{{ x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">{{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm '}}</time></div>
+                        <div class="col-xs-6 col-sm-6 textToRight">Data zgłoszenia: </div>
+                        <div class="col-xs-6 col-sm-6 ba"><time class="badge" title="{{ x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">{{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm '}}</time></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-6 textToRight">Opis problemu: </div>
-                        <div class="col-xs-12 col-sm-6">{{x.content}}</div>
+                        <div class="col-xs-6 col-sm-6 textToRight">Opis problemu: </div>
+                        <div class="col-xs-6 col-sm-6">{{x.content}}</div>
                     </div>
                     <div class="row">
                         <div class="margin-top">
-                            <div class="col-xs-12 col-sm-6 textToRight">Liczba zadań: </div>
-                            <div class="col-xs-12 col-sm-6 ba">{{tasksCount}}</div>
+                            <div class="col-xs-6 col-sm-6 textToRight">Liczba zadań: </div>
+                            <div class="col-xs-6 col-sm-6">{{tasksCount}}</div>
                         </div>
                     </div>
                 </div>

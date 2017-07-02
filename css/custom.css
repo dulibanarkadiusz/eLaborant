@@ -30,6 +30,12 @@ ul.settings .settings a{
 	text-align: right;
 }
 
+.badge{
+	white-space: normal;
+}
+
+
+
 #task-list{
 	margin-bottom: 70px;
 }
