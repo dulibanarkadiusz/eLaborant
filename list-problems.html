@@ -97,9 +97,15 @@
 
                     <div class="form-group">
                       <label for="source">Proszę określić, czego problem dotyczy:</label>
-                      <div class="input-group">
-                        <label class="radio-inline"><input type="radio" ng-model="problem.source" value="computer" name="source">Pojedynczy komputer</label>
-                        <label class="radio-inline"><input type="radio" ng-model="problem.source" value="laboratory" name="source">Sala laboratoryjna</label>
+                      <div class="input-group problem-source">
+                        <label role="button">
+                          <input type="radio" ng-model="problem.source" value="computer" name="source">
+                          <span>Pojedynczy komputer</span>
+                        </label>
+                        <label role="button">
+                          <input type="radio" ng-model="problem.source" value="laboratory" name="source">
+                          <span>Sala laboratoryjna</span>
+                        </label>
                       </div>
                     </div>
 

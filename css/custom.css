@@ -135,13 +135,48 @@ ul.settings .settings a{
 
 .paginationPageSize{
 	text-align: right;
-		display: flex;
+	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 }
 
 .paginationPageSize select{
 	max-width: 120px;
+}
+
+.problem-source{
+	margin: 0 auto;
+}
+
+.problem-source input[type=radio]{
+	display: none;
+}
+
+.problem-source label{
+	width: 170px;
+	margin: 4px;
+	border-radius: 4px;
+	overflow: auto;
+	border: 1px solid #ccc;
+	color: #333;
+}
+
+@media screen and (max-width: 410px){
+	.problem-source label{
+		width: 100%;
+	}
+}
+
+.problem-source span{
+	text-align: center;
+	padding: 13px 0;
+	display: block;
+}
+
+.problem-source input:checked + span{
+	background-color: #337ab7;
+	color: #F7F7F7;
+	transition: background-color 0.5s ease-out;
 }
 
 h2{
