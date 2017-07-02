@@ -56,7 +56,10 @@
                                 </span>
                               </div>
                      					<div class="hidden-xs col-sm-3 col-md-2">{{x.author.firstname}} {{x.author.surname}}</div>
-                     					<div class="col-xs-6 col-sm-3 col-md-2">{{x.computer.name}} ({{x.computer.laboratory.building + x.computer.laboratory.roomNo}}) {{x.laboratory.building}}{{x.laboratory.roomNo}}</div>
+                     					<div class="col-xs-6 col-sm-3 col-md-2">
+                                <a ui-sref="computer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()">{{x.computer.name}}</a>
+                                <a ui-sref="laboratory({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()">{{x.laboratory.building + x.laboratory.roomNo}}</span>
+                              </div>
                      					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>{{x.content}}</i></div>
                      					<div class="col-sm-1 col-md-1">
                      						<button ui-sref="problem({id: '{{x.id}}'})" class="btn btn-xs btn-primary btn-preview pull-right"><i class="fa fa-share fa-1" aria-hidden="true"></i></button> 

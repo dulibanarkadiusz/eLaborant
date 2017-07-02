@@ -21,7 +21,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
     
-    <<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script>
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
@@ -31,20 +31,15 @@
     <script src="js/bootstrap-datetimepicker.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-   <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>-->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-table/0.3.3/ng-table.min.js"></script>
 
 </head>
 
 <body>
-
     <div id="wrapper">
 
-        <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -54,7 +49,7 @@
                 </button>
                 <a class="navbar-brand" href="index.html">eLaborant - panel administracyjny</a>
             </div>
-            <!-- Top Menu Items -->
+
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Arkadiusz Duliban <b class="caret"></b></a>
@@ -72,7 +67,7 @@
                     </ul>
                 </li>
             </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+           
             <div ng-controller="nav" class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="{{active || 'last-problems'}} nav navbar-nav side-nav">
                     <li class="last-problems" ng-click="active='last-problems'">
@@ -170,6 +165,10 @@
         .state('computers', {
             url: "/computers",
             templateUrl: "list-computers.html"
+        })
+        .state('computer', {
+            url: "/computer/:id?",
+            templateUrl: "computer.html"
         })
 
         $locationProvider.html5Mode(true);
