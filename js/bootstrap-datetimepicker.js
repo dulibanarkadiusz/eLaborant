@@ -64,6 +64,7 @@
             input,
             component = false,
             widget = false,
+			showClose = true,
             use24Hours,
             minViewModeNumber = 0,
             actualFormat,
@@ -202,6 +203,17 @@
                 ];
             },
 
+			getCloseButton = function (){
+				var btn = $('<button>',
+				{
+					text: 'OK',
+				});
+			
+				return [
+					$('<div>').append(btn.addClass('btn btn-primary close-button').attr({'data-action':'close', 'title': 'Potwierdź i zamknij kalendarz'}))
+				];
+			},
+			
             getTimePickerMainTemplate = function () {
                 var topRow = $('<tr>'),
                     middleRow = $('<tr>'),
@@ -303,6 +315,7 @@
                 var template = $('<div>').addClass('bootstrap-datetimepicker-widget dropdown-menu'),
                     dateView = $('<div>').addClass('datepicker').append(getDatePickerTemplate()),
                     timeView = $('<div>').addClass('timepicker').append(getTimePickerTemplate()),
+					cancelButton = $('<div>').addClass('pull-right').append(getCloseButton()),
                     content = $('<ul>').addClass('list-unstyled'),
                     toolbar = $('<li>').addClass('picker-switch' + (options.collapse ? ' accordion-toggle' : '')).append(getToolbar());
 
@@ -326,6 +339,7 @@
                         $('<div>').addClass('row')
                             .append(dateView.addClass('col-md-6'))
                             .append(timeView.addClass('col-md-6'))
+							.append(cancelButton)
                     );
                     if (options.toolbarPlacement === 'bottom') {
                         template.append(toolbar);
@@ -2359,7 +2373,7 @@
         toolbarPlacement: 'default',
         showTodayButton: false,
         showClear: false,
-        showClose: false,
+        showClose: true,
         widgetPositioning: {
             horizontal: 'auto',
             vertical: 'auto'
