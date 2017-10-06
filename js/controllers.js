@@ -677,3 +677,11 @@
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
     });
+
+    $(function() {
+        if (window.history && window.history.pushState) {
+            $(window).on('popstate', function() {
+                $('.modal-backdrop').remove();
+            });
+        }
+    });
