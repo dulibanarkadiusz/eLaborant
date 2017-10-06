@@ -45,7 +45,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ui-sref="laboratory({id: '{{lab.id}}'})" class="clickable" ng-repeat="lab in labListData">
+                    <tr class="clickable" ng-repeat="lab in labListData">
                         <td>{{ lab.building }}</td>
                         <td>{{ lab.roomNo }}</td>
                         <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>

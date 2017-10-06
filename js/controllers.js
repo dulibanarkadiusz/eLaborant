@@ -31,7 +31,7 @@
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
 
-        $scope.loadData = function(pageNumber = 0) {
+        functionRefresh = $scope.loadData = function(pageNumber = 0) {
             $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
             .success(function (serverResponse) {
                 $scope.labListData = serverResponse.response;
@@ -303,6 +303,7 @@
             .error(function(error, status){
                 if (status==404){
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
+                    // ddd
                 }
                 else{
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
@@ -399,7 +400,7 @@
     elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
-        $scope.idAuthor = 5;
+        $scope.idAuthor = 8;
         var datetimepicker = $('#datetimepicker4');
         $scope.minDate = new Date();
 
@@ -458,14 +459,16 @@
             });
 
         $scope.task.priority = "3";
-        $scope.task.status = "2";
-        $scope.task.userExecuteTasksById = [];
+        $scope.task.idState = "2";
+        $scope.task.userExecuteTasksById = {};
 
         $('button[type=submit]').on('click', function(e){
-            $scope.idAuthor = 5;
+            $scope.idAuthor = 8;
             var dataAddTask = jQuery.extend({}, $scope.task);
             dataAddTask.dateRealization = new Date(dataAddTask.dateRealization).getTime();
-            dataAddTask.idAuthor = 5;
+            dataAddTask.idAuthor = 8;
+            dataAddTask.priority = parseInt($scope.task.priority);
+            dataAddTask.idState = parseInt($scope.task.idState);
             dataAddTask.idProblem = parseInt($scope.problemid);
             
             // testowo 
@@ -489,8 +492,8 @@
                 functionRefresh();
                 $('#addTask').modal('hide');
                 $scope.task = {};
-                $scope.task.priority = "3";
-                $scope.task.status = "2";
+                $scope.task.priority = 3;
+                $scope.task.idState = 2;
                 $scope.task.userExecuteTasksById = [];
             })
             .error(function (response) {
@@ -587,7 +590,7 @@
         $('button[type=submit]').on('click', function(e){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
-            $scope.data.idAuthor = 5;
+            $scope.data.idAuthor = 8;
             if ($scope.problem.source == 'computer'){
                 $scope.data.idComputer = parseInt($scope.problem.idComputer);
             }

@@ -116,7 +116,7 @@
                 </div>
 
             </div>
-            <div class="row pagination-container">
+            <div class="row pagination-container" ng-show="tasksCount > 0">
                 <div class="col-xs-12 col-sm-9">
                     <br>
                     <ul class="pagination">
@@ -188,7 +188,7 @@
                         <label for="status" class="control-label">Status zadania:</label>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                            <select class="form-control" name="idState" ng-model="task.status" required>
+                            <select class="form-control" name="idState" ng-model="task.idState" required>
                                 <option ng-repeat="status in statesData" value="{{status.id}}">{{status.name}}</option>
                             </select>
                         </div>

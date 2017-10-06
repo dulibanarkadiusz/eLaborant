@@ -89,6 +89,10 @@ ul.settings .settings a{
 	white-space: pre-wrap;
 }
 
+.tasks{
+	margin-bottom: 50px;
+}
+
 .task{
 	margin-bottom: 5px;
 }
