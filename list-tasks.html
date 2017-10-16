@@ -48,11 +48,11 @@
                                         <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority | priortyDescription}} ({{task.priority}})">{{task.priority}}</span>
                                     </div>
                                     <div class="col-sm-5 col-md-3">
-                                        <div title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
-                                            <i class="fa fa-clock-o" aria-hidden="true"></i> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                        <div >
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i> <span title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}" bs-tooltip> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}</span>
                                         </div>
-                                        <div title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}">
-                                            <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                        <div>
+                                            <i class="fa fa-bell-o" aria-hidden="true"></i> <span title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}" bs-tooltip>{{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}</span>
                                         </div>
                                     </div>
                                     <div class="col-xs-4 col-sm-3 col-md-2">
@@ -60,11 +60,11 @@
                                             <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
                                         </a>
                                     </div>
-                                    <div class="col-xs-4 col-sm-4 col-md-3" title="Bieżący status: {{task.state}}"> 
-                                        <i class="fa fa-flag"></i> {{task.state}}
+                                    <div class="col-xs-4 col-sm-4 col-md-3" > 
+                                        <i class="fa fa-flag"></i> <span title="Bieżący status: {{task.state}}" bs-tooltip>{{task.state}}</span>
                                     </div>
-                                    <div class="col-xs-4 col-sm-4 col-md-2" title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname}}">
-                                        <b><i class="fa fa-user-plus"></i> {{task.author.firstname + " " + task.author.surname}}</b>
+                                    <div class="col-xs-4 col-sm-4 col-md-2" >
+                                        <b title="Zadanie dodane przez: {{task.author.firstname + ' ' + task.author.surname}}" bs-tooltip><i class="fa fa-user-plus"></i> {{task.author.firstname + " " + task.author.surname}}</b>
                                     </div>
 
                                     <div class="col-sm-12 task-content">
