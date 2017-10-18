@@ -207,3 +207,6 @@ div:has(input){
 	background-color: red;
 }
 
+.close-button{
+	min-width: 50px;
+}

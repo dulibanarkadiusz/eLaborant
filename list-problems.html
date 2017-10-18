@@ -18,7 +18,7 @@
               <br>
               <ul class="pagination">
                   <li ng-class="currentPage==0 ? 'disabled' : ''">
-                      <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                      <a href="#" ng-click="(currentPage>0) ? loadData(currentPage - 1) : ''">«</a>
                   </li>
                   <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
                       <a href="#" ng-click="loadData(x)">{{x+1}}</a>

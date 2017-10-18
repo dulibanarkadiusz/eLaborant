@@ -19,7 +19,7 @@
                     <br>
                     <ul class="pagination">
                         <li ng-class="currentPage==0 ? 'disabled' : ''">
-                            <a href="#" ng-click="loadData(currentPage - 1)">«</a>
+                            <a href="#" ng-click="(currentPage>0) ? loadData(currentPage - 1) : ''">«</a>
                         </li>
                         <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
                             <a href="#" ng-click="loadData(x)">{{x+1}}</a>
@@ -114,7 +114,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                    <button type="submit" class="btn btn-success" ng-disabled="addUserForm.$invalid">Dodaj</button>
+                    <button type="submit" class="btn btn-success" ng-disabled="addLabForm.$invalid">Dodaj</button>
                 </div>
             </form>
         </div>   

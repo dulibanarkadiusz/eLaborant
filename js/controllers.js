@@ -125,6 +125,14 @@
         return array;
     }
 
+    function roundMinutes(date){
+        date.setSeconds(0);
+        date.setHours(date.getHours() + 1);
+        date.setMinutes(0);
+
+        return date;
+    }
+
     elaborantApp.controller('assistantList', function ($scope, $http){
         $scope.dataLoaded = false;
         $http.get('api/laboranci.html').success(function (response) {
@@ -460,6 +468,7 @@
 
         $scope.task.priority = "3";
         $scope.task.idState = "2";
+        $scope.task.dateRealization = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm'));
         $scope.task.userExecuteTasksById = {};
 
         $('button[type=submit]').on('click', function(e){
@@ -667,4 +676,12 @@
 
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
+    });
+
+    $(function() {
+        if (window.history && window.history.pushState) {
+            $(window).on('popstate', function() {
+                $('.modal-backdrop').remove();
+            });
+        }
     });
