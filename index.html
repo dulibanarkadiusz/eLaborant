@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pl" ng-app="elaborant">
 <head>
     <base href="/eLaborant/index.html">
@@ -29,150 +29,131 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
+
 <body>
-    <div id="wrapper">
+    <div ui-view></div>
+</body>
 
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">eLaborant - panel administracyjny</a>
-            </div>
-
-            <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Arkadiusz Duliban <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profil</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Ustawienia</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Wyloguj</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-           
-            <div ng-controller="nav" class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="{{active || 'last-problems'}} nav navbar-nav side-nav">
-                    <li class="last-problems" ng-click="active='last-problems'">
-                        <a ui-sref="last-problems"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy</a>                        
-                    </li>
-                    <li class="last-tasks" ng-click="active='last-tasks'">
-                        <a ui-sref="last-tasks"><i class="fa fa-tasks"></i> Zadania</a>
-                    </li>
-                    <li class="users-list" ng-click="active='users-list'">
-                        <a ui-sref="users-list"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
-                    </li>
-                    <li class="laboratories" ng-click="active='laboratories'">
-                        <a ui-sref="laboratories"><i class="fa fa-fw fa-building-o"></i> Laboratoria</a>
-                    </li>
-                    <li class="computers" ng-click="active='computers'">
-                        <a ui-sref="computers"><i class="fa fa-fw fa-laptop"></i> Komputery</a>
-                    </li>
-                    <!--
-                    <li class="settings" ng-click="active='settings'">
-                        <a ui-sref="settings"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="demo" class="collapse">
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                            <li>
-                                <a href="#">Dropdown Item</a>
-                            </li>
-                        </ul>
-                    </li>
-                    -->
-                </ul>
-            </div>
-        </nav>
-
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="span12">
-                        <div ui-view></div> 
-                    </div> 
-                </div> 
-            </div>
-
-        </div>
-
-    </div>
-
-    <script>
-
+<script>
 
     var elaborantApp = angular.module('elaborant', ["ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
     var apiUrl = "http://157.158.16.186:8081/api/";
     var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var dataError = "Wystąpił błąd podczas pobierana danych."
-    function parseErrorInfo(message) { 
-        return '<div class="alert alert-danger"><strong>Wystąpił błąd</strong><br>'+message+'</div>';
-    }  
+    function parseErrorInfo(message) {
+        return '<div class="alert alert-danger"><strong>Wystąpił błąd</strong><br>' + message + '</div>';
+    }
 
-    elaborantApp.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
-        $urlRouterProvider.otherwise("/index");
+    elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+        $urlRouterProvider.otherwise("/");
+        $stateProvider.state('login', {
+            url: '/',
+            templateUrl: 'login.html'
+        })
+          .state('home', {
+              url: '/home',
+              templateUrl: 'home.html'
+          }).state('users-list', {
+              url: "/users",
+              parent: "home",
 
-        $stateProvider
-        .state('index', {
-            url: "/index",
-            templateUrl: "home.html"
-        })
-        .state('users-list', {
-            url: "/users",
-            templateUrl: "list-users.html"
-        })
-        .state('last-problems', {
-            url: "/last-problems/",
-            templateUrl: "list-problems.html"
-        })
-        .state('last-tasks', {
-            url: "/last-tasks",
-            templateUrl: "list-tasks.html"
-        })
-        .state('problem', {
-            url: "/problem/:id?",
-            templateUrl: "problem.html"
-        })
-        .state('laboratories', {
-            url: "/laboratories",
-            templateUrl: "list-laboratories.html"
-        })
-        .state('laboratory', {
-            url: "/laboratory/:id?",
-            templateUrl: "laboratory.html"
-        })
-        .state('computers', {
-            url: "/computers",
-            templateUrl: "list-computers.html"
-        })
-        .state('computer', {
-            url: "/computer/:id?",
-            templateUrl: "computer.html"
-        })
-
+              templateUrl: "list-users.html"
+          })
+                .state('last-problems', {
+                    url: "/last-problems/",
+                    parent: "home",
+                    templateUrl: "list-problems.html"
+                })
+                .state('last-tasks', {
+                    url: "/last-tasks",
+                    parent: "home",
+                    templateUrl: "list-tasks.html"
+                })
+                .state('problem', {
+                    url: "/problem/:id?",
+                    parent: "home",
+                    templateUrl: "problem.html"
+                })
+                .state('laboratories', {
+                    url: "/laboratories",
+                    parent: "home",
+                    templateUrl: "list-laboratories.html"
+                })
+                .state('laboratory', {
+                    url: "/laboratory/:id?",
+                    parent: "home",
+                    templateUrl: "laboratory.html"
+                })
+                .state('computers', {
+                    url: "/computers",
+                    parent: "home",
+                    templateUrl: "list-computers.html"
+                })
+                .state('computer', {
+                    url: "/computer/:id?",
+                    parent: "home",
+                    templateUrl: "computer.html"
+                })
         $locationProvider.html5Mode(true);
     });
-    </script>
-    <script src="js/controllers.js"></script>
-    <script>
-        $('[data-toggle="tooltip"]').tooltip();  
-        $('body').on('click', function(){
-            $('.tooltip').tooltip('hide');
-        });
-    </script>
+
+    elaborantApp.controller('LoginController', function ($scope, $rootScope, $stateParams, $state, $location, LoginService) {
+
+        $scope.formSubmit = function () {
+            LoginService.login($scope.username, $scope.password, function (response) {
+                if (response.success) {
+                    $scope.error = '';
+                    $scope.username = '';
+                    $scope.password = '';
+                    LoginService.setToken();
+                    $location.path('/home');
+                } else {
+                    $scope.error = "Incorrect username/password !";
+                }
+            });
+
+        }
+
+    });
+
+
+    elaborantApp.factory('LoginService', function ($http, $rootScope) {
+
+        return {
+
+            login: function (username, password, callback) {
+                sessionStorage.removeItem("token");
+                $http({
+                    method: 'POST',
+                    url: apiUrl + "login",
+                    data: { username: username, password: password }
+                }).success(function (data, status, headers, config) {
+                    sessionStorage.setItem('token', headers("Authorization"));
+                    //alert(headers("Authorization"));
+                    callback({ success: true });
+
+                }).error(function () {
+                    callback({ success: false });
+                });
+
+
+            },
+            setToken: function () {
+                $http.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
+            }
+
+        };
+
+    });
+
+</script>
+<script src="js/controllers.js"></script>
+<script>
+    $('[data-toggle="tooltip"]').tooltip();
+    $('body').on('click', function () {
+        $('.tooltip').tooltip('hide');
+    });
+</script>
 </body>
 </html>
