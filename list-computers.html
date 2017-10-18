@@ -10,7 +10,7 @@
                     Liczba komputerów: {{totalElements}}
                 </div>
                 <div class="col-md-6">
-                    <button class="btn btn-success pull-right" data-toggle="modal" data-target="#addComputer">
+                    <button class="btn btn-success pull-right" ng-click="addNewComputer()">
                         <i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj komputer
                     </button>
                 </div>
@@ -64,84 +64,6 @@
 
 <div class="modal fade" data-backdrop="static" data-keyboard="true" id="addComputer" role="dialog">
     <div class="modal-dialog modal-md" ng-model="computer.idLaboratory">
-        <div class="modal-content" ng-controller="addComputerFormController">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Dodaj komputer</h4>
-            </div>
-            <form name="addComputerForm" ng-submit="processForm()">
-                <div class="modal-body"> 
-                    <div ng-show="IsResponseError">
-                        <div class="alert alert-danger"><strong>Błąd przy dodawaniu komputera:</strong>
-                            {{ResponseErrorMessage}}
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addComputerForm.barcode.$invalid}">
-                        <label for="barcode" class="control-label">Kod (identyfikator) komputera:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-barcode" aria-hidden="true"></i></span>
-                            <input type='text' name='barcode' ng-model="computer.barcode" class="form-control" ng-maxlength="25" required />
-                        </div>
-                        <div ng-show="addComputerForm.barcode.$invalid && addComputerForm.barcode.$touched" class="help-block with-errors">
-                            Proszę podać kod komputera (max. 25 znaków)
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addComputerForm.name.$invalid}">
-                        <label for="name" class="control-label">Nazwa komputera:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                            <input type="name" name="name" class="form-control" ng-model="computer.name" ng-pattern="/^[0-9A-zÀ-ž\s]{2,50}$/" required>
-                        </div>
-                        <div ng-show="addComputerForm.name.$invalid && addComputerForm.name.$touched" class="help-block with-errors">
-                            Proszę podać nazwę komputera (2-50 znaków)
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addComputerForm.ip.$invalid}">
-                        <label for="ip" class="control-label">Adres IP:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-globe" aria-hidden="true"></i></span>
-                            <input type="text" name="ip" class="form-control" ng-model="computer.ip" ng-pattern='/\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/' placeholder='0.0.0.0' required>
-                        </div>
-                        <div ng-show="addComputerForm.ip.$invalid && addComputerForm.ip.$touched" class="help-block with-errors">
-                            Proszę podać poprawny adres IPv4
-                        </div>
-                    </div>
-
-
-                    <div class="form-group" ng-class="{'has-error': addComputerForm.mac.$invalid}">
-                        <label for="mac" class="control-label">Adres MAC:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-inbox" aria-hidden="true"></i></span>
-                            <input type="text" name="mac" class="form-control" ng-model="computer.mac" ng-pattern='/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/' placeholder='3D:F2:C9:A6:B3:4F' required>
-                        </div>
-                        <div ng-show="addComputerForm.mac.$invalid && addComputerForm.mac.$touched" class="help-block with-errors">
-                            Proszę podać poprawny adres MAC
-                        </div>
-                    </div>
-
-                    <div class="form-group" ng-class="{'has-error': addComputerForm.idLaboratory.$invalid}">
-                        <label for="idLaboratory" class="control-label">Laboratorium:</label>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="fa fa-newspaper-o" aria-hidden="true"></i></span>
-                            <select class="form-control" name="idLaboratory" ng-init="computer.idLaboratory = computer.idLaboratory || labListData[0].id" ng-model="computer.idLaboratory" required> 
-                                <option ng-repeat="lab in labListData" value="{{lab.id}}">{{lab.building + lab.roomNo}}</option>
-                            </select>
-                            <!--<select ng-options="lab.id as lab.roomNo for lab in labListData" ng-model="computer.idLaboratory"></select> {{computer.idLaboratory}}-->
-                        </div>
-                        <div ng-show="addComputerForm.idLaboratory.$invalid && addComputerForm.idLaboratory.$touched" class="help-block with-errors">
-                            Proszę wybrać element z listy
-                        </div>
-                    </div>
-                    
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                    <button type="submit" class="btn btn-success" ng-disabled="addComputerForm.$invalid">Dodaj</button>
-                </div>
-            </form>
-        </div>   
+        
     </div>
 </div>

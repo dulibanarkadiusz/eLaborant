@@ -35,11 +35,6 @@
             var modalInstance = $modal.open({
                 templateUrl: 'modals/addLabView.html',
                 controller: 'addLabFormController'
-                /*resolve: {
-                    param: function(){
-                        return {'id':taskId}
-                    }
-                }*/
             });
         };
 
@@ -63,11 +58,18 @@
     });
 
 
-    elaborantApp.controller('computersList', function ($scope, $http) {
+    elaborantApp.controller('computersList', function ($scope, $http, $modal) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
+
+        $scope.addNewComputer = function(){ 
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addComputerView.html',
+                controller: 'addComputerFormController'
+            });
+        };
 
         functionRefresh = $scope.loadData = function(pageNumber = 0) {
             $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
@@ -653,7 +655,7 @@
     });
 
     var test;
-    elaborantApp.controller('addComputerFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addComputerFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.computer = {};
 
         $scope.labList = function() {
@@ -670,7 +672,7 @@
         $scope.labList();
 
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save = function(){
             var dataAddTask = jQuery.extend({}, $scope.task);
             $http({
               method: 'POST',
@@ -679,7 +681,7 @@
             })
             .success(function (success) {
                 functionRefresh();
-                $('#addComputer').modal('hide');
+                $scope.cancel();
                 $scope.computer = {};
             })
             .error(function (response) {
@@ -687,7 +689,11 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
         
     });
 
