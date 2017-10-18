@@ -16,27 +16,7 @@
                 </div>
             </div>
 
-            <div class="row pagination-container">
-                <div class="col-xs-12 col-sm-9">
-                    <br>
-                    <ul class="pagination">
-                        <li ng-class="currentPage==0 ? 'disabled' : ''">
-                            <a href="#" ng-click="(currentPage>0) ? loadData(currentPage - 1) : ''">«</a>
-                        </li>
-                        <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : ''">
-                            <a href="#" ng-click="loadData(x)">{{x+1}}</a>
-                        </li>
-                        <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
-                            <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
-                    Wyników na stronę:
-                    <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
-                    </select>
-                </div>
-            </div>
+            <div ng-include="'views/paginationPartialView.html'"></div>
 
             <table class="table table-hover table-striped">
                 <thead>
