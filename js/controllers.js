@@ -244,15 +244,22 @@
         $scope.tasksCount = 0;
         $scope.errorDataLoaded = '';
 
-        $scope.addNewTask = function() {
+        $scope.addNewTask = function(taskId = null) {
             var modalInstance = $modal.open({
                 templateUrl: 'modals/addTaskView.html',
                 controller: 'addTaskFormController',
-                link: function(scope, iElement, attrs){
-                    alert('test');
+                resolve: {
+                    param: function(){
+                        return {'id':taskId}
+                    }
                 }
             });
         };
+
+        $scope.editTask = function(taskId){
+            alert(taskId);
+            $scope.addNewTask(taskId);
+        }
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
@@ -415,9 +422,10 @@
     });
 
 
-    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
+    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
+        $scope.task.id = param.id;
         $scope.idAuthor = 8;
         $scope.minDate = new Date();
 
@@ -434,6 +442,20 @@
             format: 'YYYY-MM-DDTHH:mm'
         });*/
         
+        if ($scope.task.id){ // get details for existing, edited task
+            $http.get(apiUrl + 'tasks/' + $scope.task.id) 
+            .success(function (serverResponse) {
+                var response = serverResponse.response;
+                response.dateRealization = new Date(response.dateRealization);
+                response.priority = String(response.priority);
+
+                $scope.task = response;
+            })
+            .error(function(data, status){
+                alert("Błąd przy pobieraniu")
+            });
+        }
+
         $scope.options = [];
         $http.get(apiUrl + 'users') // TODO - zamienić na laborantów 
             .success(function (serverResponse) {
