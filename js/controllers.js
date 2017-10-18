@@ -237,12 +237,22 @@
         $scope.loadData();
     });
 
-    elaborantApp.controller('problem', function($scope, $sce, amMoment, $stateParams, $http) {
+    elaborantApp.controller('problem', function($scope, $sce, amMoment, $stateParams, $http, $modal) {
         $scope.problemid = $stateParams.id;
         amMoment.changeLocale('pl');
         $scope.problemDataLoaded = false;
         $scope.tasksCount = 0;
         $scope.errorDataLoaded = '';
+
+        $scope.addNewTask = function() {
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addTaskView.html',
+                controller: 'addTaskFormController',
+                link: function(scope, iElement, attrs){
+                    alert('test');
+                }
+            });
+        };
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
@@ -405,13 +415,13 @@
     });
 
 
-    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
         $scope.idAuthor = 8;
-        var datetimepicker = $('#datetimepicker4');
         $scope.minDate = new Date();
 
+        /*var datetimepicker = $('#datetimepicker4');
         datetimepicker.on('blur', function(e){
             var value = datetimepicker.val(); 
             datetimepicker.trigger('change');
@@ -422,23 +432,10 @@
             locale: 'pl',
             sideBySide: true,
             format: 'YYYY-MM-DDTHH:mm'
-        });
-        
-        /*
-        $scope.options = [];
-        $http.get('api/laboranci.html').success(function (response) {
-            $scope.assistantsData = response;
-            $scope.assistantsDataLoaded = true;
-
-            for(var i=0; i < response.length; i++){
-                $scope.options.push({
-                    "id": parseInt(response[i].id),
-                    "name": response[i].firstname + " " + response[i].surname
-                });
-            }
         });*/
+        
         $scope.options = [];
-        $http.get(apiUrl + 'users')
+        $http.get(apiUrl + 'users') // TODO - zamienić na laborantów 
             .success(function (serverResponse) {
                 var response = serverResponse.response;
                 $scope.assistantsDataLoaded = true;
@@ -471,7 +468,7 @@
         $scope.task.dateRealization = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm'));
         $scope.task.userExecuteTasksById = {};
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save =  function(){
             $scope.idAuthor = 8;
             var dataAddTask = jQuery.extend({}, $scope.task);
             dataAddTask.dateRealization = new Date(dataAddTask.dateRealization).getTime();
@@ -479,18 +476,6 @@
             dataAddTask.priority = parseInt($scope.task.priority);
             dataAddTask.idState = parseInt($scope.task.idState);
             dataAddTask.idProblem = parseInt($scope.problemid);
-            
-            // testowo 
-            /*dataAddTask.userExecuteTasksById = [];
-            var exs = $scope.task.userExecuteTasksById;
-            if (exs != null ){
-                for(var i=0; i < exs.length; i++){
-                    dataAddTask.userExecuteTasksById.push(exs[i].id);
-                }
-            }*/
-            //
-            $('#addTask').modal('hide');
-            functionRefresh();
 
             $http({
               method: 'POST',
@@ -499,7 +484,7 @@
             })
             .success(function (success) {
                 functionRefresh();
-                $('#addTask').modal('hide');
+                $scope.cancel();
                 $scope.task = {};
                 $scope.task.priority = 3;
                 $scope.task.idState = 2;
@@ -510,8 +495,11 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
         
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     });
 
     function ParseResponseErrorMessages(JSONresponse){
@@ -678,6 +666,7 @@
         e.stopPropagation();
     });
 
+    // modal background fix 
     $(function() {
         if (window.history && window.history.pushState) {
             $(window).on('popstate', function() {
