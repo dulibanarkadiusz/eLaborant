@@ -218,12 +218,18 @@
     });
 
     var lastProblemsLoad;
-    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http) {
+    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http, $modal) {
         $scope.dataLoaded = false;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
 
         amMoment.changeLocale('pl');
+        $scope.addNewProblem = function(){ 
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addProblemView.html',
+                controller: 'addProblemFormController'
+            });
+        };
 
         lastProblemsLoad = $scope.loadData = function(pageNumber = 0) {
             //$http.get(apiUrl+'problems')
@@ -593,7 +599,7 @@
         
     });
 
-    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problem = {};
 
         $scope.labList = function() {
@@ -623,7 +629,7 @@
             });
         };
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save = function(){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
             $scope.data.idAuthor = 8;
@@ -650,7 +656,11 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
         
     });
 
