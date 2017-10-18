@@ -52,12 +52,12 @@
 
                      					<div class="col-xs-6 col-sm-6 col-md-2"><strong>#{{x.id}}</strong><br>
                                 <span class="badge">
-                                  <time am-time-ago="x.dateNotification"></time>
+                                  <time am-time-ago="x.dateNotification" title="Problem dodano: {{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
                                 </span>
                               </div>
-                     					<div class="hidden-xs col-sm-3 col-md-2">{{x.author.firstname}} {{x.author.surname}}</div>
+                     					<div class="hidden-xs col-sm-3 col-md-2" title="Problem dodany przez: {{x.author.firstname}} {{x.author.surname}}"bs-tooltip>{{x.author.firstname}} {{x.author.surname}}</div>
                      					<div class="col-xs-6 col-sm-3 col-md-2">
-                                <a ui-sref="computer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()">{{x.computer.name}}</a>
+                                <a ui-sref="computer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()" title="Nazwa komputera: {{x.computer.name}}" bs-tooltip>{{x.computer.name}}</a>
                                 <a ui-sref="laboratory({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()">{{x.laboratory.building + x.laboratory.roomNo}}</a>
                               </div>
                      					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>{{x.content}}</i></div>
