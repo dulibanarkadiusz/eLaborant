@@ -25,11 +25,23 @@
         $scope.loadData();
     });
 
-    elaborantApp.controller('labList', function ($scope, $sce, $http) {
+    elaborantApp.controller('labList', function ($scope, $sce, amMoment, $stateParams, $http, $modal) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
+
+        $scope.addNewLaboratory = function(){ 
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addLabView.html',
+                controller: 'addLabFormController'
+                /*resolve: {
+                    param: function(){
+                        return {'id':taskId}
+                    }
+                }*/
+            });
+        };
 
         functionRefresh = $scope.loadData = function(pageNumber = 0) {
             $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
@@ -328,7 +340,6 @@
             .error(function(error, status){
                 if (status==404){
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
-                    // ddd
                 }
                 else{
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
@@ -535,7 +546,7 @@
         return responseString.trim();
     }
 
-    elaborantApp.controller('addLabFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addLabFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.lab = {};
         $scope.lab.building = "MS";
 
@@ -554,7 +565,7 @@
         $scope.usersList();
 
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save = function(){
             var dataAddTask = jQuery.extend({}, $scope.task);
             $http({
               method: 'POST',
@@ -563,7 +574,7 @@
             })
             .success(function (success) {
                 functionRefresh();
-                $('#addLab').modal('hide');
+                $scope.cancel();
                 $scope.lab = {};
                 $scope.lab.building = "MS";
             })
@@ -572,7 +583,11 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
         
     });
 
