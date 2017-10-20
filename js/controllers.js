@@ -25,11 +25,18 @@
         $scope.loadData();
     });
 
-    elaborantApp.controller('labList', function ($scope, $sce, $http) {
+    elaborantApp.controller('labList', function ($scope, $sce, amMoment, $stateParams, $http, $modal) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
+
+        $scope.addNewLaboratory = function(){ 
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addLabView.html',
+                controller: 'addLabFormController'
+            });
+        };
 
         functionRefresh = $scope.loadData = function(pageNumber = 0) {
             $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
@@ -51,11 +58,18 @@
     });
 
 
-    elaborantApp.controller('computersList', function ($scope, $http) {
+    elaborantApp.controller('computersList', function ($scope, $http, $modal) {
         $scope.dataLoaded = false;
         $scope.totalElements = 0;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
+
+        $scope.addNewComputer = function(){ 
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addComputerView.html',
+                controller: 'addComputerFormController'
+            });
+        };
 
         functionRefresh = $scope.loadData = function(pageNumber = 0) {
             $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
@@ -204,12 +218,18 @@
     });
 
     var lastProblemsLoad;
-    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http) {
+    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http, $modal) {
         $scope.dataLoaded = false;
         $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
         $scope.pages = [];
 
         amMoment.changeLocale('pl');
+        $scope.addNewProblem = function(){ 
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addProblemView.html',
+                controller: 'addProblemFormController'
+            });
+        };
 
         lastProblemsLoad = $scope.loadData = function(pageNumber = 0) {
             //$http.get(apiUrl+'problems')
@@ -237,12 +257,29 @@
         $scope.loadData();
     });
 
-    elaborantApp.controller('problem', function($scope, $sce, amMoment, $stateParams, $http) {
+    elaborantApp.controller('problem', function($scope, $sce, amMoment, $stateParams, $http, $modal) {
         $scope.problemid = $stateParams.id;
         amMoment.changeLocale('pl');
         $scope.problemDataLoaded = false;
         $scope.tasksCount = 0;
         $scope.errorDataLoaded = '';
+
+        $scope.addNewTask = function(taskId = null) {
+            var modalInstance = $modal.open({
+                templateUrl: 'modals/addTaskView.html',
+                controller: 'addTaskFormController',
+                resolve: {
+                    param: function(){
+                        return {'id':taskId}
+                    }
+                }
+            });
+        };
+
+        $scope.editTask = function(taskId){
+            alert(taskId);
+            $scope.addNewTask(taskId);
+        }
 
         functionRefresh = $scope.loadData = function() {
             $scope.message = "";
@@ -311,7 +348,6 @@
             .error(function(error, status){
                 if (status==404){
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
-                    // ddd
                 }
                 else{
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
@@ -405,13 +441,14 @@
     });
 
 
-    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
+        $scope.task.id = param.id;
         $scope.idAuthor = 8;
-        var datetimepicker = $('#datetimepicker4');
         $scope.minDate = new Date();
 
+        /*var datetimepicker = $('#datetimepicker4');
         datetimepicker.on('blur', function(e){
             var value = datetimepicker.val(); 
             datetimepicker.trigger('change');
@@ -422,23 +459,24 @@
             locale: 'pl',
             sideBySide: true,
             format: 'YYYY-MM-DDTHH:mm'
-        });
-        
-        /*
-        $scope.options = [];
-        $http.get('api/laboranci.html').success(function (response) {
-            $scope.assistantsData = response;
-            $scope.assistantsDataLoaded = true;
-
-            for(var i=0; i < response.length; i++){
-                $scope.options.push({
-                    "id": parseInt(response[i].id),
-                    "name": response[i].firstname + " " + response[i].surname
-                });
-            }
         });*/
+        
+        if ($scope.task.id){ // get details for existing, edited task
+            $http.get(apiUrl + 'tasks/' + $scope.task.id) 
+            .success(function (serverResponse) {
+                var response = serverResponse.response;
+                response.dateRealization = new Date(response.dateRealization);
+                response.priority = String(response.priority);
+
+                $scope.task = response;
+            })
+            .error(function(data, status){
+                alert("Błąd przy pobieraniu")
+            });
+        }
+
         $scope.options = [];
-        $http.get(apiUrl + 'users')
+        $http.get(apiUrl + 'users') // TODO - zamienić na laborantów 
             .success(function (serverResponse) {
                 var response = serverResponse.response;
                 $scope.assistantsDataLoaded = true;
@@ -471,7 +509,7 @@
         $scope.task.dateRealization = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm'));
         $scope.task.userExecuteTasksById = {};
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save =  function(){
             $scope.idAuthor = 8;
             var dataAddTask = jQuery.extend({}, $scope.task);
             dataAddTask.dateRealization = new Date(dataAddTask.dateRealization).getTime();
@@ -479,18 +517,6 @@
             dataAddTask.priority = parseInt($scope.task.priority);
             dataAddTask.idState = parseInt($scope.task.idState);
             dataAddTask.idProblem = parseInt($scope.problemid);
-            
-            // testowo 
-            /*dataAddTask.userExecuteTasksById = [];
-            var exs = $scope.task.userExecuteTasksById;
-            if (exs != null ){
-                for(var i=0; i < exs.length; i++){
-                    dataAddTask.userExecuteTasksById.push(exs[i].id);
-                }
-            }*/
-            //
-            $('#addTask').modal('hide');
-            functionRefresh();
 
             $http({
               method: 'POST',
@@ -499,7 +525,7 @@
             })
             .success(function (success) {
                 functionRefresh();
-                $('#addTask').modal('hide');
+                $scope.cancel();
                 $scope.task = {};
                 $scope.task.priority = 3;
                 $scope.task.idState = 2;
@@ -510,8 +536,11 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
         
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     });
 
     function ParseResponseErrorMessages(JSONresponse){
@@ -525,7 +554,7 @@
         return responseString.trim();
     }
 
-    elaborantApp.controller('addLabFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addLabFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.lab = {};
         $scope.lab.building = "MS";
 
@@ -544,7 +573,7 @@
         $scope.usersList();
 
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save = function(){
             var dataAddTask = jQuery.extend({}, $scope.task);
             $http({
               method: 'POST',
@@ -553,7 +582,7 @@
             })
             .success(function (success) {
                 functionRefresh();
-                $('#addLab').modal('hide');
+                $scope.cancel();
                 $scope.lab = {};
                 $scope.lab.building = "MS";
             })
@@ -562,11 +591,15 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
         
     });
 
-    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problem = {};
 
         $scope.labList = function() {
@@ -596,7 +629,7 @@
             });
         };
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save = function(){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
             $scope.data.idAuthor = 8;
@@ -623,12 +656,16 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
         
     });
 
     var test;
-    elaborantApp.controller('addComputerFormController', function($scope, $http, $sce, $filter, $stateParams){
+    elaborantApp.controller('addComputerFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.computer = {};
 
         $scope.labList = function() {
@@ -645,7 +682,7 @@
         $scope.labList();
 
 
-        $('button[type=submit]').on('click', function(e){
+        $scope.save = function(){
             var dataAddTask = jQuery.extend({}, $scope.task);
             $http({
               method: 'POST',
@@ -654,7 +691,7 @@
             })
             .success(function (success) {
                 functionRefresh();
-                $('#addComputer').modal('hide');
+                $scope.cancel();
                 $scope.computer = {};
             })
             .error(function (response) {
@@ -662,7 +699,11 @@
                 $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
             });
 
-        });
+        };
+
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
         
     });
 
@@ -678,6 +719,7 @@
         e.stopPropagation();
     });
 
+    // modal background fix 
     $(function() {
         if (window.history && window.history.pushState) {
             $(window).on('popstate', function() {

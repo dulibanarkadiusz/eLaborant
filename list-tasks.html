@@ -1,6 +1,6 @@
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 <div class="row">
     <div class="col-lg-12">
         <h2>Zadania</h2>
@@ -8,7 +8,7 @@
             <div class=" tasks panel-body">
                 <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='taskList'>
                 
-                    <div ng-hide="dataLoaded" class="preloader">
+                    <div ng-hide="dataLoaded || responseError" class="preloader">
                     </div>
 
                     <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
@@ -16,27 +16,7 @@
 
                     <div ng-show="dataLoaded">
                         <p>Liczba zadań w bazie: {{totalElements}}</p>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-9">
-                                &nbsp;<br>
-                                <ul class="pagination">
-                                    <li ng-class="currentPage==0 ? 'disabled' : ''">
-                                        <a href="#" ng-click="loadData(currentPage - 1)">«</a>
-                                    </li>
-                                    <li ng-repeat="x in pages" ng-class="x==currentPage ? 'active' : 'active2'">
-                                        <a href="#" ng-click="loadData(x)">{{x+1}}</a>
-                                    </li>
-                                    <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
-                                        <a href="#" ng-click="(currentPage==pages.length-1) ? null : loadData(currentPage + 1)">»</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
-                                Wyników na stronę:
-                                <select class="form-control" ng-model="pageSize" ng-change="loadData(0)" ng-options="v for v in [5,10,25,50,100]">
-                                </select>
-                            </div>
-                        </div>
+                        <div ng-include="'views/paginationPartialView.html'"></div>
 
                         <div class="task" ng-repeat="task in taskListData">
                             <div class="panel panel-default">
