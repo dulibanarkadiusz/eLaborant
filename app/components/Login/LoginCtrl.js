@@ -6,7 +6,7 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
                     $scope.error = '';
                     $scope.username = '';
                     $scope.password = '';
-                    LoginService.setToken();
+                    //LoginService.setToken();
                     $location.path('/Panel');
                 } else {
                     $scope.error = "Incorrect username/password !";

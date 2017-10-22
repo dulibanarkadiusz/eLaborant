@@ -3,13 +3,13 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
         return {
 
             login: function (username, password, callback) {
-                sessionStorage.removeItem("token");
+                localStorage.removeItem("token");
                 $http({
                     method: 'POST',
                     url: apiUrl + "login",
                     data: { username: username, password: password }
                 }).success(function (data, status, headers, config) {
-                    sessionStorage.setItem('token', headers("Authorization"));
+                    localStorage.setItem('token', headers("Authorization"));
                     //alert(headers("Authorization"));
                     callback({ success: true });
 
@@ -20,7 +20,7 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
 
             },
             setToken: function () {
-                $http.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
+                $http.defaults.headers.common['Authorization'] = localStorage.getItem('token');
             }
 
         };
