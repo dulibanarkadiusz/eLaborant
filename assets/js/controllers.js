@@ -1,134 +1,6 @@
     var functionRefresh; 
     var defaultPageSize = 10;
-    elaborantApp.controller('usersList', function ($scope, $http) {
-        $scope.dataLoaded = false;
-        $scope.totalElements = 0;
-        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-        $scope.pages = [];
-
-        $scope.loadData = function(pageNumber = 0) {
-            $http.get(apiUrl + 'users?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-            .success(function (serverResponse) {
-                $scope.usersListData = serverResponse.response;
-                $scope.dataLoaded = true;
-                $scope.totalElements = serverResponse.totalElements;
-                $scope.pages = getPagesArray(serverResponse.totalPages);
-                $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.loadData();
-    });
-
-    elaborantApp.controller('labList', function ($scope, $sce, amMoment, $stateParams, $http, $modal) {
-        $scope.dataLoaded = false;
-        $scope.totalElements = 0;
-        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-        $scope.pages = [];
-
-        $scope.addNewLaboratory = function(){ 
-            var modalInstance = $modal.open({
-                templateUrl: 'modals/addLabView.html',
-                controller: 'addLabFormController'
-            });
-        };
-
-        functionRefresh = $scope.loadData = function(pageNumber = 0) {
-            $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-            .success(function (serverResponse) {
-                $scope.labListData = serverResponse.response;
-                $scope.dataLoaded = true;
-                $scope.totalElements = serverResponse.totalElements;
-                $scope.pages = getPagesArray(serverResponse.totalPages);
-                $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.loadData();
-    });
-
-
-    elaborantApp.controller('computersList', function ($scope, $http, $modal) {
-        $scope.dataLoaded = false;
-        $scope.totalElements = 0;
-        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-        $scope.pages = [];
-
-        $scope.addNewComputer = function(){ 
-            var modalInstance = $modal.open({
-                templateUrl: 'modals/addComputerView.html',
-                controller: 'addComputerFormController'
-            });
-        };
-
-        functionRefresh = $scope.loadData = function(pageNumber = 0) {
-            $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-            .success(function (serverResponse) {
-                $scope.computersListData = serverResponse.response;
-                $scope.dataLoaded = true;
-                $scope.totalElements = serverResponse.totalElements;
-                $scope.pages = getPagesArray(serverResponse.totalPages);
-                $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.loadData();
-    });
-
-    elaborantApp.controller('taskList', function ($scope, $injector, $sce, amMoment, $http) {
-        $scope.dataLoaded = false;
-        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-        $scope.pages = [];
-
-        amMoment.changeLocale('pl');
-
-        $scope.loadData = function(pageNumber) {
-            if (pageNumber<0)
-                return false;
-
-            $http.get(apiUrl + 'tasks?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-            .success(function (serverResponse) {
-                $scope.taskListData = serverResponse.response;
-                $scope.pages = getPagesArray(serverResponse.totalPages);
-                $scope.dataLoaded = true;
-                $scope.totalElements = serverResponse.totalElements;
-                $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
-
-                for (var i = 0; i < $scope.taskListData.length; i++ ){
-                        var task = $scope.taskListData[i];
-                        task.executorsString = "";
-                        for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
-                            task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
-                        }
-                    }
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-
-            $('[data-toggle="tooltip"]').tooltip(); 
-        };
-        $scope.loadData(0);
-
-
-    });
+    
 
     function getPagesArray(pagesCount){
         var array = [];
@@ -153,7 +25,6 @@
             $scope.assistantsData = response;
             $scope.assistantsDataLoaded = true;
         });
-
     });
 
     elaborantApp.controller('nav', function($scope, $state){
@@ -216,214 +87,6 @@
         return input;
       };
     });
-
-    var lastProblemsLoad;
-    elaborantApp.controller('lastProblems', function ($scope, $injector, $sce, amMoment, $http, $modal) {
-        $scope.dataLoaded = false;
-        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-        $scope.pages = [];
-
-        amMoment.changeLocale('pl');
-        $scope.addNewProblem = function(){ 
-            var modalInstance = $modal.open({
-                templateUrl: 'modals/addProblemView.html',
-                controller: 'addProblemFormController'
-            });
-        };
-
-        lastProblemsLoad = $scope.loadData = function(pageNumber = 0) {
-            //$http.get(apiUrl+'problems')
-            $http.get(apiUrl + 'problems?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-            .success(function (serverResponse) {
-                $scope.myData = serverResponse.response;
-                $scope.totalElements = serverResponse.totalElements;
-                $scope.dataLoaded = true;
-
-                $scope.pages = getPagesArray(serverResponse.totalPages);
-                $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $('#reload').on('click', function(){
-            $scope.dataLoaded = false;
-            $scope.loadData();
-        })
-
-        $scope.loadData();
-    });
-
-    elaborantApp.controller('problem', function($scope, $sce, amMoment, $stateParams, $http, $modal) {
-        $scope.problemid = $stateParams.id;
-        amMoment.changeLocale('pl');
-        $scope.problemDataLoaded = false;
-        $scope.tasksCount = 0;
-        $scope.errorDataLoaded = '';
-
-        $scope.addNewTask = function(taskId = null) {
-            var modalInstance = $modal.open({
-                templateUrl: 'modals/addTaskView.html',
-                controller: 'addTaskFormController',
-                resolve: {
-                    param: function(){
-                        return {'id':taskId}
-                    }
-                }
-            });
-        };
-
-        $scope.editTask = function(taskId){
-            alert(taskId);
-            $scope.addNewTask(taskId);
-        }
-
-        functionRefresh = $scope.loadData = function() {
-            $scope.message = "";
-            $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-            $scope.pages = [];
-            $http.get(apiUrl + 'problems/'+$scope.problemid)
-                .success(function (serverResponse) {
-                    $scope.problemData = new Array(serverResponse.response);
-                    $scope.problemDataLoaded = true;
-                })
-                .error(function(error, status){
-                    if (status==404)
-                        $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Taki problem nie istnieje.'));
-                    else
-                        $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
-                });
-
-            $scope.loadTasks = function(pageNumber = 0){
-                $http.get(apiUrl + 'tasks/?query=idProblem%3D'+$scope.problemid+',page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-                .success(function (serverTaskResponse) {
-                    $scope.taskData = serverTaskResponse.response;
-                    $scope.tasksCount = serverTaskResponse.totalElements;
-                    $scope.pages = getPagesArray(serverTaskResponse.totalPages);
-                    $scope.currentPage = pageNumber;
-                    localStorage.pageSize = $scope.pageSize;
-                    
-                    $scope.dataLoaded = true;
-                    for (var i = 0; i < $scope.taskData.length; i++ ){
-                        var task = $scope.taskData[i];
-                        task.executorsString = "";
-                        for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
-                            task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
-                        }
-                    }
-                })
-                .error(function(error, status) {
-                    switch(status){
-                        case 404: 
-                            $scope.message = "Brak zadań do wyświetlenia.";
-                            break;
-                    }
-                });
-            }
-
-            $scope.loadTasks();
-
-            $('[data-toggle="tooltip"]').tooltip(); 
-        }
-
-        $scope.loadData();
-    }); 
-
-
-    elaborantApp.controller('laboratory', function($scope, $sce, $stateParams, $http) {
-        $scope.labid = $stateParams.id;
-        $scope.labDataLoaded = false;
-        $scope.computersCount = 0;
-        $scope.errorDataLoaded = '';
-
-        functionRefresh = $scope.loadData = function() {
-            $scope.message = "";
-            $http.get(apiUrl + 'laboratories/'+$scope.labid).success(function (serverResponse) {
-                $scope.labData = new Array(serverResponse.response);
-                $scope.labDataLoaded = true;
-            })
-            .error(function(error, status){
-                if (status==404){
-                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
-                }
-                else{
-                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
-                }
-                return;
-            });
-
-
-            $http.get(apiUrl + 'computers/?query=idLaboratory%3D'+$scope.labid)
-            .success(function (serverResponse) {
-                $scope.computersCount = serverResponse.totalElements;
-                $scope.computersData = serverResponse.response;
-                $scope.dataLoaded = true;
-            })
-            .error(function(error, status) {
-                switch(status){
-                    case 404: 
-                        $scope.message = "Brak komputerów w laboratorium";
-                        break;
-                }
-            });
-        }
-
-        $scope.loadData();
-    }); 
-
-    var computerProblemsData;
-    elaborantApp.controller('computer', function($scope, $sce, amMoment, $stateParams, $http) {
-        $scope.computerid = $stateParams.id;
-        $scope.computerDataLoaded = false;
-        $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
-        $scope.pages = [];
-        $scope.errorDataLoaded = '';
-        $scope.problemsCount = 0;
-        amMoment.changeLocale('pl');
-
-        $scope.loadData = function() {
-            $scope.message = "";
-            $http.get(apiUrl + 'computers/'+$scope.computerid).success(function (serverResponse) {
-                $scope.computerData = new Array(serverResponse.response);
-                $scope.computerDataLoaded = true;
-            })
-            .error(function(error, status){
-                if (status==404){
-                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Komputer nie został znaleziony.'));
-                }
-                else{
-                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
-                }
-                return;
-            });
-   
-            computerProblemsData = function(pageNumber = 0) { 
-                $http.get(apiUrl + 'problems/?query=idComputer%3D'+$scope.computerid+',page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-                    .success(function (serverResponse) {
-                        $scope.problemsCount = serverResponse.totalElements;
-                        $scope.problemsData = serverResponse.response;
-                        $scope.dataLoaded = true;
-                        $scope.pages = getPagesArray(serverResponse.totalPages);
-                        $scope.currentPage = pageNumber;
-                        localStorage.pageSize = $scope.pageSize;
-                    })
-                    .error(function(error, status) {
-                        switch(status){
-                            case 404: 
-                                $scope.message = "Brak zgłoszonych problemów dla tego komputera";
-                            break;
-                        }
-                    });
-            }
-            computerProblemsData();
-        }
-
-        $scope.loadData();
-    }); 
-
 
     elaborantApp.directive('bsTooltip', function(){
         return {
@@ -524,7 +187,7 @@
               data: JSON.parse(JSON.stringify(dataAddTask))
             })
             .success(function (success) {
-                functionRefresh();
+                $rootScope.$emit("RefreshTaskList", {});
                 $scope.cancel();
                 $scope.task = {};
                 $scope.task.priority = 3;
@@ -537,7 +200,7 @@
             });
 
         };
-        
+
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
@@ -554,7 +217,7 @@
         return responseString.trim();
     }
 
-    elaborantApp.controller('addLabFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
+    elaborantApp.controller('addLabFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.lab = {};
         $scope.lab.building = "MS";
 
@@ -581,7 +244,7 @@
               data: JSON.parse(JSON.stringify($scope.lab))
             })
             .success(function (success) {
-                functionRefresh();
+                $rootScope.$emit("RefreshList", {});
                 $scope.cancel();
                 $scope.lab = {};
                 $scope.lab.building = "MS";
@@ -595,8 +258,7 @@
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
-        };
-        
+        };     
     });
 
     elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
@@ -661,11 +323,10 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-        
     });
 
     var test;
-    elaborantApp.controller('addComputerFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
+    elaborantApp.controller('addComputerFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.computer = {};
 
         $scope.labList = function() {
@@ -690,7 +351,7 @@
               data: JSON.parse(JSON.stringify($scope.computer))
             })
             .success(function (success) {
-                functionRefresh();
+                $rootScope.$emit("RefreshList", {});
                 $scope.cancel();
                 $scope.computer = {};
             })
@@ -703,8 +364,7 @@
 
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
-        };
-        
+        };       
     });
 
     elaborantApp.controller('addUserFormController', function formController($scope, $http){

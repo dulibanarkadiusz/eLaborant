@@ -1,0 +1,52 @@
+<div class="row pagination-container">
+    <div class="col-xs-12 col-sm-9">
+        <ul class="pagination pagination-sm" ng-show="pages.length > 1">
+
+            <!-- Go to previous page -->
+            <li ng-class="currentPage==0 ? 'disabled' : ''">
+                <a href="#" ng-click="(currentPage>0) ? getList(currentPage - 1) : ''">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                </a>
+            </li>
+
+            <!-- First page -->
+            <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage > 1">
+                <a href="#" ng-click="getList(0)">
+                    1
+                </a>
+            </li>
+            <li class="disabled dotted" ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage > 2">
+                <a>…</a>
+            </li>
+
+            <!-- Display current and nearest items -->
+            <li ng-repeat="x in pages | limitTo:3:((currentPage==0) ? currentPage : (currentPage-1))" ng-class="x==currentPage ? 'active' : ''">
+                <a href="#" ng-click="getList(x)">{{x+1}}</a>
+            </li>
+
+            <!-- Last page -->
+            <li class="disabled dotted" ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage < pages.length - 3">
+                <a>…</a>
+            </li>
+            <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="(currentPage < pages.length - 2) && (pages.length > 3)">
+                <a href="#" ng-click="getList(pages.length-1)">
+                    {{pages.length}}
+                </a>
+            </li>
+
+            <!-- Go to next page button -->
+            <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''">
+                <a href="#" ng-click="(currentPage==pages.length-1) ? null : getList(currentPage + 1)">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <!--
+    <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+        Wyników na stronę:
+        <select class="form-control" ng-model="pageSize" ng-change="getList(0)" ng-options="v for v in [5,10,25,50,100]">
+        </select>
+    </div>-->
+</div>

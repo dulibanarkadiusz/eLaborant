@@ -1,6 +1,5 @@
 <div class="row">
-
-	<div class="col-lg-12" ng-controller='lastProblems'>
+	<div class="col-lg-12" ng-controller='ProblemCtrl' ng-init='getLastProblems()'>
   		<h2>Zgłoszone problemy</h2>
       
   		<div class="filter-menu">
@@ -28,9 +27,9 @@
 
                     <div ng-show="dataLoaded">
 
-                      <div ng-include="'views/paginationPartialView.html'"></div>
+                      <div ng-include="'app/shared/paginationPartialView.html'"></div>
                       
-                   		<div ui-sref="problem({id: '{{x.id}}'})" class="panel panel-default" role="button" ng-repeat="x in myData">
+                   		<div ui-sref="Problem({id: '{{x.id}}'})" class="panel panel-default" role="button" ng-repeat="x in myData">
                       		<div class="panel-heading" role="tab" id="headingOne">
                               <div class="row panel-title accordion-toggle" aria-expanded="true">
 
@@ -41,8 +40,8 @@
                               </div>
                      					<div class="hidden-xs col-sm-3 col-md-2" title="Problem dodany przez: {{x.author.firstname}} {{x.author.surname}}"bs-tooltip>{{x.author.firstname}} {{x.author.surname}}</div>
                      					<div class="col-xs-6 col-sm-3 col-md-2">
-                                <a ui-sref="computer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()" title="Nazwa komputera: {{x.computer.name}}" bs-tooltip>{{x.computer.name}}</a>
-                                <a ui-sref="laboratory({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()">{{x.laboratory.building + x.laboratory.roomNo}}</a>
+                                <a ui-sref="Komputer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()" title="Nazwa komputera: {{x.computer.name}}" bs-tooltip>{{x.computer.name}}</a>
+                                <a ui-sref="Laboratorium({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()">{{x.laboratory.building + x.laboratory.roomNo}}</a>
                               </div>
                      					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>{{x.content}}</i></div>
                      					<div class="col-sm-1 col-md-1">
