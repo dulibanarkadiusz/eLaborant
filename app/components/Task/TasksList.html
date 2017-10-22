@@ -1,12 +1,9 @@
-
-<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 <div class="row">
     <div class="col-lg-12">
         <h2>Zadania</h2>
         <div class="filter-menu">
             <div class=" tasks panel-body">
-                <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='taskList'>
+                <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='TaskCtrl' ng-init='getList()'>
                 
                     <div ng-hide="dataLoaded || responseError" class="preloader">
                     </div>
@@ -15,13 +12,13 @@
                     </div>
 
                     <div ng-show="dataLoaded">
-                        <p>Liczba zadań w bazie: {{totalElements}}</p>
-                        <div ng-include="'views/paginationPartialView.html'"></div>
+                        <p>Liczba zadań: {{tasksCount}}</p>
+                        <div ng-include="'app/shared/paginationPartialView.html'"></div>
 
-                        <div class="task" ng-repeat="task in taskListData">
+                        <div class="task" ng-repeat="task in taskData">
                             <div class="panel panel-default">
                                 <div class="panel-heading padding-5">
-                                    <a ui-sref="problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
+                                    <a ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
                                 </div>
                                 <div class="panel-body padding-5">
                                     <div class="col-sm-1 col-md-1">
@@ -79,11 +76,8 @@
                             </div>
                         </div>
                     </div>
-                </div><!-- /.panel -->
-            </div><!-- /.panel-group -->
-        </div><!-- /.panel-body -->
-    </div><!-- /.filter-menu -->  
+                </div>
+            </div>
+        </div>
+    </div>
 </div>  
-<script>
-        $('[data-toggle="tooltip"]').tooltip();   
-</script>

@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-lg-12" ng-controller="LaboratoryCtrl" ng-init="getList()">
+        <h2>Laboratoria</h2>
+        <div ng-hide="dataLoaded" class="preloader">
+        </div>
+        <div ng-show="dataLoaded" class="table-responsive">
+            
+            <div class="row">
+                <div class="col-md-6">
+                    Liczba laboratoriów: {{totalElements}}
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-success pull-right" ng-click="addNewLaboratory()">
+                        <i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj nowe laboratorium
+                    </button>
+                </div>
+            </div>
+
+            <div ng-include="'app/shared/paginationPartialView.html'"></div>
+
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Budynek</th>
+                        <th>Numer</th>
+                        <th>Opiekun</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="clickable" ng-repeat="lab in labListData">
+                        <td>{{ lab.building }}</td>
+                        <td>{{ lab.roomNo }}</td>
+                        <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

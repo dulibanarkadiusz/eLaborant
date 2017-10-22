@@ -10,13 +10,13 @@
 
     <title>eLaborant - panel administracyjny</title>
 
-    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/sb-admin.css" rel="stylesheet">
-    <link href="css/panel-group.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet">
-    <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <link href="fonts/font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/sb-admin.css" rel="stylesheet">
+    <link href="assets/css/panel-group.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href="assets/fonts/font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -25,8 +25,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script> <!-- amMoment-->
     <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
     <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
-    <script src="js/angular-bootstrap-multiselect.js"></script>
-    <script src="js/bootstrap-datetimepicker.js"></script>
+    <script src="assets/js/angular-bootstrap-multiselect.js"></script>
+    <script src="assets/js/bootstrap-datetimepicker.js"></script>
     
 </head>
 
@@ -35,9 +35,9 @@
     <div ui-view></div>
 </body>
 
+
 <script>
 
-    var elaborantApp = angular.module('elaborant', ["ui.router", "angularMoment", "btorfs.multiselect", "ui.bootstrap"]);
     var apiUrl = "http://157.158.16.186:8081/api/";
     var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
@@ -45,111 +45,19 @@
     function parseErrorInfo(message) {
         return '<div class="alert alert-danger"><strong>Wystąpił błąd</strong><br>' + message + '</div>';
     }
-
-    elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
-        $urlRouterProvider.otherwise("/");
-        $stateProvider.state('login', {
-            url: '/',
-            templateUrl: 'login.html'
-        })
-          .state('home', {
-              url: '/home',
-              templateUrl: 'home.html'
-          }).state('users-list', {
-              url: "/users",
-              parent: "home",
-
-              templateUrl: "list-users.html"
-          })
-                .state('last-problems', {
-                    url: "/last-problems/",
-                    parent: "home",
-                    templateUrl: "list-problems.html"
-                })
-                .state('last-tasks', {
-                    url: "/last-tasks",
-                    parent: "home",
-                    templateUrl: "list-tasks.html"
-                })
-                .state('problem', {
-                    url: "/problem/:id?",
-                    parent: "home",
-                    templateUrl: "problem.html"
-                })
-                .state('laboratories', {
-                    url: "/laboratories",
-                    parent: "home",
-                    templateUrl: "list-laboratories.html"
-                })
-                .state('laboratory', {
-                    url: "/laboratory/:id?",
-                    parent: "home",
-                    templateUrl: "laboratory.html"
-                })
-                .state('computers', {
-                    url: "/computers",
-                    parent: "home",
-                    templateUrl: "list-computers.html"
-                })
-                .state('computer', {
-                    url: "/computer/:id?",
-                    parent: "home",
-                    templateUrl: "computer.html"
-                })
-        $locationProvider.html5Mode(true);
-    });
-
-    elaborantApp.controller('LoginController', function ($scope, $rootScope, $stateParams, $state, $location, LoginService) {
-
-        $scope.formSubmit = function () {
-            LoginService.login($scope.username, $scope.password, function (response) {
-                if (response.success) {
-                    $scope.error = '';
-                    $scope.username = '';
-                    $scope.password = '';
-                    LoginService.setToken();
-                    $location.path('/home');
-                } else {
-                    $scope.error = "Incorrect username/password !";
-                }
-            });
-
-        }
-
-    });
-
-
-    elaborantApp.factory('LoginService', function ($http, $rootScope) {
-
-        return {
-
-            login: function (username, password, callback) {
-                sessionStorage.removeItem("token");
-                $http({
-                    method: 'POST',
-                    url: apiUrl + "login",
-                    data: { username: username, password: password }
-                }).success(function (data, status, headers, config) {
-                    sessionStorage.setItem('token', headers("Authorization"));
-                    //alert(headers("Authorization"));
-                    callback({ success: true });
-
-                }).error(function () {
-                    callback({ success: false });
-                });
-
-
-            },
-            setToken: function () {
-                $http.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
-            }
-
-        };
-
-    });
-
 </script>
-<script src="js/controllers.js"></script>
+
+<script type="text/javascript" src="app/app.module.js"></script>
+<script type="text/javascript" src="app/app.routes.js"></script>
+<script type="text/javascript" src="app/components/Login/LoginCtrl.js"></script>
+<script type="text/javascript" src="app/components/Login/LoginService.js"></script>
+<script type="text/javascript" src="app/components/Problem/ProblemCtrl.js"></script>
+<script type="text/javascript" src="app/components/Task/TaskCtrl.js"></script>
+<script type="text/javascript" src="app/components/Computer/ComputerCtrl.js"></script>
+<script type="text/javascript" src="app/components/User/UserCtrl.js"></script>
+<script type="text/javascript" src="app/components/Laboratory/LaboratoryCtrl.js"></script>
+
+<script src="assets/js/controllers.js"></script>
 <script>
     $('[data-toggle="tooltip"]').tooltip();
     $('body').on('click', function () {
