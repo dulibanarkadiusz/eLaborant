@@ -45,13 +45,24 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
             templateUrl: "app/components/User/UsersList.html"
         })
         .state('Login', {
-            url: '/',
+            url: '/Login',
             templateUrl: 'app/components/Login/Login.html'
         })
     	.state('Panel', {
     		url: '/Panel',
     		templateUrl: 'admin-panel.html'
     	})
+		 .state('Main', {
+            url: '/',
+			 controller: function ( $state, LoginService) {
+                if(LoginService.isLogged())
+					$state.go("Panel");
+				else
+					$state.go("Login");
+				
+			 }
+            
+        })
 
     $locationProvider.html5Mode(true);
 });

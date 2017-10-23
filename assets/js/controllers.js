@@ -374,7 +374,16 @@
 
         }
     });
+ elaborantApp.controller('CurrentUserController', function( $scope, $location, LoginService){
+        $scope.user = LoginService.getFirstName() + " "+ LoginService.getSurname();
+		$scope.logOut = function(){
+			LoginService.logOut();
+			$location.path('/');
+		}
+    });
+	
 
+	
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
     });
