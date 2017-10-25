@@ -29,7 +29,8 @@
 
     elaborantApp.controller('nav', function($scope, $state){
         $(function(){
-            $scope.active = $state.current.name;
+			$scope.active = $state.current.name;	
+			
         });
     });
 
@@ -374,16 +375,34 @@
 
         }
     });
- elaborantApp.controller('CurrentUserController', function( $scope, $location, LoginService){
-        $scope.user = LoginService.getFirstName() + " "+ LoginService.getSurname();
-		$scope.logOut = function(){
-			LoginService.logOut();
-			$location.path('/');
-		}
+    elaborantApp.controller('CurrentUserController', function ($scope, $location, LoginService) {
+        $scope.user = LoginService.getFirstName() + " " + LoginService.getSurname();
+        $scope.logOut = function () {
+            LoginService.logOut();
+            $location.path('/');
+        }
     });
 	
+    elaborantApp.controller('MainPageController', function ($scope, $state, LoginService) {
+        //$state.go("Login");
+        if (!LoginService.isLogged()) {
 
-	
+            $state.go("Login");
+        }
+        else {
+
+            switch (LoginService.getRole()) {
+                case 'admin':
+                    $state.go("Panel");
+                    break;
+                default:
+                    $state.go("Panel");
+                    break;
+
+            }
+        }
+
+    });
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
     });
