@@ -1,5 +1,5 @@
 angular.module('elaborantLoginService', []).factory('LoginService', function ($http, $rootScope) {
-		var username, firstName, surname, role;
+		//var username, firstName, surname, role;
         return {
 
             login: function (username, password, callback) {
@@ -27,9 +27,12 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
                     url: apiUrl + "users?query=login=" + userName
                 }).success(function (data, status, headers, config) {
                     
-                    firstName = data.response[0].firstname;
-					surname = data.response[0].surname;
-					role = data.response[0].role.name;
+                    // firstName = data.response[0].firstname;
+					// surname = data.response[0].surname;
+					// role = data.response[0].role.name;
+					localStorage.setItem('firstName', data.response[0].firstname);
+					localStorage.setItem('surname', data.response[0].surname);
+					localStorage.setItem('role', data.response[0].role.name);
                     callback({ success: true });
 
                 }).error(function () {
@@ -39,18 +42,27 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
 
             },
 			getSurname: function(){
-				return surname;
+				return localStorage.getItem('surname');
 				
 			},
 			getFirstName: function(){
-				return firstName;
+				return localStorage.getItem('firstName');
+				
+			},
+			getRole: function(){
+				//return localStorage.getItem('role');
+				return 'user';
 				
 			},
 			isLogged: function(){
 				return localStorage.getItem('token') !== null;			
 			},
 			logOut: function(){
-				localStorage.removeItem("token");				
+				localStorage.removeItem("token");
+				localStorage.removeItem("firstName");
+				localStorage.removeItem("surname");
+				localStorage.removeItem("role");
+				
 			}
 
         };

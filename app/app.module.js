@@ -9,4 +9,5 @@ var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"elaborantUserCtrl",
 												"elaborantProblemCtrl",
 												"elaborantTaskCtrl"
+											
 												]);

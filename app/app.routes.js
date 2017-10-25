@@ -52,17 +52,37 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
     		url: '/Panel',
     		templateUrl: 'admin-panel.html'
     	})
+		.state('UserPanel', {
+    		url: '/UserPanel',
+    		templateUrl: 'user-panel.html'
+    	})
 		 .state('Main', {
             url: '/',
 			 controller: function ( $state, LoginService) {
-                if(LoginService.isLogged())
-					$state.go("Panel");
-				else
+                if(!LoginService.isLogged()){
 					$state.go("Login");
+				}
+				else{
+					alert(LoginService.getRole());
+						switch(LoginService.getRole()){
+							case 'admin':
+							$state.go("Panel");
+							break;
+							default:
+							$state.go("UserPanel");
+							break;
+							
+						}
+						
+						
+					}
+					
+					
+				}
+					
 				
 			 }
-            
-        })
-
+            )
+        
     $locationProvider.html5Mode(true);
 });

@@ -8,9 +8,9 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
                     $scope.password = '';
                     LoginService.checkRole(function (checkUserResponse) {
 						if(checkUserResponse.success)
-							$location.path('/Panel');
+							$location.path('/Main');
 						else
-							$scope.error = "aaaaWystąpił błąd !";
+							$scope.error = "Wystąpił błąd !";
 					}
 					
 					
