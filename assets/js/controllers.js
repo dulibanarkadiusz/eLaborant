@@ -28,10 +28,15 @@
     });
 
     elaborantApp.controller('nav', function($scope, $state){
-        $(function(){
-			$scope.active = $state.current.name;	
-			
-        });
+      
+		
+		$scope.active = $state.current.name;
+		$scope.showProblems = true;
+		$scope.showTasks = true;
+		$scope.showUsers = true;
+		$scope.showLaboratories = true;
+		$scope.showComputers = true;			
+        
     });
 
     elaborantApp.filter('labelPriority', function(){
@@ -325,6 +330,8 @@
             $modalInstance.dismiss('cancel');
         };
     });
+	
+	
 
     var test;
     elaborantApp.controller('addComputerFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
@@ -396,13 +403,15 @@
                     $state.go("Panel");
                     break;
                 default:
-                    $state.go("Panel");
+                    $state.go("UserPanel");
                     break;
 
             }
         }
 
     });
+	
+
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
     });
