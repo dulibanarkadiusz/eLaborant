@@ -1,4 +1,4 @@
-<div>
+<div >
     <div id="wrapper">
 
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -32,19 +32,19 @@
            
             <div ng-controller="nav" class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="{{active || 'last-problems'}} nav navbar-nav side-nav">
-                    <li class="last-problems" ng-click="active='last-problems'">
-                        <a ui-sref="Problemy"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy</a>                        
+                    <li ng-show="showProblems" class="last-problems" ng-click="active='last-problems'">
+                        <a ui-sref="Problemy"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy {{tru}}</a>                        
                     </li>
-                    <li class="last-tasks" ng-click="active='last-tasks'">
-                        <a ui-sref="Zadania"><i class="fa fa-tasks"></i> Zadania</a>
+                    <li ng-show="showTasks" class="last-tasks" ng-click="active='last-tasks'">
+                        <a ui-sref="Zadania"><i class="fa fa-tasks"></i> Zadania {{true}}</a>
                     </li>
-                    <li class="users-list" ng-click="active='users-list'">
+                    <li ng-show="showUsers" class="users-list" ng-click="active='users-list'">
                         <a ui-sref="Uzytkownicy"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
                     </li>
-                    <li class="laboratories" ng-click="active='laboratories'">
+                    <li ng-show="showLaboratories" class="laboratories" ng-click="active='laboratories'">
                         <a ui-sref="Laboratoria"><i class="fa fa-fw fa-building-o"></i> Laboratoria</a>
                     </li>
-                    <li class="computers" ng-click="active='computers'">
+                    <li ng-show="showComputers" class="computers" ng-click="active='computers'">
                         <a ui-sref="Komputery"><i class="fa fa-fw fa-laptop"></i> Komputery</a>
                     </li>
                     <!--
