@@ -54,7 +54,6 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
     	})
 		.state('UserPanel', {
 		    url: '/UserPanel',
-			controller: 'addProblemFromUserFormController',
 		    templateUrl: 'user-panel.html'
 		})
 		 .state('Main', {
