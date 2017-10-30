@@ -109,7 +109,6 @@
         $scope.problemid = $stateParams.id;
         $scope.task = {};
         $scope.task.id = param.id;
-        $scope.idAuthor = 8;
         $scope.minDate = new Date();
 
         /*var datetimepicker = $('#datetimepicker4');
@@ -174,10 +173,8 @@
         $scope.task.userExecuteTasksById = {};
 
         $scope.save =  function(){
-            $scope.idAuthor = 8;
             var dataAddTask = jQuery.extend({}, $scope.task);
             dataAddTask.dateRealization = new Date(dataAddTask.dateRealization).getTime();
-            dataAddTask.idAuthor = 8;
             dataAddTask.priority = parseInt($scope.task.priority);
             dataAddTask.idState = parseInt($scope.task.idState);
             dataAddTask.idProblem = parseInt($scope.problemid);
@@ -295,7 +292,6 @@
         $scope.save = function(){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
-            $scope.data.idAuthor = 8;
             if ($scope.problem.source == 'computer'){
                 $scope.data.idComputer = parseInt($scope.problem.idComputer);
             }
