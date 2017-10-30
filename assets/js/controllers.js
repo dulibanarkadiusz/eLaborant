@@ -262,7 +262,7 @@
         };     
     });
 
-    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
+    elaborantApp.controller('addProblemFormController', function($scope, $rootScope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problem = {};
 
         $scope.labList = function() {
@@ -310,8 +310,8 @@
               data: JSON.parse(JSON.stringify($scope.data))
             })
             .success(function (success) {
-                lastProblemsLoad();
-                $('#addProblem').modal('hide');
+                $rootScope.$emit("RefreshProblemList", {});
+                $scope.cancel();
                 $scope.problem = {};
             })
             .error(function (response) {

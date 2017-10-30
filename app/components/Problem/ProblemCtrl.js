@@ -1,4 +1,4 @@
-angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $injector, $sce, amMoment, $stateParams, $http, $modal) {
+angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal) {
     $scope.dataLoaded = false;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
@@ -27,6 +27,10 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
             $scope.errorMessage = $sce.trustAsHtml(errorMessage);
         });
     };
+
+    $rootScope.$on("RefreshProblemList", function(){
+        $scope.getList();
+    });
 
     $scope.getProblem = function(idProblem = $stateParams.id) {
         $scope.problemid = idProblem;
