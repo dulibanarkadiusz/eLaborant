@@ -1,28 +1,70 @@
 angular.module('elaborantLoginService', []).factory('LoginService', function ($http, $rootScope) {
+    //var username, firstName, surname, role;
+    return {
 
-        return {
+        login: function (username, password, callback) {
+            localStorage.removeItem("token");
+            $http({
+                method: 'POST',
+                url: apiUrl + "login",
+                data: { username: username, password: password }
+            }).success(function (data, status, headers, config) {
+                localStorage.setItem('token', headers("Authorization"));
+                userName = username;
+                //alert(headers("Authorization"));
+                callback({ success: true });
 
-            login: function (username, password, callback) {
-                sessionStorage.removeItem("token");
-                $http({
-                    method: 'POST',
-                    url: apiUrl + "login",
-                    data: { username: username, password: password }
-                }).success(function (data, status, headers, config) {
-                    sessionStorage.setItem('token', headers("Authorization"));
-                    //alert(headers("Authorization"));
-                    callback({ success: true });
-
-                }).error(function () {
-                    callback({ success: false });
-                });
+            }).error(function () {
+                callback({ success: false });
+            });
 
 
-            },
-            setToken: function () {
-                $http.defaults.headers.common['Authorization'] = sessionStorage.getItem('token');
-            }
+        },
+        checkRole: function (callback) {
 
-        };
+            $http({
+                method: 'GET',
+                url: apiUrl + "users?query=login=" + userName
+            }).success(function (data, status, headers, config) {
 
-    });
+                // firstName = data.response[0].firstname;
+                // surname = data.response[0].surname;
+                // role = data.response[0].role.name;
+                localStorage.setItem('firstName', data.response[0].firstname);
+                localStorage.setItem('surname', data.response[0].surname);
+                localStorage.setItem('role', data.response[0].role.name);
+                callback({ success: true });
+
+            }).error(function () {
+                callback({ success: false });
+            });
+
+
+        },
+        getSurname: function () {
+            return localStorage.getItem('surname');
+
+        },
+        getFirstName: function () {
+            return localStorage.getItem('firstName');
+
+        },
+        getRole: function () {
+            //return localStorage.getItem('role');
+            return 'admin';
+
+        },
+        isLogged: function () {
+            return localStorage.getItem('token') !== null;
+        },
+        logOut: function () {
+            localStorage.removeItem("token");
+            localStorage.removeItem("firstName");
+            localStorage.removeItem("surname");
+            localStorage.removeItem("role");
+
+        }
+
+    };
+
+});
