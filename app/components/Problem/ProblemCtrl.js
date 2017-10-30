@@ -11,7 +11,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
         });
     };
 
-    $scope.getLastProblems = function(pageNumber = 0) {
+    $scope.getList = function(pageNumber = 0) {
         $http.get(apiUrl + 'problems?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
         .success(function (serverResponse) {
             $scope.myData = serverResponse.response;
