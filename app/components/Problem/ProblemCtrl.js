@@ -75,4 +75,19 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
         }
     }
 
+    $scope.editEntity = function(problemId){
+        var problemEntity = {id:parseInt($scope.problemid), isResolved:$scope.problemData[0].isResolved};
+        $http({
+          method: 'PUT',
+          url: apiUrl + "problems/",
+          data: JSON.parse(JSON.stringify(problemEntity))
+        })
+        .success(function (success) {
+
+        })
+        .error(function (response) {
+            $scope.IsResponseError = true;
+        });
+    }
+
 });
