@@ -66,7 +66,8 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
     $scope.addNewTask = function(taskId = null) {
         var modalInstance = $modal.open({
             templateUrl: 'modals/addTaskView.html',
-            controller: 'addTaskFormController',
+            controller: 'TaskManagerCtrl',
+            backdrop: 'static',
             resolve: {
                 param: function(){
                     return {'id':taskId}

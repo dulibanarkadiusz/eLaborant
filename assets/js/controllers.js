@@ -105,13 +105,14 @@
     });
 
 
+    /*
     elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
         $scope.task.id = param.id;
         $scope.minDate = new Date();
 
-        /*var datetimepicker = $('#datetimepicker4');
+        var datetimepicker = $('#datetimepicker4');
         datetimepicker.on('blur', function(e){
             var value = datetimepicker.val(); 
             datetimepicker.trigger('change');
@@ -122,7 +123,7 @@
             locale: 'pl',
             sideBySide: true,
             format: 'YYYY-MM-DDTHH:mm'
-        });*/
+        });
         
         if ($scope.task.id){ // get details for existing, edited task
             $http.get(apiUrl + 'tasks/' + $scope.task.id) 
@@ -202,7 +203,7 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-    });
+    });*/
 
     function ParseResponseErrorMessages(JSONresponse){
         if (typeof JSONresponse.status != 'undefined')

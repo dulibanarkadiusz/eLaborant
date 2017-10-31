@@ -1,7 +1,7 @@
-<div class="modal-content">
+<div class="modal-content" ng-init="init()">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Dodaj zadanie</h4>
+        <h4 class="modal-title">{{windowTitle}}</h4>
     </div>
     <form name="addTaskForm" ng-submit="processForm()">
         <div class="modal-body"> 
@@ -18,8 +18,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
                     </span>
-                    <!--<input type='datetime-local' name='dateRealization' ng-model="task.dateRealization" class="form-control" id='datetimepicker4' min="{{minDate}}" required />-->
-                    <input type='datetime-local' name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control"  required />
+                    <input type='datetime-local' ng-blur="updateDateRealization($event)" ng-model-options="{updateOn: 'blur'}" name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control" min="{{minDate}}" required />
                 </div>
                 <div ng-show="addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched" class="help-block with-errors">
                     Termin musi być poprawną datą i dotyczyć przyszłości
@@ -83,24 +82,15 @@
                 </div>
             </div>
 
-            <!--<pre>
-                {{ task | json}}
-            </pre>-->   
-
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Anuluj</button>
-            <button type="submit" class="btn btn-success" ng-disabled="addTaskForm.$invalid" ng-click="save()">Dodaj</button>
+            <button type="submit" class="btn btn-success" ng-disabled="addTaskForm.$invalid" ng-click="save()">Zapisz</button>
         </div>
     </form>
 </div>
 <script>
     var datetimepicker = $('#dateRealization');
-    datetimepicker.on('blur', function(e){
-        var value = datetimepicker.val(); 
-        datetimepicker.trigger('change');
-    });
-
     datetimepicker.datetimepicker({
         locale: 'pl',
         sideBySide: true,
