@@ -1,0 +1,27 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+        <h4 class="modal-title">Ostrzeżenie</h4>
+    </div>
+    <form>
+        <div class="modal-body row"> 
+            <div class="col-xs-3 warning-icon">
+                <span class="fa-stack fa-lg">
+                    <i class="fa fa-exclamation fa-stack-1x"></i>
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                </span>
+            </div>
+            <div class="col-xs-9">
+                <h2 class="title">Czy na pewno usunąć?</h2>
+                <p class="text">
+                    <strong>Uwaga:</strong> Ta operacja jest nieodwracalna.<br>
+                    Usunięte zostaną również wszystkie obiekty, które są powiązane z usuwanym elementem. 
+                </p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Anuluj</button>
+            <button type="submit" class="btn btn-danger" ng-click="deleteEntity()">Usuń</button>
+        </div>
+    </form>
+</div>

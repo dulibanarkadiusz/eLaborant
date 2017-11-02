@@ -25,7 +25,7 @@
             </li>
 
             <!-- Last page -->
-            <li class="disabled dotted" ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage < pages.length - 3">
+            <li class="disabled dotted" ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="(currentPage < pages.length - 3) && (pages.length > 4)">
                 <a>…</a>
             </li>
             <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="(currentPage < pages.length - 2) && (pages.length > 3)">
