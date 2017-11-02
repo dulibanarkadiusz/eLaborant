@@ -56,4 +56,8 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+	 $scope.editLaboratory = function(laboratoryId){
+			
+                    $scope.addNewLaboratory(laboratoryId);
+                }
 });
