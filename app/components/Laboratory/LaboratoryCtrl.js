@@ -4,10 +4,17 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
     $scope.computersCount = 0;
     $scope.errorDataLoaded = '';
 
-    $scope.addNewLaboratory = function(){ 
+    $scope.addNewLaboratory = function(laboratoryId = null){ 
+	
         var modalInstance = $modal.open({
             templateUrl: 'modals/addLabView.html',
-            controller: 'addLabFormController'
+            controller: 'LaboratoryManagerCtrl',
+            backdrop: 'static',
+            resolve: {
+                param: function(){
+                    return {'id':laboratoryId}
+                }
+            }
         });
     };
 
@@ -60,5 +67,10 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
                     break;
             }
         });
+		
+    }
+	$scope.editLaboratory = function(laboratoryId){
+			
+        $scope.addNewLaboratory(laboratoryId);
     }
 }); 
