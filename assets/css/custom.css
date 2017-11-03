@@ -226,6 +226,21 @@ div:has(input){
 
 .problemStatusInfo{
 	text-align: center;
+	display: inline-block;
+}
+
+.neutral-button{
+	margin-left: 10px;
+	margin-top: -10px;
+}
+
+.neutral-button > i{
+	margin: 0 !important;
+	padding: 0 !important;
+	vertical-align: top;
+    color: rgb(99, 99, 99);
+    padding: 0 5px;
+    font-size: 20px;
 }
 
 

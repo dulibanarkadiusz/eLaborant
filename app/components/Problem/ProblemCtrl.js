@@ -1,4 +1,4 @@
-angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal) {
+angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService) {
     $scope.dataLoaded = false;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
@@ -82,12 +82,19 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
           url: apiUrl + "problems/",
           data: JSON.parse(JSON.stringify(problemEntity))
         })
-        .success(function (success) {
+        .then(function(response) {
 
-        })
-        .error(function (response) {
+        }, function(response) {
             $scope.IsResponseError = true;
         });
+    }
+
+    $scope.openRemoveProblemWindow = function(entityId = $scope.problemid){
+        var options = ModalService.getModalOptions(entityId);
+        options.templateUrl = 'modals/deleteEntity.html';
+        options.controller = 'ProblemManagerCtrl';
+
+        var modalInstance = $modal.open(options);
     }
 
 });
