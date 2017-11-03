@@ -13,5 +13,20 @@ angular.module('elaborantTaskService', []).factory('TaskService', function ($htt
                 alert("Błąd przy pobieraniu")
             });
         }
+
+/*
+        getDataListEntity: function (problemId, callback){
+            $http({
+                method: 'GET',
+                url: apiUrl + "tasks/?query=idProblem%3D" + problemId + ",page=" ,
+                data: JSON.parse(JSON.stringify(json))
+            })
+            .then(function(response) {
+                $rootScope.$emit("RefreshTaskList", {});
+                $scope.cancel();
+            }, function(response) {
+                alert("Wystąpił błąd!");
+            });
+        }*/
     };
 });

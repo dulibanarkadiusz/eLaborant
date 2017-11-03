@@ -1,57 +1,81 @@
 <div class="row">
 	<div class="col-lg-12" ng-controller='ProblemCtrl' ng-init='getList()'>
-  		<h2>Zgłoszone problemy</h2>
+  	<h2>Zgłoszone problemy</h2>
       
-  		<div class="filter-menu">
+  	<div class="filter-menu">
 
       <div class="row">
-          <div class="col-md-6">
-              
-          </div>
-          <div class="col-md-6">
-              <button class="btn btn-success pull-right" ng-click="addNewProblem()">
-                <i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj nowy problem
-              </button>
-          </div>
+        <div class="col-md-6">        
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-success pull-right" ng-click="addNewProblem()">
+            <i class="fa fa-plus-square" aria-hidden="true"></i> Dodaj nowy problem
+          </button>
+        </div>
       </div>
 
-			<div class="panel ">
-				<div class="panel-body">
-                	<div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true">
-                    
-                    <div ng-hide="dataLoaded || responseError" class="preloader">
-                    </div>
-
-                    <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
-                    </div>
-
-                    <div ng-show="dataLoaded">
-
-                      <div ng-include="'app/shared/paginationPartialView.html'"></div>
+  		<div class="panel ">
+  			<div class="panel-body">
+          <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true">
                       
-                   		<div ui-sref="Problem({id: '{{x.id}}'})" class="panel panel-default" role="button" ng-repeat="x in myData">
-                      		<div class="panel-heading" role="tab" id="headingOne">
-                              <div class="row panel-title accordion-toggle" aria-expanded="true">
+            <div ng-hide="dataLoaded || responseError" class="preloader">
+            </div>
 
-                     					<div class="col-xs-6 col-sm-6 col-md-2"><strong>#{{x.id}}</strong><br>
-                                <span class="badge">
-                                  <time am-time-ago="x.dateNotification" title="Problem dodano: {{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
-                                </span>
-                              </div>
-                     					<div class="hidden-xs col-sm-3 col-md-2" title="Problem dodany przez: {{x.author.firstname}} {{x.author.surname}}"bs-tooltip>{{x.author.firstname}} {{x.author.surname}}</div>
-                     					<div class="col-xs-6 col-sm-3 col-md-2">
-                                <a ui-sref="Komputer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()" title="Nazwa komputera: {{x.computer.name}}" bs-tooltip>{{x.computer.name}}</a>
-                                <a ui-sref="Laboratorium({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()">{{x.laboratory.building + x.laboratory.roomNo}}</a>
-                              </div>
-                     					<div class="col-xs-12 col-sm-11 col-md-5 problem-desc"><i>{{x.content}}</i></div>
-                     					<div class="col-sm-1 col-md-1">
-                     						<!--<button ui-sref="problem({id: '{{x.id}}'})" class="btn btn-xs btn-primary btn-preview pull-right"><i class="fa fa-share fa-1" aria-hidden="true"></i></button> -->
-                     					</div>
-                        			</div>
-                      		</div>
-                    	</div>
+            <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
+            </div>
+
+            <div ng-show="dataLoaded" class="problemList">
+              <div ng-include="'app/shared/paginationPartialView.html'"></div>
+           		<div class="panel panel-default" ng-repeat="x in myData">
+            		<div class="panel-heading" ng-class="(x.isResolved) ? 'problem-resolved' : ''" id="headingOne">
+                  <div class="row panel-title accordion-toggle" aria-expanded="true">
+                    <div class="hidden-xs float-left">
+                      <span class="checkbox checkbox-primary checkbox-circle checkbox-lg" data-placement="left" title="{{x.isResolved ? 'Problem oznaczono jako rozwiązany' : 'Kliknij, by oznaczyć problem jako rozwiązany' }}" bs-tooltip>
+                        <input id="checkbox-{{x.id}}" class="styled" type="checkbox" ng-model="x.isResolved" ng-change="editEntity(x.id, x.isResolved)">
+                        <label for="checkbox-{{x.id}}"></label>
+                      </span>
                     </div>
-                </div>
-        	</div>
-    </div> 
-</div>	
+           					<div class="col-xs-4 col-sm-4 col-md-2 problemId">
+                      <button ui-sref="Problem({id: '{{x.id}}'})" class="btn btn-xs btn-default btn-preview" title="Przejdź do strony problemu" bs-tooltip>
+                         <i class="fa fa-share fa-1" aria-hidden="true"></i>
+                      </button>
+                      <a ui-sref="Problem({id: '{{x.id}}'})">
+                        <strong>#{{x.id}}</strong><br>
+                      </a>
+                      <span class="badge">
+                        <time am-time-ago="x.dateNotification" title="Zgłoszono: {{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
+                      </span>
+                    </div>
+           					<div class="hidden-xs col-sm-2 col-md-2">
+                      <span title="Zgłaszający: {{x.author.firstname}} {{x.author.surname}}" bs-tooltip>
+                        {{x.author.firstname}} {{x.author.surname}}
+                      </span>
+                    </div>
+           					<div class="col-xs-6 col-sm-3 col-md-2">
+                      <a ui-sref="Komputer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()" ng-show="x.computer" title="Lokalizacja komputera: {{x.computer.laboratory.building + x.computer.laboratory.roomNo}}" bs-tooltip>
+                        <i class="fa fa-desktop"></i>
+                        {{x.computer.name}}
+                      </a>
+
+                      <a ui-sref="Laboratorium({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()" ng-show="x.laboratory" title="Sala laboratoryjna" bs-tooltip>
+                        <i class="fa fa-cube"></i>
+                        {{x.laboratory.building + x.laboratory.roomNo}}
+                      </a>
+                    </div>
+                    <div class="col-md-1 text-right col-md-push-5">
+                      <button class="btn btn-xs btn-danger btn-preview" ng-click="openRemoveProblemWindow(x.id)">
+                        <i class="fa fa-trash-o fa-1" aria-hidden="true" title="Usuń problem" bs-tooltip></i>
+                      </button>
+                      &nbsp;
+                    </div>
+           					<div class="col-xs-12 col-sm-12 col-md-4 problem-desc "><i>{{x.content}}</i></div>
+            			</div>
+            		</div>
+            	</div>
+            </div>
+          </div>
+      	</div>
+      </div> 
+    </div>
+  </div>	
+</div>

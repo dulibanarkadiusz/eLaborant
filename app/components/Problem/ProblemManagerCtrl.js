@@ -13,7 +13,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
         })
         .then(function(response) {
             $scope.cancel();
-            $state.go('Problemy');
+            $state.go('Problemy', {}, {reload: true}); // redirection from problem page to problemList
         }, function(response) {
             
         });

@@ -5,10 +5,11 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
 
     amMoment.changeLocale('pl');
     $scope.addNewProblem = function(){ 
-        var modalInstance = $modal.open({
-            templateUrl: 'modals/addProblemView.html',
-            controller: 'addProblemFormController'
-        });
+        var options = ModalService.getModalOptions();
+        options.templateUrl = 'modals/addProblemView.html';
+        options.controller = 'addProblemFormController';
+
+        var modalInstance = $modal.open(options);
     };
 
     $scope.getList = function(pageNumber = 0) {
@@ -75,8 +76,8 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
         }
     }
 
-    $scope.editEntity = function(problemId){
-        var problemEntity = {id:parseInt($scope.problemid), isResolved:$scope.problemData[0].isResolved};
+    $scope.editEntity = function(problemId, isMarkedAsResolved){
+        var problemEntity = {id:parseInt(problemId), isResolved: isMarkedAsResolved};
         $http({
           method: 'PUT',
           url: apiUrl + "problems/",
