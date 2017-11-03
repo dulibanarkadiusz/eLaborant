@@ -143,13 +143,17 @@ ul.settings .settings a{
 	padding: 0 !important;
 }
 
+.dotted:hover{
+	cursor: default !important;
+}
+
 .dotted > a{
     padding-left: 6px !important;
     padding-right: 6px !important;
 }
 
 .dotted > a:hover{
-	background: rgba(255, 255, 255, 0);
+	background: rgba(255, 255, 255, 0) !important;
 }
 
 .pagination{
