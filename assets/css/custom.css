@@ -227,6 +227,10 @@ ul.settings .settings a{
 	color: #adadad;
 }
 
+.problem-resolved .problemId button{
+	color: #ccc;
+}
+
 .float-left{
 	float:left;
 }
