@@ -403,12 +403,3 @@
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
     });
-
-    // modal background fix 
-    $(function() {
-        if (window.history && window.history.pushState) {
-            $(window).on('popstate', function() {
-                $('.modal-backdrop').remove();
-            });
-        }
-    });
