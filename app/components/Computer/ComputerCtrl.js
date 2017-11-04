@@ -1,4 +1,4 @@
-angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function($rootScope, $scope, $sce, amMoment, $stateParams, $http, $modal) {
+angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function($rootScope, $scope, $sce, amMoment, $stateParams, $http, $modal, ModalService) {
     $scope.computerid = $stateParams.id;
     $scope.computerDataLoaded = false;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
@@ -80,5 +80,13 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
                 $scope.editComputer = function(computerId){
 	
                     $scope.addNewComputer(computerId);
-                }
+                };
+                $scope.openRemoveComputerWindow = function(entityId){
+                    alert("open"+entityId);
+                    var options = ModalService.getModalOptions(entityId);
+                    options.templateUrl = 'modals/deleteEntity.html';
+                    options.controller = 'ComputerManagerCtrl';
+
+                    var modalInstance = $modal.open(options);
+                };			
             }); 

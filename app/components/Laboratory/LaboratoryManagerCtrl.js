@@ -1,4 +1,10 @@
 angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService) {
+    $scope.lab = {};
+    if (param.id) {
+        $scope.lab.id = param.id;
+    }
+
+
     $scope.init = function () {
         $scope.windowTitle = "Dodaj nowe laboratorium";
         $scope.lab = {};
@@ -6,6 +12,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         $scope.buttonName = "Dodaj";
 
         if (param.id) { // get details if task exsists
+            $scope.lab.id = param.id;
             $scope.windowTitle = "Edycja laboratorium";
             LaboratoryService.getDataEntity(param.id, createObject);
             $scope.buttonName = "Edytuj";
@@ -52,12 +59,27 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         });
 
     };
+    $scope.deleteEntity = function () {
+        var json = { id: parseInt($scope.lab.id) };
+        $http({
+            method: 'DELETE',
+            url: apiUrl + "laboratories/" + $scope.lab.id,
+            data: JSON.parse(JSON.stringify(json))
+        })
+        .then(function (response) {
+            $rootScope.$emit("RefreshList", {});
+            $scope.cancel();
+        }, function (response) {
+            alert("Wystąpił błąd!");
+        });
+    }
+
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
-	 $scope.editLaboratory = function(laboratoryId){
-			
-                    $scope.addNewLaboratory(laboratoryId);
-                }
+    $scope.editLaboratory = function (laboratoryId) {
+
+        $scope.addNewLaboratory(laboratoryId);
+    }
 });

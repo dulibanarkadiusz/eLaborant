@@ -1,4 +1,4 @@
-angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', function($rootScope, $scope, $sce, $stateParams, $http, $modal) {
+angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', function($rootScope, $scope, $sce, $stateParams, $http, $modal, ModalService) {
     $scope.labid = $stateParams.id;
     $scope.labDataLoaded = false;
     $scope.computersCount = 0;
@@ -73,4 +73,13 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 			
                     $scope.addNewLaboratory(laboratoryId);
                 }
-            }); 
+                $scope.openRemoveLaboratoryWindow = function(entityId){
+					
+                    var options = ModalService.getModalOptions(entityId);
+                    options.templateUrl = 'modals/deleteEntity.html';
+                    options.controller = 'LaboratoryManagerCtrl';
+
+                    var modalInstance = $modal.open(options);
+                }			
+            });
+	
