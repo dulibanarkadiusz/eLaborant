@@ -1,9 +1,27 @@
 <div ng-controller="ProblemCtrl" ng-init="getProblem()">
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-repeat="x in problemData">
         <div class="panel-heading">
-            <h3>Problem #{{problemid}}
-                <!--<button class="btn btn-warning btn-xs pull-right" title="Edytuj problem">Edytuj</button>-->
+            <h3 class="problem-title">
+                Problem #{{problemid}}
+            <!--<button class="btn btn-warning btn-xs pull-right" title="Edytuj problem">Edytuj</button>-->     
+                <span class="problemOptions">
+                    <button class="btn btn-md btn-default neutral-button" ng-click="openRemoveProblemWindow()" data-placement="right" data-original-title="Usuń problem" bs-tooltip>
+                        <i class="fa fa-trash pull-right" aria-hidden="true"></i>
+                    </button>   
+                </span>
             </h3>
+            <div class="pull-right">
+                <div class="problemStatusInfo">
+                    <div>
+                        <small>Rozwiązany?</small>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" ng-model="x.isResolved" ng-change="editEntity(x.id, x.isResolved)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
         </div>
 
         <div ng-hide="problemDataLoaded || errorDataLoaded!=''" class="preloader">
@@ -12,7 +30,7 @@
         <div ng-bind-html="errorDataLoaded" class="margin-top padding-5"></div>
 
         <div class="panel-body">
-            <div class="row" ng-repeat="x in problemData">
+            <div class="row">
                 <div class="col-xs-12 col-md-8">
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 textToRight">Lokalizacja: </div>
@@ -41,7 +59,7 @@
         <div class="panel-heading">
             <h4>
                 Zadania
-                <button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" ng-click="addNewTask()">
+                <button class="btn btn-success btn-sm pull-right" title="Nowe zadanie" ng-click="openNewTaskWindow()">
                     <i class="fa fa-plus" aria-hidden="true"></i> Dodaj nowe zadanie
                 </button>
             </h4>
@@ -73,9 +91,12 @@
                         <b><i class="fa fa-user-plus"></i> {{task.author.firstname + " " + task.author.surname}}</b>
                     </div>
                     
-                    <div class="textToRight col-xs-3 col-sm-3 col-md-1 task-buttons no-collapsable">
-                        <button class="btn btn-warning btn-xs pull-right" data-toggle="modal" data-target="#editProblemModal" title="Edytuj zadanie" ng-click="editTask(task.id)">
+                    <div class="textToRight col-xs-3 col-sm-3 col-md-1 task-buttons no-collapsable pull-right">
+                        <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj zadanie" ng-click="openEditTaskWindow(task.id)">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </button>
+                        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń zadanie" ng-click="openRemoveTaskWindow(task.id)">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>

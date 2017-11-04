@@ -10,12 +10,12 @@
             </li>
 
             <!-- First page -->
-            <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage > 1">
+            <li ng-show="currentPage > 1">
                 <a href="#" ng-click="getList(0)">
                     1
                 </a>
             </li>
-            <li class="disabled dotted" ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage > 2">
+            <li class="dotted" ng-show="currentPage > 2">
                 <a>…</a>
             </li>
 
@@ -25,7 +25,7 @@
             </li>
 
             <!-- Last page -->
-            <li class="disabled dotted" ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="currentPage < pages.length - 3">
+            <li class="dotted" ng-show="(currentPage < pages.length - 3) && (pages.length > 4)">
                 <a>…</a>
             </li>
             <li ng-class="(currentPage==pages.length-1) ? 'disabled' : ''" ng-show="(currentPage < pages.length - 2) && (pages.length > 3)">

@@ -1,17 +1,18 @@
-angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $injector, $sce, amMoment, $stateParams, $http, $modal) {
+angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService) {
     $scope.dataLoaded = false;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
 
     amMoment.changeLocale('pl');
     $scope.addNewProblem = function(){ 
-        var modalInstance = $modal.open({
-            templateUrl: 'modals/addProblemView.html',
-            controller: 'addProblemFormController'
-        });
+        var options = ModalService.getModalOptions();
+        options.templateUrl = 'modals/addProblemView.html';
+        options.controller = 'addProblemFormController';
+
+        var modalInstance = $modal.open(options);
     };
 
-    $scope.getLastProblems = function(pageNumber = 0) {
+    $scope.getList = function(pageNumber = 0) {
         $http.get(apiUrl + 'problems?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
         .success(function (serverResponse) {
             $scope.myData = serverResponse.response;
@@ -27,6 +28,10 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
             $scope.errorMessage = $sce.trustAsHtml(errorMessage);
         });
     };
+
+    $rootScope.$on("RefreshProblemList", function(){
+        $scope.getList();
+    });
 
     $scope.getProblem = function(idProblem = $stateParams.id) {
         $scope.problemid = idProblem;
@@ -69,6 +74,28 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
                 }
             });
         }
+    }
+
+    $scope.editEntity = function(problemId, isMarkedAsResolved){
+        var problemEntity = {id:parseInt(problemId), isResolved: isMarkedAsResolved};
+        $http({
+          method: 'PUT',
+          url: apiUrl + "problems/",
+          data: JSON.parse(JSON.stringify(problemEntity))
+        })
+        .then(function(response) {
+
+        }, function(response) {
+            $scope.IsResponseError = true;
+        });
+    }
+
+    $scope.openRemoveProblemWindow = function(entityId = $scope.problemid){
+        var options = ModalService.getModalOptions(entityId);
+        options.templateUrl = 'modals/deleteEntity.html';
+        options.controller = 'ProblemManagerCtrl';
+
+        var modalInstance = $modal.open(options);
     }
 
 });

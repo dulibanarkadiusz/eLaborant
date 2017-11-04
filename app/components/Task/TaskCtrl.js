@@ -1,6 +1,5 @@
-angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal) {
+angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService) {
     $scope.dataLoaded = false;
-    $scope.refresh;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
 
@@ -35,8 +34,9 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         $scope.getList();
     });
     
-    $scope.getList = function(pageNumber = 0, problemId = $scope.problemid){
-        var problemIdQuery = (typeof value === "undefined") ? '' : 'idProblem%3D'+problemId+',';
+
+    $scope.getList = function(pageNumber = 0, problemId = $stateParams.id){
+        var problemIdQuery = (typeof problemId === "undefined") ? '' : 'idProblem%3D'+problemId+',';
         $http.get(apiUrl + 'tasks/?query='+problemIdQuery+'page=' + pageNumber + ",pageSize=" + $scope.pageSize)
         .success(function (serverTaskResponse) {
             $scope.taskData = serverTaskResponse.response;
@@ -63,20 +63,24 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         });
     }
 
-    $scope.addNewTask = function(taskId = null) {
-        var modalInstance = $modal.open({
-            templateUrl: 'modals/addTaskView.html',
-            controller: 'addTaskFormController',
-            resolve: {
-                param: function(){
-                    return {'id':taskId}
-                }
-            }
-        });
+    $scope.openNewTaskWindow = function(taskId = null) {
+        var options = ModalService.getModalOptions(taskId);
+        options.templateUrl = 'modals/addTaskView.html';
+        options.controller = 'TaskManagerCtrl';
+
+        var modalInstance = $modal.open(options);
     };
 
-    $scope.editTask = function(taskId){
-        $scope.addNewTask(taskId);
+    $scope.openEditTaskWindow = function(taskId){
+        $scope.openNewTaskWindow(taskId);
+    }
+
+    $scope.openRemoveTaskWindow = function(taskId){
+        var options = ModalService.getModalOptions(taskId);
+        options.templateUrl = 'modals/deleteEntity.html';
+        options.controller = 'TaskManagerCtrl';
+
+        var modalInstance = $modal.open(options);
     }
 
 });

@@ -105,14 +105,14 @@
     });
 
 
+    /*
     elaborantApp.controller('addTaskFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param){
         $scope.problemid = $stateParams.id;
         $scope.task = {};
         $scope.task.id = param.id;
-        $scope.idAuthor = 8;
         $scope.minDate = new Date();
 
-        /*var datetimepicker = $('#datetimepicker4');
+        var datetimepicker = $('#datetimepicker4');
         datetimepicker.on('blur', function(e){
             var value = datetimepicker.val(); 
             datetimepicker.trigger('change');
@@ -123,7 +123,7 @@
             locale: 'pl',
             sideBySide: true,
             format: 'YYYY-MM-DDTHH:mm'
-        });*/
+        });
         
         if ($scope.task.id){ // get details for existing, edited task
             $http.get(apiUrl + 'tasks/' + $scope.task.id) 
@@ -174,10 +174,8 @@
         $scope.task.userExecuteTasksById = {};
 
         $scope.save =  function(){
-            $scope.idAuthor = 8;
             var dataAddTask = jQuery.extend({}, $scope.task);
             dataAddTask.dateRealization = new Date(dataAddTask.dateRealization).getTime();
-            dataAddTask.idAuthor = 8;
             dataAddTask.priority = parseInt($scope.task.priority);
             dataAddTask.idState = parseInt($scope.task.idState);
             dataAddTask.idProblem = parseInt($scope.problemid);
@@ -205,7 +203,7 @@
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-    });
+    });*/
 
     function ParseResponseErrorMessages(JSONresponse){
         if (typeof JSONresponse.status != 'undefined')
@@ -262,7 +260,7 @@
         };     
     });
 
-    elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
+    elaborantApp.controller('addProblemFormController', function($scope, $rootScope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problem = {};
 
         $scope.labList = function() {
@@ -295,7 +293,6 @@
         $scope.save = function(){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
-            $scope.data.idAuthor = 8;
             if ($scope.problem.source == 'computer'){
                 $scope.data.idComputer = parseInt($scope.problem.idComputer);
             }
@@ -310,8 +307,8 @@
               data: JSON.parse(JSON.stringify($scope.data))
             })
             .success(function (success) {
-                lastProblemsLoad();
-                $('#addProblem').modal('hide');
+                $rootScope.$emit("RefreshProblemList", {});
+                $scope.cancel();
                 $scope.problem = {};
             })
             .error(function (response) {
@@ -405,13 +402,4 @@
     });
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
-    });
-
-    // modal background fix 
-    $(function() {
-        if (window.history && window.history.pushState) {
-            $(window).on('popstate', function() {
-                $('.modal-backdrop').remove();
-            });
-        }
     });
