@@ -222,8 +222,7 @@
     }
 
    
-
-    elaborantApp.controller('addProblemFormController', function($scope, $rootScope, $http, $sce, $filter, $stateParams, $modalInstance){
+elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problem = {};
 
         $scope.labList = function() {
@@ -256,6 +255,7 @@
         $scope.save = function(){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
+            $scope.data.idAuthor = 8;
             if ($scope.problem.source == 'computer'){
                 $scope.data.idComputer = parseInt($scope.problem.idComputer);
             }
@@ -270,8 +270,8 @@
               data: JSON.parse(JSON.stringify($scope.data))
             })
             .success(function (success) {
-                $rootScope.$emit("RefreshProblemList", {});
-                $scope.cancel();
+                lastProblemsLoad();
+                $('#addProblem').modal('hide');
                 $scope.problem = {};
             })
             .error(function (response) {
