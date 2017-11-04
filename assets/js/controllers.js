@@ -419,7 +419,7 @@
 
             switch (LoginService.getRole()) {
                 case 'admin':
-                    $state.go("Panel");
+                    $state.go("PanelHome");
                     break;
                 default:
                     $state.go("UserPanel");
