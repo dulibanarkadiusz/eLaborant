@@ -28,10 +28,15 @@
     });
 
     elaborantApp.controller('nav', function($scope, $state){
-        $(function(){
-			$scope.active = $state.current.name;	
-			
-        });
+      
+		
+		$scope.active = $state.current.name;
+		$scope.showProblems = true;
+		$scope.showTasks = true;
+		$scope.showUsers = true;
+		$scope.showLaboratories = true;
+		$scope.showComputers = true;			
+        
     });
 
     elaborantApp.filter('labelPriority', function(){
@@ -216,51 +221,8 @@
         return responseString.trim();
     }
 
-    elaborantApp.controller('addLabFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
-        $scope.lab = {};
-        $scope.lab.building = "MS";
-
-        $scope.usersList = function() {
-            $http.get(apiUrl + 'users')
-            .success(function (serverResponse) {
-                $scope.usersListData = serverResponse.response;
-                $scope.dataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.usersList();
-
-
-        $scope.save = function(){
-            var dataAddTask = jQuery.extend({}, $scope.task);
-            $http({
-              method: 'POST',
-              url: apiUrl + "laboratories/",
-              data: JSON.parse(JSON.stringify($scope.lab))
-            })
-            .success(function (success) {
-                $rootScope.$emit("RefreshList", {});
-                $scope.cancel();
-                $scope.lab = {};
-                $scope.lab.building = "MS";
-            })
-            .error(function (response) {
-                $scope.IsResponseError = true;
-                $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
-            });
-
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };     
-    });
-
-    elaborantApp.controller('addProblemFormController', function($scope, $rootScope, $http, $sce, $filter, $stateParams, $modalInstance){
+   
+elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
         $scope.problem = {};
 
         $scope.labList = function() {
@@ -293,6 +255,7 @@
         $scope.save = function(){
             $scope.data = {};
             $scope.data.content = $scope.problem.content;
+            $scope.data.idAuthor = 8;
             if ($scope.problem.source == 'computer'){
                 $scope.data.idComputer = parseInt($scope.problem.idComputer);
             }
@@ -307,8 +270,8 @@
               data: JSON.parse(JSON.stringify($scope.data))
             })
             .success(function (success) {
-                $rootScope.$emit("RefreshProblemList", {});
-                $scope.cancel();
+                lastProblemsLoad();
+                $('#addProblem').modal('hide');
                 $scope.problem = {};
             })
             .error(function (response) {
@@ -322,6 +285,72 @@
             $modalInstance.dismiss('cancel');
         };
     });
+    elaborantApp.controller('addProblemByUserFormController', function($scope, $http, $sce, $filter, $stateParams ){
+        $scope.problem = {};
+		$scope.showErrors = false;
+        $scope.labList = function() {
+            $http.get(apiUrl + 'laboratories')
+            .success(function (serverResponse) {
+                $scope.labListData = serverResponse.response;
+                $scope.labDataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+        };
+        $scope.labList();
+
+
+        $scope.computersList = function() {
+            $http.get(apiUrl + 'computers?query=idLaboratory%3D'+ $scope.problem.idLaboratory)
+            .success(function (serverResponse) {
+                $scope.computersListData = serverResponse.response;
+                $scope.computersDataLoaded = true;
+            })
+            .error(function(data, status){
+                $scope.responseError = true;
+                $scope.computersListData = {};
+                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+            });
+        };
+
+        $scope.save = function(){
+            $scope.data = {};
+            $scope.data.content = $scope.problem.content;
+            $scope.data.idAuthor = 8;
+            if ($scope.problem.source == 'computer'){
+                $scope.data.idComputer = parseInt($scope.problem.idComputer);
+            }
+            else{
+                $scope.data.idLaboratory = parseInt($scope.problem.idLaboratory);
+            }
+
+            console.log($scope.data);
+            $http({
+              method: 'POST',
+              url: apiUrl + "problems/",
+              data: JSON.parse(JSON.stringify($scope.data))
+            })
+            .success(function (success) {
+                           
+                $scope.problem = {};
+				
+            })
+            .error(function (response) {
+                $scope.IsResponseError = true;
+                $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
+				
+            });
+
+        };
+
+        $scope.cancel = function () {
+            //$modalInstance.dismiss('cancel');
+        };
+    });
+	
+	
 
     var test;
     elaborantApp.controller('addComputerFormController', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance){
@@ -390,16 +419,18 @@
 
             switch (LoginService.getRole()) {
                 case 'admin':
-                    $state.go("Panel");
+                    $state.go("PanelHome");
                     break;
                 default:
-                    $state.go("Panel");
+                    $state.go("UserPanel");
                     break;
 
             }
         }
 
     });
+	
+
     $(document).on('click', '.no-collapsable', function(e){
         e.stopPropagation();
     });

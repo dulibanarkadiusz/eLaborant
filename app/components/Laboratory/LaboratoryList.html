@@ -4,7 +4,7 @@
         <div ng-hide="dataLoaded" class="preloader">
         </div>
         <div ng-show="dataLoaded" class="table-responsive">
-            
+
             <div class="row">
                 <div class="col-md-6">
                     Liczba laboratoriów: {{totalElements}}
@@ -24,6 +24,8 @@
                         <th>Budynek</th>
                         <th>Numer</th>
                         <th>Opiekun</th>
+                        <th>&nbsp </th>
+                        <th>&nbsp </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +33,18 @@
                         <td>{{ lab.building }}</td>
                         <td>{{ lab.roomNo }}</td>
                         <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
+                        <td>
+                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj laboratorium" ng-click="editLaboratory(lab.id)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń laboratorium" ng-click="openRemoveLaboratoryWindow(lab.id)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </td>
+
                     </tr>
                 </tbody>
             </table>

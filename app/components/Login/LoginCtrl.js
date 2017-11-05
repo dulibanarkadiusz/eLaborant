@@ -17,7 +17,7 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
                 );
 
             } else {
-                $scope.error = "Incorrect username/password !";
+                $scope.error = "Niepoprawny login/hasło !";
             }
         });
 

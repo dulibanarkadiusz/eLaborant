@@ -1,21 +1,84 @@
- <div class="col-md-12" ng-controller="LoginCtrl">
-      <h3>Login Page</h3>
+<!-- TODO przenieść style -->
+<style>
+    .reauth-email {
+        display: block;
+        color: #ff0000;
+        line-height: 2;
+        margin-bottom: 10px;
+        font-size: 14px;
+        text-align: center;
+    }
 
-      <form ng-submit="formSubmit()" class="form">
-        <div class="col-md-4">
-          <div class="form-group">
-            <input type="text" class="form-control" ng-model="username" placeholder="username" required=""/>
-          </div>
+    .card-container.card {
+        max-width: 350px;
+        padding: 40px 40px;
+    }
 
-          <div class="form-group">
-            <input type="password" class="form-control" ng-model="password" placeholder="password" required=""/>
-          </div>
+    .card {
+        background-color: #F7F7F7;
+        padding: 20px 25px 30px;
+        margin: 0 auto 25px;
+        margin-top: 50px;
+        border-radius: 2px;
+    }
 
-          <div class="form-group">
-            <button type="submit" class="btn btn-success">Login</button>
-            <span class="text-danger">{{ error }}</span>
-          </div>
+    .profile-img-card {
+        width: 96px;
+        height: 96px;
+        margin: 0 auto 10px;
+        display: block;
+        border-radius: 50%;
+    }
 
-        </div>
-      </form>
-    </div>
+    .profile-name-card {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        margin: 10px 0 0;
+        min-height: 1em;
+    }
+
+    .form-signin #inputLogin,
+    .form-signin #inputPassword {
+        direction: ltr;
+        height: 44px;
+        font-size: 16px;
+    }
+
+    .form-signin input[type=password],
+    .form-signin input[type=text],
+    .form-signin button {
+        width: 100%;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .btn.btn-signin {
+        background-color: rgb(104, 145, 162);
+        font-weight: 700;
+        font-size: 14px;
+        height: 36px;
+        border-radius: 3px;
+        border: none;
+    }
+
+        .btn.btn-signin:hover,
+        .btn.btn-signin:focus {
+            background-color: rgb(12, 97, 33);
+        }
+</style>
+<div class="container" ng-controller="LoginCtrl">
+    <div class="card card-container">
+
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card"> eLaborant</p>
+        <form class="form-signin" ng-submit="formSubmit()">
+            <span id="reauth-email" class="reauth-email">{{ error }}</span>
+            <input type="text" id="inputLogin" ng-model="username" class="form-control" placeholder="Login" required autofocus>
+            <input type="password" id="inputPassword" ng-model="password" class="form-control" placeholder="Hasło" required>
+
+            <button class="btn b btn-signin" type="submit">Zaloguj</button>
+        </form><!-- /form -->
+
+    </div><!-- /card-container -->
+</div>
