@@ -90,10 +90,6 @@ ul.settings .settings a{
 	white-space: pre-wrap;
 }
 
-.tasks{
-	margin-bottom: 50px;
-}
-
 .task{
 	margin-bottom: 5px;
 }
@@ -121,6 +117,10 @@ ul.settings .settings a{
 	padding: 5px;
 }
 
+.panel-group:last-child{
+  margin-bottom: 0;
+}
+
 .modal{
 	overflow-y: auto;
 }
@@ -136,7 +136,6 @@ ul.settings .settings a{
 
 .pagination-container{
 	clear: both;
-	padding-top: 20px;
 }
 
 .pagination-container > .col-xs-12{
@@ -231,6 +230,14 @@ ul.settings .settings a{
 	color: #ccc;
 }
 
+.problem-details{
+  padding: 1%;
+}
+
+.problem-details .row{
+  margin: 7px 0;
+}
+
 .float-left{
 	float:left;
 }
@@ -282,6 +289,11 @@ div:has(input){
 
 .problemList .checkbox{
 	margin: 4px 5px 10px 0;
+}
+
+.responseMessage{
+  text-align: center;
+  padding: 5px;
 }
 
 /* --- bootstrap toggle button */

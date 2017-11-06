@@ -55,7 +55,11 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
             }
         })
         .error(function(error, status) {
+            $scope.messageType = messageType.Error;
             switch(status){
+                case 403:
+                    $scope.message = "Bez autoryzacji.";
+                    break;
                 case 404: 
                     $scope.message = "Brak zadań do wyświetlenia.";
                     break;

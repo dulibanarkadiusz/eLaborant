@@ -47,33 +47,6 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
                 else
                     $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
             });
-
-        $scope.loadTasks = function(pageNumber = 0){
-            $http.get(apiUrl + 'tasks/?query=idProblem%3D'+$scope.problemid+',page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-            .success(function (serverTaskResponse) {
-                $scope.taskData = serverTaskResponse.response;
-                $scope.tasksCount = serverTaskResponse.totalElements;
-                $scope.pages = getPagesArray(serverTaskResponse.totalPages);
-                $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
-                
-                $scope.dataLoaded = true;
-                for (var i = 0; i < $scope.taskData.length; i++ ){
-                    var task = $scope.taskData[i];
-                    task.executorsString = "";
-                    for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
-                        task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
-                    }
-                }
-            })
-            .error(function(error, status) {
-                switch(status){
-                    case 404: 
-                        $scope.message = "Brak zadań do wyświetlenia.";
-                        break;
-                }
-            });
-        }
     }
 
     $scope.editEntity = function(problemId, isMarkedAsResolved){
