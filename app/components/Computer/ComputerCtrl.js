@@ -82,7 +82,7 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
                     $scope.addNewComputer(computerId);
                 };
                 $scope.openRemoveComputerWindow = function(entityId){
-                    alert("open"+entityId);
+                    
                     var options = ModalService.getModalOptions(entityId);
                     options.templateUrl = 'modals/deleteEntity.html';
                     options.controller = 'ComputerManagerCtrl';
