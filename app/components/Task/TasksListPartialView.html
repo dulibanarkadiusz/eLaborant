@@ -14,7 +14,7 @@
 
             <div class="task" ng-repeat="task in taskData">
                 <div class="panel panel-default">
-                    <div class="panel-heading padding-5" ng-if="2==1">
+                    <div class="panel-heading padding-5" ng-if="!problemid">
                         <a ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
                     </div>
                     <div class="panel-body padding-5">

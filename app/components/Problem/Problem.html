@@ -1,4 +1,6 @@
+
 <div ng-controller="ProblemCtrl" ng-init="getProblem()">
+    <div ng-bind-html="errorDataLoaded"></div>
     <div class="panel panel-default" ng-repeat="x in problemData">
         <div class="panel-heading">
 
@@ -29,7 +31,7 @@
             <div ng-hide="problemDataLoaded || errorDataLoaded!=''" class="preloader">
             </div>
 
-            <div ng-bind-html="errorDataLoaded"></div>
+            
 
             <div class="row">
                 <div class="col-xs-4 col-md-3 col-lg-2 textToRight">
