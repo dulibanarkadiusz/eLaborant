@@ -26,12 +26,15 @@
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-3">
                                 <div>
-                                    <span title="Zadanie dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}" bs-tooltip>
-                                        <i class="fa fa-clock-o" aria-hidden="true"></i> {{task.dateNotification | amDateFormat: 'D MMMM YYYY H:mm '}}
+
+                                    <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
+                                    <span title="Dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}" am-time-ago="task.dateNotification" bs-tooltip>
                                     </span>
                                 </div>
-                                <div title="Termin realizacji upływa: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }} " bs-tooltip>
-                                    <i class="fa fa-bell-o" aria-hidden="true"></i> {{task.dateRealization | amDateFormat: 'D MMMM YYYY H:mm '}}
+                                <div>
+                                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+                                    <span title="Termin realizacji: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }} " am-time-ago="task.dateRealization" bs-tooltip>
+                                    </span>
                                 </div>
                             </div>
                             <div class="col-xs-3 col-sm-3 col-md-2">

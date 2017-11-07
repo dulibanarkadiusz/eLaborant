@@ -35,9 +35,16 @@ ul.settings .settings a{
 }
 
 
-
 #task-list{
 	margin-bottom: 70px;
+}
+
+#task-list .panel-heading button{
+  margin-top: -5px;
+}
+
+#problems-list .panel-group{
+  margin: 0 !important;
 }
 
 .task-buttons button:even{
@@ -186,6 +193,19 @@ ul.settings .settings a{
 	overflow: auto;
 	border: 1px solid #ccc;
 	color: #333;
+}
+
+.problemHeader .problemOptions{
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.problemHeader h3{
+  margin: 8px 0 0 10px;
+}
+
+.problemHeader .problemStatusInfo{
+  margin-top: 12px;
 }
 
 @media screen and (max-width: 410px){
