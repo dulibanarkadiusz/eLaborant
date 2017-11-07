@@ -7,7 +7,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
     $scope.addNewProblem = function(){ 
         var options = ModalService.getModalOptions();
         options.templateUrl = 'modals/addProblemView.html';
-        options.controller = 'addProblemFormController';
+        options.controller = 'ProblemManagerCtrl';
 
         var modalInstance = $modal.open(options);
     };

@@ -225,70 +225,8 @@
         return responseString.trim();
     }
 
-   
-elaborantApp.controller('addProblemFormController', function($scope, $http, $sce, $filter, $stateParams, $modalInstance){
-        $scope.problem = {};
-
-        $scope.labList = function() {
-            $http.get(apiUrl + 'laboratories')
-            .success(function (serverResponse) {
-                $scope.labListData = serverResponse.response;
-                $scope.labDataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-        $scope.labList();
 
 
-        $scope.computersList = function() {
-            $http.get(apiUrl + 'computers?query=idLaboratory%3D'+ $scope.problem.idLaboratory)
-            .success(function (serverResponse) {
-                $scope.computersListData = serverResponse.response;
-                $scope.computersDataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.computersListData = {};
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-
-        $scope.save = function(){
-            $scope.data = {};
-            $scope.data.content = $scope.problem.content;
-            $scope.data.idAuthor = 8;
-            if ($scope.problem.source == 'computer'){
-                $scope.data.idComputer = parseInt($scope.problem.idComputer);
-            }
-            else{
-                $scope.data.idLaboratory = parseInt($scope.problem.idLaboratory);
-            }
-
-            console.log($scope.data);
-            $http({
-              method: 'POST',
-              url: apiUrl + "problems/",
-              data: JSON.parse(JSON.stringify($scope.data))
-            })
-            .success(function (success) {
-                lastProblemsLoad();
-                $('#addProblem').modal('hide');
-                $scope.problem = {};
-            })
-            .error(function (response) {
-                $scope.IsResponseError = true;
-                $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
-            });
-
-        };
-
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
     elaborantApp.controller('addProblemByUserFormController', function($scope, $http, $sce, $filter, $stateParams ){
         $scope.problem = {};
 		$scope.showErrors = false;
