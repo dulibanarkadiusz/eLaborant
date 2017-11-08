@@ -35,9 +35,16 @@ ul.settings .settings a{
 }
 
 
-
 #task-list{
 	margin-bottom: 70px;
+}
+
+#task-list .panel-heading button{
+  margin-top: -5px;
+}
+
+#problems-list .panel-group{
+  margin: 0 !important;
 }
 
 .task-buttons button:even{
@@ -62,6 +69,7 @@ ul.settings .settings a{
 
 .btn-preview{
 	margin-left: 3px;
+    margin-top: -3px;
 }
 
 .table-striped button{
@@ -87,10 +95,6 @@ ul.settings .settings a{
 
 .tooltip-inner{
 	white-space: pre-wrap;
-}
-
-.tasks{
-	margin-bottom: 50px;
 }
 
 .task{
@@ -120,6 +124,10 @@ ul.settings .settings a{
 	padding: 5px;
 }
 
+.panel-group:last-child{
+  margin-bottom: 0;
+}
+
 .modal{
 	overflow-y: auto;
 }
@@ -135,16 +143,23 @@ ul.settings .settings a{
 
 .pagination-container{
 	clear: both;
-	padding-top: 20px;
 }
 
 .pagination-container > .col-xs-12{
 	padding: 0 !important;
 }
 
+.dotted:hover{
+	cursor: default !important;
+}
+
 .dotted > a{
     padding-left: 6px !important;
     padding-right: 6px !important;
+}
+
+.dotted > a:hover{
+	background: rgba(255, 255, 255, 0) !important;
 }
 
 .pagination{
@@ -180,6 +195,19 @@ ul.settings .settings a{
 	color: #333;
 }
 
+.problemHeader .problemOptions{
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.problemHeader h3{
+  margin: 8px 0 0 10px;
+}
+
+.problemHeader .problemStatusInfo{
+  margin-top: 12px;
+}
+
 @media screen and (max-width: 410px){
 	.problem-source label{
 		width: 100%;
@@ -196,6 +224,42 @@ ul.settings .settings a{
 	background-color: #337ab7;
 	color: #F7F7F7;
 	transition: background-color 0.5s ease-out;
+}
+
+.problem-resolved{
+	background: #fff !important;
+	color: #ccc !important;
+}
+
+.problem-resolved a{
+	color: #a9c5de;
+}
+
+.problem-resolved .badge{
+    color: #b1b1b1 !important;
+	background: rgba(241, 241, 241, 0.59) !important;
+    text-shadow: none;
+    font-weight: normal;
+}
+
+.problem-resolved .problemId{
+	color: #adadad;
+}
+
+.problem-resolved .problemId button{
+	color: #ccc;
+}
+
+.problem-details{
+  padding: 1%;
+}
+
+.problem-details .row{
+  margin: 7px 0;
+}
+
+.float-left{
+	float:left;
 }
 
 h2{
@@ -218,4 +282,224 @@ div:has(input){
 
 .close-button{
 	min-width: 50px;
+}
+
+.problem-title{
+	display:inline-block;
+}
+
+.problemStatusInfo{
+	text-align: center;
+	display: inline-block;
+}
+
+.neutral-button{
+	margin-left: 10px;
+	margin-top: -10px;
+}
+
+.neutral-button > i{
+	margin: 0 !important;
+	padding: 0 !important;
+	vertical-align: top;
+    color: rgb(99, 99, 99);
+    padding: 0 5px;
+    font-size: 20px;
+}
+
+.problemList .checkbox{
+	margin: 4px 5px 10px 0;
+}
+
+.responseMessage{
+  text-align: center;
+  padding: 5px;
+}
+
+/* --- bootstrap toggle button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #337ab7;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+/* --- END bootstrap toggle button */
+
+
+/* --- CHECKBOX --- */
+.checkbox {
+  padding-left: 20px; }
+.checkbox label {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+    padding-left: 5px; }
+
+.checkbox label::before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  width: 17px;
+  height: 17px;
+  left: 0;
+  margin-left: -20px;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  background-color: #fff;
+ }
+.checkbox label::after {
+  display: inline-block;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 0;
+  top: 0;
+  margin-left: -20px;
+  padding-left: 3px;
+  padding-top: 1px;
+  font-size: 11px;
+	color: #555555; 
+}
+.checkbox-lg label::before{
+    width: 30px;
+    height: 30px;
+}
+.checkbox-lg label::after{
+	width: 29px;
+	height: 29px;
+  	padding-left: 5px;
+  	font-size: 20px;
+}
+.checkbox input[type="checkbox"],
+.checkbox input[type="radio"] {
+  opacity: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.checkbox input[type="checkbox"]:checked + label::after,
+.checkbox input[type="radio"]:checked + label::after {
+  font-family: "FontAwesome";
+  content: "\f00c";}
+.checkbox.checkbox-circle label::before {
+    border-radius: 50%; }
+.checkbox.checkbox-inline {
+    margin-top: 0; }
+
+.checkbox-primary input[type="checkbox"]:checked + label::before,
+.checkbox-primary input[type="radio"]:checked + label::before {
+	color: #337ab7;
+	border-color: #2669a2;
+ }
+.checkbox-primary input[type="checkbox"]:checked + label::after,
+.checkbox-primary input[type="radio"]:checked + label::after {
+  color: #337ab7; }
+
+.checkbox-danger input[type="checkbox"]:checked + label::before,
+.checkbox-danger input[type="radio"]:checked + label::before {
+  background-color: #d9534f;
+  border-color: #d9534f; }
+.checkbox-danger input[type="checkbox"]:checked + label::after,
+.checkbox-danger input[type="radio"]:checked + label::after {
+  color: #fff; }
+
+.checkbox-info input[type="checkbox"]:checked + label::before,
+.checkbox-info input[type="radio"]:checked + label::before {
+  background-color: #5bc0de;
+  border-color: #5bc0de; }
+.checkbox-info input[type="checkbox"]:checked + label::after,
+.checkbox-info input[type="radio"]:checked + label::after {
+  color: #fff; }
+
+.checkbox-warning input[type="checkbox"]:checked + label::before,
+.checkbox-warning input[type="radio"]:checked + label::before {
+  background-color: #f0ad4e;
+  border-color: #f0ad4e; }
+.checkbox-warning input[type="checkbox"]:checked + label::after,
+.checkbox-warning input[type="radio"]:checked + label::after {
+  color: #fff; }
+
+.checkbox-success input[type="checkbox"]:checked + label::before,
+.checkbox-success input[type="radio"]:checked + label::before {
+  background-color: #5cb85c;
+  border-color: #5cb85c; }
+.checkbox-success input[type="checkbox"]:checked + label::after,
+.checkbox-success input[type="radio"]:checked + label::after {
+  color: #fff;}
+input[type="checkbox"].styled:checked + label:after,
+input[type="radio"].styled:checked + label:after {
+  font-family: 'FontAwesome';
+  content: "\f00c"; }
+input[type="checkbox"] .styled:checked + label::before,
+input[type="radio"] .styled:checked + label::before {
+  color: #fff; }
+input[type="checkbox"] .styled:checked + label::after,
+input[type="radio"] .styled:checked + label::after {
+  color: #fff; }
+
+
+/* --- MODALS --- */
+.warning-icon{
+    font-size: 2.2vw;
+    color: #f0ad4e;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
+}
+.modal-content .title{
+	margin: 0;
+    padding: 0;
+	font-weight: bold;
+	font-size: 22px;
+}
+.modal-content .text{
+	margin-top: 5px;
+	font-size: 12px;
 }

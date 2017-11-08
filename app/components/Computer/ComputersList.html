@@ -25,6 +25,8 @@
                         <th>Adres IP</th>
                         <th>MAC</th>
                         <th>Laboratorium</th>
+                        <th>&nbsp </th>
+                        <th>&nbsp </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +36,14 @@
                         <td>{{ computer.ip }}</td>
                         <td>{{ computer.mac }}</td>
                         <td>{{ computer.laboratory.building + computer.laboratory.roomNo }}</td>
+                        <td>
+                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj komputer" ng-click="editComputer(computer.id)">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </td>
+						<td>
+                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń komputer" ng-click="openRemoveComputerWindow(computer.id)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        </td>
                     </tr>
                 </tbody>
             </table>

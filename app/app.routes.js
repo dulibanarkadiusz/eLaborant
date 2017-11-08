@@ -52,6 +52,11 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
     		url: '/Panel',
     		templateUrl: 'admin-panel.html'
     	})
+		.state('PanelHome', {
+    		url: '/Home',
+			parent: "Panel",
+    		templateUrl: 'app/components/Home/home.html'
+    	})
 		.state('UserPanel', {
 		    url: '/UserPanel',
 		    templateUrl: 'user-panel.html'
@@ -63,3 +68,19 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
 
     $locationProvider.html5Mode(true);
 });
+
+elaborantApp.run([
+        '$rootScope', '$modalStack',
+        function ($rootScope, $modalStack) {
+            $rootScope.$on('$locationChangeStart', function (event) {
+                var top = $modalStack.getTop();
+                if (top) {
+                    if( confirm("Czy chcesz wrócić na poprzednią stronę?\nNiezapisane zmiany zostaną utracone.") ){
+                        $modalStack.dismiss(top.key);
+                    } else {
+                        event.preventDefault();
+                    }
+                }
+            });
+        }
+    ])

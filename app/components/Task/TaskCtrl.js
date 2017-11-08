@@ -1,42 +1,17 @@
-angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal) {
-    $scope.dataLoaded = false;
-    $scope.refresh;
+angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService) {
+    amMoment.changeLocale('pl');
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
-
-    amMoment.changeLocale('pl');
-
-    /*$scope.getList = function(pageNumber = 0) {
-        $scope.refresh = this;
-        $http.get(apiUrl + 'tasks?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-        .success(function (serverResponse) {
-            $scope.taskListData = serverResponse.response;
-            $scope.pages = getPagesArray(serverResponse.totalPages);
-            $scope.dataLoaded = true;
-            $scope.totalElements = serverResponse.totalElements;
-            $scope.currentPage = pageNumber;
-            localStorage.pageSize = $scope.pageSize;
-
-            for (var i = 0; i < $scope.taskListData.length; i++ ){
-                    var task = $scope.taskListData[i];
-                    task.executorsString = "";
-                    for (var j = 0; j < task.userExecuteTasksById.length; j++ ){
-                        task.executorsString += task.userExecuteTasksById[j].firstname + " " + task.userExecuteTasksById[j].surname + "\n";
-                    }
-                }
-        })
-        .error(function(data, status){
-            $scope.responseError = true;
-            $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-        });
-    };*/
 
     $rootScope.$on("RefreshTaskList", function(){
         $scope.getList();
     });
     
-    $scope.getList = function(pageNumber = 0, problemId = $scope.problemid){
-        var problemIdQuery = (typeof value === "undefined") ? '' : 'idProblem%3D'+problemId+',';
+
+    $scope.getList = function(pageNumber = 0, problemId = $stateParams.id){
+        $scope.dataLoaded = false;
+        $scope.message = null;
+        var problemIdQuery = (typeof problemId === "undefined") ? '' : 'idProblem%3D'+problemId+',';
         $http.get(apiUrl + 'tasks/?query='+problemIdQuery+'page=' + pageNumber + ",pageSize=" + $scope.pageSize)
         .success(function (serverTaskResponse) {
             $scope.taskData = serverTaskResponse.response;
@@ -55,7 +30,11 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
             }
         })
         .error(function(error, status) {
+            $scope.messageType = messageType.Error;
             switch(status){
+                case 403:
+                    $scope.message = "Bez autoryzacji.";
+                    break;
                 case 404: 
                     $scope.message = "Brak zadań do wyświetlenia.";
                     break;
@@ -63,20 +42,24 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         });
     }
 
-    $scope.addNewTask = function(taskId = null) {
-        var modalInstance = $modal.open({
-            templateUrl: 'modals/addTaskView.html',
-            controller: 'addTaskFormController',
-            resolve: {
-                param: function(){
-                    return {'id':taskId}
-                }
-            }
-        });
+    $scope.openNewTaskWindow = function(taskId = null) {
+        var options = ModalService.getModalOptions(taskId);
+        options.templateUrl = 'modals/addTaskView.html';
+        options.controller = 'TaskManagerCtrl';
+
+        var modalInstance = $modal.open(options);
     };
 
-    $scope.editTask = function(taskId){
-        $scope.addNewTask(taskId);
+    $scope.openEditTaskWindow = function(taskId){
+        $scope.openNewTaskWindow(taskId);
+    }
+
+    $scope.openRemoveTaskWindow = function(taskId){
+        var options = ModalService.getModalOptions(taskId);
+        options.templateUrl = 'modals/deleteEntity.html';
+        options.controller = 'TaskManagerCtrl';
+
+        var modalInstance = $modal.open(options);
     }
 
 });
