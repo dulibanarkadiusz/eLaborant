@@ -50,20 +50,17 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 			}
 			return;
 		});
-
-		$http.get(apiUrl + 'computers/?query=idLaboratory%3D'+$scope.labid)
-		.success(function (serverResponse) {
+		ComputerService.getComputersFromLab($scope.labid,function (serverResponse) {
 			$scope.computersCount = serverResponse.totalElements;
 			$scope.computersData = serverResponse.response;
 			$scope.dataLoaded = true;
-		})
-		.error(function(error, status) {
+		}, function(status) {
 			switch(status){
 				case 404: 
 					$scope.message = "Brak komputerów w laboratorium";
 					break;
-			}
-		});
+		} })
+		
 
 	}
 	$scope.editLaboratory = function(laboratoryId){
