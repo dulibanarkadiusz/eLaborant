@@ -1,4 +1,4 @@
-angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, ComputerService) {
+angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, ComputerService, NotificationService) {
     $scope.computer = {};
     if (param.id) {
         $scope.computer.id = param.id;
@@ -40,11 +40,12 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
     $scope.save = function () {
         var dataAddTask = jQuery.extend({}, $scope.task);
         $http({
-            method: ($scope.id) ? 'PUT' : 'POST',
+            method: ($scope.computer.id) ? 'PUT' : 'POST',
             url: apiUrl + "computers/",
             data: JSON.parse(JSON.stringify($scope.computer))
         })
         .success(function (success) {
+			($scope.computer.id) ? NotificationService.successNotification("Komputer został zmieniony!") : NotificationService.successNotification("Komputer został dodany!");
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
             $scope.computer = {};
@@ -63,6 +64,7 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
             data: JSON.parse(JSON.stringify(json))
         })
         .then(function (response) {
+			NotificationService.successNotification("Komputer został usunięty!")
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
         }, function (response) {
