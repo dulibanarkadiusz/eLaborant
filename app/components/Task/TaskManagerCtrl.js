@@ -85,8 +85,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
             $rootScope.$emit("RefreshTaskList", {});
             $scope.cancel();
         }, function(response) {
-            console.log(response);
-            NotificationService.errorNotification("Nie udało się usunąć zadania. Kod błędu: " + response.status + " " + response.statusText);
+            NotificationService.errorNotification("Nie udało się usunąć zadania. " + response.data.errors[0].message);
         });
     }
 
@@ -95,7 +94,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     }
 
     $scope.showGetTaskDataError = function (serverResponse){
-        NotificationService.errorNotification("Nie udało się pobrać szczegółów zadania. Kod błędu: " + serverResponse.status + " " + serverResponse.statusText);
+        NotificationService.errorNotification("Nie udało się pobrać szczegółów zadania. Kod błędu: " + response.data.errors[0].message);
     }
 
     $scope.cancel = function () {
