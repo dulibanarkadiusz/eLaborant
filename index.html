@@ -29,7 +29,9 @@
     <script src="assets/js/bootstrap-datetimepicker.js"></script>
 	<script src="assets/js/plugins/chart/Chart.min.js"></script>
 
-	 <script src="assets/js/plugins/chart/angular-chart.min.js"></script>
+	<script src="assets/js/plugins/chart/angular-chart.min.js"></script>
+	<script src="assets/js/plugins/notify/bootstrap-notify.min.js"></script>
+	<script src="assets/js/plugins/notify/bootstrap-notify.js"></script>
 
 	
     
@@ -43,7 +45,7 @@
 
 <script>
 
-    var apiUrl = "http://157.158.16.186:8081/api/";
+    var apiUrl = "http://157.158.16.186:8082/api/";
     var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
     var dataError = "Wystąpił błąd podczas pobierana danych."
@@ -64,6 +66,8 @@
 <script type="text/javascript" src="app/components/Login/LoginCtrl.js"></script>
 <script type="text/javascript" src="app/components/Login/LoginService.js"></script>
 
+<script type="text/javascript" src="app/components/User/UserService.js"></script>
+
 <script type="text/javascript" src="app/components/Problem/ProblemManagerCtrl.js"></script>
 <script type="text/javascript" src="app/components/Problem/ProblemCtrl.js"></script>
 <script type="text/javascript" src="app/components/Task/TaskCtrl.js"></script>
@@ -76,7 +80,7 @@
 <script type="text/javascript" src="app/components/Laboratory/LaboratoryService.js"></script>
 <script type="text/javascript" src="app/components/Modal/ModalService.js"></script>
 <script type="text/javascript" src="app/components/Home/HomeCtrl.js"></script>
-
+<script type="text/javascript" src="app/components/Notification/NotificationService.js"></script>
 <script src="assets/js/controllers.js"></script>
 <script>
     $('[data-toggle="tooltip"]').tooltip();

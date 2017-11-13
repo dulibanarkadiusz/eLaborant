@@ -1,11 +1,11 @@
-angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService) {
+angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService, NotificationService) {
     $scope.lab = {};
     if (param.id) {
         $scope.lab.id = param.id;
     }
 
 
-    $scope.init = function () {
+    $scope.init = function () {		
         $scope.windowTitle = "Dodaj nowe laboratorium";
         $scope.lab = {};
         $scope.lab.building = "MS";
@@ -30,6 +30,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         .success(function (serverResponse) {
             $scope.usersListData = serverResponse.response;
             $scope.dataLoaded = true;
+			
         })
         .error(function (data, status) {
             $scope.responseError = true;
@@ -43,13 +44,15 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
     $scope.save = function () {
         var dataAddTask = jQuery.extend({}, $scope.task);
         $http({
-            method: ($scope.id) ? 'PUT' : 'POST',
+            method: ($scope.lab.id) ? 'PUT' : 'POST',
             url: apiUrl + "laboratories/",
             data: JSON.parse(JSON.stringify($scope.lab))
         })
-        .success(function (success) {
-            $rootScope.$emit("RefreshList", {});
+        .success(function (success) {		
+			($scope.lab.id) ? NotificationService.successNotification("Laboratorium zostało zmienione!") : NotificationService.successNotification("Laboratorium zostało dodane!");
+			$rootScope.$emit("RefreshList", {});
             $scope.cancel();
+			
             $scope.lab = {};
             $scope.lab.building = "MS";
         })
@@ -69,6 +72,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         .then(function (response) {
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
+			NotificationService.successNotification("Laboratorium zostało usunięte!");
         }, function (response) {
             alert("Wystąpił błąd!");
         });
