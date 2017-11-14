@@ -1,4 +1,4 @@
-angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService) {
+angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService) {
     $scope.dataLoaded = false;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
@@ -57,9 +57,10 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
           data: JSON.parse(JSON.stringify(problemEntity))
         })
         .then(function(response) {
-
+            NotificationService.successNotification("Status problemu został zmieniony.");
         }, function(response) {
-            $scope.IsResponseError = true;
+            console.log(response);
+            NotificationService.errorNotification("Nie udało się zmienić statusu problemu: " + response.data.errors[0].message);
         });
     }
 

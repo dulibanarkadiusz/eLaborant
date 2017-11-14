@@ -22,15 +22,22 @@ angular.module('elaborantNotificationService', []).factory('NotificationService'
 
         });
     }
+    function createNotifyContent(title, text){
+        return '<p class="title">'+title+'</p><p>' + text + '</p>';
+    }
+
 
     return {
         errorNotification: function (text){
-            text = '<p class="title">Wystąpił błąd</p><p>' + text + '</p>';
-            showNotification(text, 'danger');
+            showNotification(createNotifyContent("Wystąpił błąd", text), 'danger');
         },
 
         successNotification: function (text) {
-            showNotification(text, 'success');
+            showNotification(createNotifyContent("Operacja wykonana poprawnie", text), 'success');
+        },
+
+        info: function(text) {
+            showNotification(createNotifyContent("Informacja", text));
         }
     };
 });
