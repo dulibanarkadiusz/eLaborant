@@ -1,4 +1,4 @@
-angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, TaskService){     
+angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, TaskService, UserService, StateService, NotificationService){     
     $scope.task = {};
     if (param.id){
         $scope.task.id = param.id;
@@ -13,47 +13,34 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
         $scope.task.problemid = $stateParams.id;
         $scope.task.priority = "3";
         $scope.task.idState = "2";
-        $scope.task.dateRealization = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm'));    // set current date rounded to the nearest hour (ex. 12:43 -> 13:00)
+        $scope.task.dateRealization = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm')); // set current date rounded to the nearest hour (ex. 12:43 -> 13:00)
         $scope.task.userExecuteTasksById = {};
+
 
         if (param.id){ // get details if task already exsists
             $scope.windowTitle = "Edycja zadania";
-            TaskService.getDataEntity(param.id, createObject);
+            TaskService.getDataEntity(param.id, createTaskObject, $scope.showGetTaskDataError);
         }
 
-        /*  ---- TEMPORARY ---- */
-        $http.get(apiUrl + 'users') // TODO - zamienić na laborantów 
-            .success(function (serverResponse) {
-                var response = serverResponse.response;
-                $scope.assistantsDataLoaded = true;
-
-                for(var i=0; i < response.length; i++){
-                    $scope.options.push({
-                        "id": response[i].id,
-                        "name": response[i].firstname + " " + response[i].surname
-                    });
-                }
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-
-        
-        $http.get(apiUrl + 'states')
-            .success(function (serverResponse) {
-                $scope.statesData = serverResponse.response;
-                $scope.statesDataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        /* ---- TEMPORARY END ---- */ 
-
+        UserService.getLaborants(createLaborantsList);
+        StateService.getDataEntity(createStateList);
     }
 
-    function createObject(dataEntityJSON){
+    function createLaborantsList(dataJSON){
+        var response = dataJSON.response;
+        for(var i=0; i < response.length; i++){
+            $scope.options.push({ // creates bootstrap dropdown list 
+                "id": response[i].id,
+                "name": response[i].firstname + " " + response[i].surname
+            });
+        }
+    }
+
+    function createStateList(dataJSON){
+        $scope.statesData = dataJSON.data.response;
+    }
+
+    function createTaskObject(dataEntityJSON){
         $scope.task = dataEntityJSON;
         $scope.task.idState = $scope.task.idState.toString();
     }
@@ -94,15 +81,20 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
             data: JSON.parse(JSON.stringify(json))
         })
         .then(function(response) {
+            NotificationService.successNotification("Zadanie zostało usunięte.");
             $rootScope.$emit("RefreshTaskList", {});
             $scope.cancel();
         }, function(response) {
-            alert("Wystąpił błąd!");
+            NotificationService.errorNotification("Nie udało się usunąć zadania. " + response.data.errors[0].message);
         });
     }
 
     $scope.updateDateRealization = function($event){
         $scope.task.dateRealization = new Date($event.target.value);
+    }
+
+    $scope.showGetTaskDataError = function (serverResponse){
+        NotificationService.errorNotification("Nie udało się pobrać szczegółów zadania. Kod błędu: " + response.data.errors[0].message);
     }
 
     $scope.cancel = function () {

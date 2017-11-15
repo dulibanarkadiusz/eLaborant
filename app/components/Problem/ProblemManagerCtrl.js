@@ -1,4 +1,4 @@
-angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, $state, $http, $sce, $filter, $stateParams, $modalInstance, param){     
+angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, $state, $http, $sce, $filter, $stateParams, $modalInstance, param, NotificationService, LaboratoryService, ComputerService){     
     $scope.problem = {};
     if (param.id){
         $scope.problem.id = param.id;
@@ -6,38 +6,16 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
 
     $scope.init = function(){
         $scope.problem = {};
+        LaboratoryService.getDataListEntity($scope.LoadLabsData, ShowError);
+    }
 
-        $scope.labList = function() { // TO DO
-            $http.get(apiUrl + 'laboratories')
-            .success(function (serverResponse) {
-                $scope.labListData = serverResponse.response;
-                $scope.labDataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
-        $scope.labList();
-
-        $scope.computersList = function() { // TO DO
-            $http.get(apiUrl + 'computers?query=idLaboratory%3D'+ $scope.problem.idLaboratory)
-            .success(function (serverResponse) {
-                $scope.computersListData = serverResponse.response;
-                $scope.computersDataLoaded = true;
-            })
-            .error(function(data, status){
-                $scope.responseError = true;
-                $scope.computersListData = {};
-                $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-            });
-        };
+    $scope.computersList = function(){
+        ComputerService.getComputersFromLab($scope.problem.idLaboratory, $scope.LoadComputersData, ShowComputersLoadError);
     }
 
     $scope.save = function(){
         $scope.data = {};
         $scope.data.content = $scope.problem.content;
-        $scope.data.idAuthor = 8;
         if ($scope.problem.source == 'computer'){
             $scope.data.idComputer = parseInt($scope.problem.idComputer);
         }
@@ -52,11 +30,12 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
         })
         .then(function(response) {
             $rootScope.$emit("RefreshProblemList", {});
+            NotificationService.successNotification("Problem został dodany.");
             $scope.cancel();
         }, 
         function(response) {
-            $scope.IsResponseError = true;
-            $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
+            console.log(response);
+            NotificationService.errorNotification("Dodawanie problemu zakończone niepowodzeniem: " + response.data.errors[0].message);
         });   
     }
 
@@ -70,9 +49,33 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
         .then(function(response) {
             $scope.cancel();
             $state.go('Problemy', {}, {reload: true}); // redirection from problem page to problemList
+            NotificationService.successNotification("Problem został usunięty.");
         }, function(response) {
-            
+            NotificationService.errorNotification("Nie udało się usunąć problemu: " + response.data.errors[0].message);
         });
+    }
+
+    $scope.LoadLabsData = function(serverResponse){
+        $scope.labListData = serverResponse.response;
+        $scope.labDataLoaded = true;
+    }
+
+    $scope.LoadComputersData = function(serverResponse){
+        $scope.computersListData = serverResponse.response;
+        $scope.computersDataLoaded = true;
+    }
+
+    function ShowError(){
+        NotificationService.errorNotification("Nie udało się załadować listy laboratoriów: " + response.data.errors[0].message);
+    }
+
+    function ShowComputersLoadError(response, status){
+        if (status == 404){
+            NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
+        }
+        else{
+            NotificationService.errorNotification(response.errors.message + " (błąd" + status + ")");
+        }
     }
 
     $scope.cancel = function () {

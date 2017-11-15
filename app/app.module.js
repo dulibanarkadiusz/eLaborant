@@ -19,5 +19,8 @@ var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"elaborantTaskManagerCtrl",
 												"elaborantLoginService",
 												"elaborantTaskService",
-												"elaborantModalService"
+												"elaborantUserService",
+												"elaborantStateService",
+												"elaborantModalService",
+												"elaborantNotificationService"
 												]);
