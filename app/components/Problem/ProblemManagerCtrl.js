@@ -34,8 +34,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
             $scope.cancel();
         }, 
         function(response) {
-            console.log(response);
-            NotificationService.errorNotification("Dodawanie problemu zakończone niepowodzeniem: " + response.data.errors[0].message);
+            NotificationService.errorFromResponse("Dodawanie problemu zakończone niepowodzeniem", response);
         });   
     }
 
@@ -51,7 +50,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
             $state.go('Problemy', {}, {reload: true}); // redirection from problem page to problemList
             NotificationService.successNotification("Problem został usunięty.");
         }, function(response) {
-            NotificationService.errorNotification("Nie udało się usunąć problemu: " + response.data.errors[0].message);
+            NotificationService.errorFromResponse("Nie udało się usunąć problemu", response);
         });
     }
 
@@ -66,7 +65,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     function ShowError(){
-        NotificationService.errorNotification("Nie udało się załadować listy laboratoriów: " + response.data.errors[0].message);
+        NotificationService.errorFromResponse("Nie udało się pobrać listy laborantów.", response);
     }
 
     function ShowComputersLoadError(response, status){
@@ -74,7 +73,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
             NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
         }
         else{
-            NotificationService.errorNotification(response.errors.message + " (błąd" + status + ")");
+            NotificationService.errorFromResponse("", response);
         }
     }
 

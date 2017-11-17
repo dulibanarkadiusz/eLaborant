@@ -59,8 +59,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
         .then(function(response) {
             NotificationService.successNotification("Status problemu został zmieniony.");
         }, function(response) {
-            console.log(response);
-            NotificationService.errorNotification("Nie udało się zmienić statusu problemu: " + response.data.errors[0].message);
+            NotificationService.errorFromResponse("Nie zmieniono statusu problemu.", response);
         });
     }
 

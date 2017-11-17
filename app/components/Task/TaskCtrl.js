@@ -23,7 +23,7 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         function (response) {
             $scope.messageType = messageType.Error;
             switch(response.status){
-                case 403:
+                case 401:
                     $scope.message = "Bez autoryzacji.";
                     break;
                 case 404: 

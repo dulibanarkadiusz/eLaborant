@@ -13,7 +13,7 @@ angular.module('elaborantTaskService', []).factory('TaskService', function ($htt
                 callback(response);
             },
             function(serverResponse){
-                NotificationService.errorNotification("Nie udało się pobrać szczegółów zadania. Kod błędu: " + serverResponse.status + " " + serverResponse.statusText);
+                NotificationService.errorFromResponse("Nie udało się pobrać szczegółów zadania", serverResponse);
             });
         }
     };
