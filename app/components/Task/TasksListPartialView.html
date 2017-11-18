@@ -13,11 +13,11 @@
             <div ng-include="'app/shared/paginationPartialView.html'"></div>
 
             <div class="task" ng-repeat="task in taskData">
-                <div class="panel panel-default">
+                <div class="panel panel-default" ng-class="(task.idState == 5) ? 'resolved' : ''">
                     <div class="panel-heading padding-5" ng-if="!problemid">
                         <a ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
                     </div>
-                    <div class="panel-body padding-5">
+                    <div class="panel-body padding-5" >
                         <div class="row">
                             <div class="col-xs-1 cols-sm-1 col-md-1">
                                 <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority | priortyDescription}}" bs-tooltip>
@@ -50,10 +50,10 @@
                             </div>
                             
                             <div class="textToRight col-xs-3 col-sm-3 col-md-1 task-buttons no-collapsable pull-right">
-                                <button class="btn btn-warning btn-xs" data-target="#editProblemModal" title="Edytuj zadanie" ng-click="openEditTaskWindow(task.id)">
+                                <button class="btn btn-warning btn-xs" data-target="#editProblemModal" title="Edytuj zadanie" ng-click="openEditTaskWindow(task.id)" bs-tooltip>
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </button>
-                                <button class="btn btn-danger btn-xs" data-target="#editProblemModal" title="Usuń zadanie" ng-click="openRemoveTaskWindow(task.id)">
+                                <button class="btn btn-danger btn-xs" data-target="#editProblemModal" title="Usuń zadanie" ng-click="openRemoveTaskWindow(task.id)" bs-tooltip>
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
                             </div>

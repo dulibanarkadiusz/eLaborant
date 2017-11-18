@@ -213,20 +213,24 @@
 	transition: background-color 0.5s ease-out;
 }
 
-.problem-resolved{
+.resolved{
 	background: #fff !important;
 	color: #ccc !important;
 }
 
-.problem-resolved a{
+.resolved a{
 	color: #a9c5de;
 }
 
-.problem-resolved .badge{
-    color: #b1b1b1 !important;
-	background: rgba(241, 241, 241, 0.59) !important;
-    text-shadow: none;
-    font-weight: normal;
+.resolved .badge{
+  color: #b1b1b1 !important;
+  background: rgba(241, 241, 241, 0.59) !important;
+  text-shadow: none;
+  font-weight: normal;
+}
+
+.resolved button, .resolved .label{
+  opacity: 0.4;
 }
 
 .problem-resolved .problemId{

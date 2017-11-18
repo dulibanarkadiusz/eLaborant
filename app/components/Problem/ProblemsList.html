@@ -27,7 +27,7 @@
             <div ng-show="dataLoaded" class="problemList">
               <div ng-include="'app/shared/paginationPartialView.html'"></div>
            		<div class="panel panel-default" ng-repeat="x in myData">
-            		<div class="panel-heading" ng-class="(x.isResolved) ? 'problem-resolved' : ''" id="headingOne">
+            		<div class="panel-heading" ng-class="(x.isResolved) ? 'resolved' : ''" id="headingOne">
                   <div class="row panel-title accordion-toggle" aria-expanded="true">
                     <div class="hidden-xs float-left">
                       <span class="checkbox checkbox-primary checkbox-circle checkbox-lg" data-placement="left" title="{{x.isResolved ? 'Problem oznaczono jako rozwiązany' : 'Kliknij, by oznaczyć problem jako rozwiązany' }}" bs-tooltip>
@@ -63,8 +63,8 @@
                       </a>
                     </div>
                     <div class="col-md-1 text-right col-md-push-5">
-                      <button class="btn btn-xs btn-danger btn-preview" ng-click="openRemoveProblemWindow(x.id)">
-                        <i class="fa fa-trash-o fa-1" aria-hidden="true" title="Usuń problem" bs-tooltip></i>
+                      <button class="btn btn-xs btn-danger btn-preview" ng-click="openRemoveProblemWindow(x.id)" title="Usuń problem" bs-tooltip>
+                        <i class="fa fa-trash-o fa-1" aria-hidden="true"></i>
                       </button>
                       &nbsp;
                     </div>
