@@ -34,20 +34,23 @@
             </ul>
            
             <div ng-controller="nav" class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="{{active || 'last-problems'}} nav navbar-nav side-nav">
-                    <li ng-show="showProblems" class="last-problems" ng-click="active='last-problems'">
+                <ul class="nav navbar-nav side-nav">
+                    <li ng-class="{active: $state.is('PanelHome')}">
+                        <a ui-sref="PanelHome"><i class="fa fa-fw fa-home"></i> Strona główna</a>
+                    </li>
+                    <li ng-class="{active: $state.is('Problemy') || $state.is('Problem')}">
                         <a ui-sref="Problemy"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy</a>                        
                     </li>
-                    <li ng-show="showTasks" class="last-tasks" ng-click="active='last-tasks'">
+                    <li ng-class="{active: $state.is('Zadania')}">
                         <a ui-sref="Zadania"><i class="fa fa-tasks"></i> Zadania</a>
                     </li>
-                    <li ng-show="showUsers" class="users-list" ng-click="active='users-list'">
+                    <li ng-class="{active: $state.is('Uzytkownicy') || $state.is('Uzytkownik')}">
                         <a ui-sref="Uzytkownicy"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
                     </li>
-                    <li ng-show="showLaboratories" class="laboratories" ng-click="active='laboratories'">
-                        <a ui-sref="Laboratoria"><i class="fa fa-fw fa-building-o"></i> Laboratoria</a>
+                    <li ng-class="{active: $state.is('Laboratorium') || $state.is('Laboratoria')}">
+                        <a ui-sref="Laboratoria"><i class="fa fa-fw fa-cubes"></i> Laboratoria</a>
                     </li>
-                    <li ng-show="showComputers" class="computers" ng-click="active='computers'">
+                    <li ng-class="{active: $state.is('Komputer') || $state.is('Komputery')}">
                         <a ui-sref="Komputery"><i class="fa fa-fw fa-laptop"></i> Komputery</a>
                     </li>
                     <!--

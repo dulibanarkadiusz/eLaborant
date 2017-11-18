@@ -69,6 +69,10 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
     $locationProvider.html5Mode(true);
 });
 
+elaborantApp.run(function($rootScope, $state) {
+    $rootScope.$state = $state;
+});
+
 elaborantApp.run([
         '$rootScope', '$modalStack',
         function ($rootScope, $modalStack) {
