@@ -4,7 +4,9 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
         $scope.user.id = param.id;
     }
 
-
+	$scope.firstStep = true;
+	$scope.next = function(){$scope.firstStep = false;};
+	$scope.back = function(){$scope.firstStep = true;};
     $scope.init = function () {		
         $scope.windowTitle = "Dodaj nowego użytkownika";
         $scope.user = {};
