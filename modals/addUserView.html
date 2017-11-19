@@ -1,0 +1,109 @@
+<div class="modal-content" ng-init="init()">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{windowTitle}}</h4>
+    </div>
+    <form name="addUserForm" ng-submit="processForm()">
+        <div class="modal-body"> 
+            <div ng-show="IsResponseError">
+                <div class="alert alert-danger"><strong>Błąd przy dodawaniu użytkownika:</strong>
+                    {{ResponseErrorMessage}}
+                </div>
+            </div>
+			<div class="form-group" ng-class="{'has-error': addUserForm.role.$invalid}">
+                <userel for="role" class="control-userel">Rola:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-home" aria-hidden="true"></i></span>
+                    <select class="form-control" name="role" ng-model="user.idRole" required>
+                        <option ng-repeat="x in rolesListData" value="{{x.id}}">{{x.name}} </option>
+                    </select>
+                </div>
+                <div ng-show="addUserForm.role.$invalid && addUserForm.role.$touched" class="help-block with-errors">
+                    Proszę wybrać rolę
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error': addUserForm.login.$invalid}">
+                <userel for="login" class="control-userel">Nazwa użytkownika:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="text" name="login" class="form-control" ng-model="user.login" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Nazwa użytkownika" required>
+                </div>
+                <div ng-show="addUserForm.login.$invalid && addUserForm.login.$touched" class="help-block with-errors">
+                    Podaj poprawną nazwę użytkownika od 2 do 20 znaków
+                </div>
+            </div>
+			<div class="form-group" ng-class="{'has-error': addUserForm.password.$invalid}">
+                <userel for="password" class="control-userel">Hasło:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Hasło" required>
+                </div>
+                <div ng-show="addUserForm.password.$invalid && addUserForm.password.$touched" class="help-block with-errors">
+                    Podaj hasło
+                </div>
+            </div>
+			
+			<div class="form-group" ng-class="{'has-error': addUserForm.password2.$invalid || user.password2 != user.password}">
+                <userel for="password2" class="control-userel">Powtórz hasło:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="text" name="password2" class="form-control" ng-model="user.password2" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Powtórz hasło" required>
+                </div>
+                <div ng-show="(addUserForm.password2.$invalid || user.password2 != user.password)&& addUserForm.password2.$touched" class="help-block with-errors">
+                    Podane hasła różnią się
+                </div>
+            </div>
+			<div class="form-group" ng-class="{'has-error': addUserForm.firstname.$invalid}">
+                <userel for="firstname" class="control-userel">Imię użytkownika:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="text" name="firstname" class="form-control" ng-model="user.firstname" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Imię użytkownika" required>
+                </div>
+                <div ng-show="addUserForm.firstname.$invalid && addUserForm.firstname.$touched" class="help-block with-errors">
+                    Podaj poprawne imię użytkownika od 2 do 20 znaków
+                </div>
+            </div>
+			<div class="form-group" ng-class="{'has-error': addUserForm.surname.$invalid}">
+                <userel for="surname" class="control-userel">Nazwisko użytkownika:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="text" name="surname" class="form-control" ng-model="user.surname" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Nazwisko użytkownika" required>
+                </div>
+                <div ng-show="addUserForm.surname.$invalid && addUserForm.surname.$touched" class="help-block with-errors">
+                    Podaj poprawne nazwisko użytkownika od 2 do 20 znaków
+                </div>
+            </div>
+			
+			
+			
+			<div class="form-group" ng-class="{'has-error': addUserForm.email.$invalid}">
+                <userel for="email" class="control-userel">Adres e-mail:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="email" name="email" class="form-control" ng-model="user.email" placeholder="Adres e-mail" required>
+                </div>
+                <div ng-show="addUserForm.email.$invalid && addUserForm.email.$touched" class="help-block with-errors">
+                    Podaj poprawny adres e-mail
+                </div>
+            </div>
+           
+
+			 <div class="form-group" ng-class="{'has-error': addUserForm.phoneNumber.$invalid}">
+                <userel for="phoneNumber" class="control-userel">Nr telefonu:</userel>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
+                    <input type="text" name="phoneNumber" class="form-control" ng-model="user.phoneNumber" ng-pattern="/^[0-9]{9,20}$/" placeholder="Numer telefonu użytkownika" required>
+                </div>
+                <div ng-show="addUserForm.phoneNumber.$invalid && addUserForm.phoneNumber.$touched" class="help-block with-errors">
+                    Podaj poprawny numer telefonu
+                </div>
+            </div>
+           
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Anuluj</button>
+            <button type="submit" class="btn btn-success" ng-disabled="addUserForm.$invalid" ng-click="save()">{{buttonName}}</button>
+        </div>
+    </form>
+</div>   
