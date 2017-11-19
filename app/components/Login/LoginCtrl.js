@@ -3,7 +3,7 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
     $scope.formSubmit = function () {
         LoginService.login($scope.username, $scope.password, function (response) {
 
-            if (response.success && response.status === 200) {
+            if (response.success) {
                 $scope.error = '';
                 $scope.username = '';
                 $scope.password = '';

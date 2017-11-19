@@ -22,7 +22,7 @@ elaborantApp.factory('httpRequestInterceptor', function ($q, $injector) {
                 });
                 return deferred.promise;
             }
-            return response;
+            return $q.reject(response);
         }
     };
 });
