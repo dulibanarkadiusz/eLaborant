@@ -81,7 +81,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
             data: JSON.parse(JSON.stringify(json))
         })
         .then(function(response) {
-            NotificationService.successNotification("Zadanie zostało usunięte.");
+            NotificationService.success("Zadanie zostało usunięte.");
             $rootScope.$emit("RefreshTaskList", {});
             $scope.cancel();
         }, function(response) {

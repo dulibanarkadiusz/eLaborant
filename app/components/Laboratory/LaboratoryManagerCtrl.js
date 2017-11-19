@@ -49,7 +49,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             data: JSON.parse(JSON.stringify($scope.lab))
         })
         .success(function (success) {		
-			($scope.lab.id) ? NotificationService.successNotification("Laboratorium zostało zmienione!") : NotificationService.successNotification("Laboratorium zostało dodane!");
+			($scope.lab.id) ? NotificationService.success("Laboratorium zostało zmienione!") : NotificationService.success("Laboratorium zostało dodane!");
 			$rootScope.$emit("RefreshList", {});
             $scope.cancel();
 			
@@ -72,7 +72,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         .then(function (response) {
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
-			NotificationService.successNotification("Laboratorium zostało usunięte!");
+			NotificationService.success("Laboratorium zostało usunięte!");
         }, function (response) {
             alert("Wystąpił błąd!");
         });

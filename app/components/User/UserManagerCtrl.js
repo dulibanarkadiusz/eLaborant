@@ -50,7 +50,7 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
             data: JSON.parse(JSON.stringify($scope.user))
         })
         .success(function (success) {		
-			($scope.user.id) ? NotificationService.successNotification("Użytkownik został zmieniony!") : NotificationService.successNotification("Użytkownik zostało dodany!");
+			($scope.user.id) ? NotificationService.success("Użytkownik został zmieniony!") : NotificationService.success("Użytkownik zostało dodany!");
 			$rootScope.$emit("RefreshList", {});
             $scope.cancel();
 			
@@ -73,7 +73,7 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
         .then(function (response) {
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
-			NotificationService.successNotification("Użytkownik został usunięty!");
+			NotificationService.success("Użytkownik został usunięty!");
         }, function (response) {
             alert("Wystąpił błąd!");
         });

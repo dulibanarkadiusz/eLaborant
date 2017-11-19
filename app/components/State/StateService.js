@@ -9,7 +9,7 @@ angular.module('elaborantStateService', []).factory('StateService', function ($h
                 successCallback(serverResponse)
             }, 
             function(serverResponse) {
-                NotificationService.errorNotification("Nie udało się załadować listy dostępnych statusów.");
+                NotificationService.error("Nie udało się załadować listy dostępnych statusów.");
             });
         }
     };

@@ -45,7 +45,7 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
             data: JSON.parse(JSON.stringify($scope.computer))
         })
         .success(function (success) {
-			($scope.computer.id) ? NotificationService.successNotification("Komputer został zmieniony!") : NotificationService.successNotification("Komputer został dodany!");
+			($scope.computer.id) ? NotificationService.success("Komputer został zmieniony!") : NotificationService.success("Komputer został dodany!");
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
             $scope.computer = {};
@@ -64,7 +64,7 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
             data: JSON.parse(JSON.stringify(json))
         })
         .then(function (response) {
-			NotificationService.successNotification("Komputer został usunięty!")
+			NotificationService.success("Komputer został usunięty!")
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
         }, function (response) {

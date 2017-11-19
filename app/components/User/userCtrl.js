@@ -20,7 +20,7 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
 	$scope.addNewUser = function(userId = null){ 
 	
         var modalInstance = $modal.open({
-            templateUrl: 'modals/addUserView.html',
+            templateUrl: 'app/components/User/AddUserView.html',
             controller: 'UserManagerCtrl',
             backdrop: 'static',
             resolve: {
@@ -36,7 +36,7 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
 	$scope.openRemoveUserWindow = function(entityId){
 
 		var options = ModalService.getModalOptions(entityId);
-		options.templateUrl = 'modals/deleteEntity.html';
+		options.templateUrl = 'app/shared/Modal/deleteEntity.html';
 		options.controller = 'UserManagerCtrl';
 
 		var modalInstance = $modal.open(options);
