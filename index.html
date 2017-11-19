@@ -1,92 +1,78 @@
 ﻿<!DOCTYPE html>
 <html lang="pl" ng-app="elaborant">
-<head>
-    <base href="/eLaborant/">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <base href="/eLaborant/">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>eLaborant - panel administracyjny</title>
+        <title>eLaborant - panel administracyjny</title>
 
-    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/sb-admin.css" rel="stylesheet">
-    <link href="assets/css/panel-group.css" rel="stylesheet">
-    <link href="assets/css/custom.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-datetimepicker.css" rel="stylesheet">
-    <link href="assets/fonts/font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
+        <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/sb-admin.css" rel="stylesheet">
+        <link href="assets/css/panel-group.css" rel="stylesheet">
+        <link href="assets/css/custom.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-datetimepicker.css" rel="stylesheet">
+        <link href="assets/fonts/font-awesome/css/font-awesome.min.css?v=2" rel="stylesheet" type="text/css">
 
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script> <!-- amMoment-->
-    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
-    <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
-    <script src="assets/js/angular-bootstrap-multiselect.js"></script>
-    <script src="assets/js/bootstrap-datetimepicker.js"></script>
-	<script src="assets/js/plugins/chart/Chart.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.1/angular-moment.min.js"></script> <!-- amMoment-->
+        <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+        <script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+        <script src="assets/js/angular-bootstrap-multiselect.js"></script>
+        <script src="assets/js/bootstrap-datetimepicker.js"></script>
+    	<script src="assets/js/plugins/chart/Chart.min.js"></script>
 
-	<script src="assets/js/plugins/chart/angular-chart.min.js"></script>
-	<script src="assets/js/plugins/notify/bootstrap-notify.min.js"></script>
-	<script src="assets/js/plugins/notify/bootstrap-notify.js"></script>
-
-	
-    
-</head>
+    	<script src="assets/js/plugins/chart/angular-chart.min.js"></script>
+    	<script src="assets/js/plugins/notify/bootstrap-notify.min.js"></script>
+    	<script src="assets/js/plugins/notify/bootstrap-notify.js"></script>
+    </head>
 
 
-<body >
-    <div ui-view ></div>
-</body>
+    <body>
+        <div ui-view ></div>
+    </body>
 
+    <script type="text/javascript" src="assets/js/functions.js"></script>
 
-<script>
-    var apiUrl = "http://157.158.16.186:8082/api/";
-</script>
+    <script type="text/javascript" src="app/app.module.js"></script>
+    <script type="text/javascript" src="app/app.routes.js"></script>
+    <script type="text/javascript" src="app/app.interceptor.js"></script>
+    <script type="text/javascript" src="app/app.directives.js"></script>
+    <script type="text/javascript" src="app/app.filters.js"></script>
 
-<script type="text/javascript" src="assets/js/functions.js"></script>
+    <script type="text/javascript" src="app/shared/NavBar/NavCtrl.js"></script>
+    <script type="text/javascript" src="app/shared/Modal/ModalService.js"></script>
 
-<script type="text/javascript" src="app/app.module.js"></script>
-<script type="text/javascript" src="app/app.routes.js"></script>
-<script type="text/javascript" src="app/app.interceptor.js"></script>
-<script type="text/javascript" src="app/app.directives.js"></script>
-<script type="text/javascript" src="app/app.filters.js"></script>
+    <script type="text/javascript" src="app/components/Task/TaskManagerCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Task/TaskService.js"></script>
 
-<script type="text/javascript" src="app/shared/NavBar/NavCtrl.js"></script>
-<script type="text/javascript" src="app/shared/Modal/ModalService.js"></script>
+    <script type="text/javascript" src="app/components/Login/LoginCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Login/LoginService.js"></script>
 
-<script type="text/javascript" src="app/components/Task/TaskManagerCtrl.js"></script>
-<script type="text/javascript" src="app/components/Task/TaskService.js"></script>
+    <script type="text/javascript" src="app/components/MainPage/MainPageCtrl.js"></script>
+    <script type="text/javascript" src="app/components/CurrentUser/CurrentUserCtrl.js"></script>
+    <script type="text/javascript" src="app/components/User/UserService.js"></script>
 
-<script type="text/javascript" src="app/components/Login/LoginCtrl.js"></script>
-<script type="text/javascript" src="app/components/Login/LoginService.js"></script>
+    <script type="text/javascript" src="app/components/Problem/ProblemManagerCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Problem/ProblemCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Task/TaskCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Computer/ComputerCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Computer/ComputerManagerCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Computer/ComputerService.js"></script>
+    <script type="text/javascript" src="app/components/User/UserCtrl.js"></script>
+    <script type="text/javascript" src="app/components/User/UserManagerCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Laboratory/LaboratoryCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Laboratory/LaboratoryManagerCtrl.js"></script>
+    <script type="text/javascript" src="app/components/Laboratory/LaboratoryService.js"></script>
+    <script type="text/javascript" src="app/components/State/StateService.js"></script>
+    <script type="text/javascript" src="app/components/Home/HomeCtrl.js"></script>
+    <script type="text/javascript" src="app/shared/Notification/NotificationService.js"></script>
 
-<script type="text/javascript" src="app/components/MainPage/MainPageCtrl.js"></script>
-<script type="text/javascript" src="app/components/CurrentUser/CurrentUserCtrl.js"></script>
-<script type="text/javascript" src="app/components/User/UserService.js"></script>
-
-<script type="text/javascript" src="app/components/Problem/ProblemManagerCtrl.js"></script>
-<script type="text/javascript" src="app/components/Problem/ProblemCtrl.js"></script>
-<script type="text/javascript" src="app/components/Task/TaskCtrl.js"></script>
-<script type="text/javascript" src="app/components/Computer/ComputerCtrl.js"></script>
-<script type="text/javascript" src="app/components/Computer/ComputerManagerCtrl.js"></script>
-<script type="text/javascript" src="app/components/Computer/ComputerService.js"></script>
-<script type="text/javascript" src="app/components/User/UserCtrl.js"></script>
-<script type="text/javascript" src="app/components/User/UserManagerCtrl.js"></script>
-<script type="text/javascript" src="app/components/Laboratory/LaboratoryCtrl.js"></script>
-<script type="text/javascript" src="app/components/Laboratory/LaboratoryManagerCtrl.js"></script>
-<script type="text/javascript" src="app/components/Laboratory/LaboratoryService.js"></script>
-<script type="text/javascript" src="app/components/State/StateService.js"></script>
-<script type="text/javascript" src="app/components/Home/HomeCtrl.js"></script>
-<script type="text/javascript" src="app/shared/Notification/NotificationService.js"></script>
-<script>
-    $('[data-toggle="tooltip"]').tooltip();
-    $('body').on('click', function () {
-        $('.tooltip').tooltip('hide');
-    });
-</script>
-</body>
 </html>

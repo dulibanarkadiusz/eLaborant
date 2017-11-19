@@ -1,3 +1,5 @@
+var apiUrl = "http://157.158.16.186:8082/api/";
+
 var messageType = {
         Info: 0,
         Warning : 1,
