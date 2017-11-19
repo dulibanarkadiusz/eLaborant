@@ -21,7 +21,7 @@
             <div ng-hide="problemsListData || errorMessage" class="preloader">
             </div>
 
-            <div ng-show="errorMessage" ng-bind-html="errorMessage" class="responseErrorMessage">
+            <div ng-show="errorMessage && !problemsListData" ng-bind-html="errorMessage" class="responseErrorMessage">
             </div>
 
             <div ng-show="problemsListData" class="problemList">
