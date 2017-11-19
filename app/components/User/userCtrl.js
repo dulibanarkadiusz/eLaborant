@@ -1,4 +1,4 @@
-angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, UserService) {
+angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, UserService, $modal, ModalService) {
     $scope.dataLoaded = false;
     $scope.totalElements = 0;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
@@ -17,5 +17,28 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
             $scope.errorMessage = $sce.trustAsHtml(errorMessage);
         }, pageNumber, $scope.pageSize)
     };
+	$scope.addNewUser = function(userId = null){ 
+	
+        var modalInstance = $modal.open({
+            templateUrl: 'modals/addUserView.html',
+            controller: 'UserManagerCtrl',
+            backdrop: 'static',
+            resolve: {
+                param: function(){
+                    return {'id':userId}
+                }
+            }
+        });
+    };
+	$scope.editUser = function(userId){
+		$scope.addNewUser(userId);
+	}
+	$scope.openRemoveUserWindow = function(entityId){
 
+		var options = ModalService.getModalOptions(entityId);
+		options.templateUrl = 'modals/deleteEntity.html';
+		options.controller = 'UserManagerCtrl';
+
+		var modalInstance = $modal.open(options);
+	}			
     });
