@@ -83,7 +83,7 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
 	$scope.openRemoveComputerWindow = function(entityId){
 		
 		var options = ModalService.getModalOptions(entityId);
-		options.templateUrl = 'modals/deleteEntity.html';
+		options.templateUrl = 'app/shared/Modal/deleteEntity.html';
 		options.controller = 'ComputerManagerCtrl';
 
 		var modalInstance = $modal.open(options);

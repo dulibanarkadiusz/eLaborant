@@ -39,7 +39,7 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
 
     $scope.openRemoveTaskWindow = function(taskId){
         var options = ModalService.getModalOptions(taskId);
-        options.templateUrl = 'modals/deleteEntity.html';
+        options.templateUrl = 'app/shared/Modal/deleteEntity.html';
         options.controller = 'TaskManagerCtrl';
 
         var modalInstance = $modal.open(options);

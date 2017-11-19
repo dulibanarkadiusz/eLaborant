@@ -62,7 +62,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
 
     $scope.openRemoveProblemWindow = function(entityId = $scope.problemid){
         var options = ModalService.getModalOptions(entityId);
-        options.templateUrl = 'modals/deleteEntity.html';
+        options.templateUrl = 'app/shared/Modal/deleteEntity.html';
         options.controller = 'ProblemManagerCtrl';
 
         var modalInstance = $modal.open(options);
