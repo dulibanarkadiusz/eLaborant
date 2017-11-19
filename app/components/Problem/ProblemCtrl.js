@@ -54,7 +54,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
           data: JSON.parse(JSON.stringify(problemEntity))
         })
         .then(function(response) {
-            NotificationService.successNotification("Status problemu został zmieniony.");
+            NotificationService.success("Status problemu został zmieniony.");
         }, function(response) {
             NotificationService.errorFromResponse("Nie zmieniono statusu problemu.", response);
         });

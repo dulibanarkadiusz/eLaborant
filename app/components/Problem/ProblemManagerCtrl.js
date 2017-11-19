@@ -30,7 +30,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
         })
         .then(function(response) {
             $rootScope.$emit("RefreshProblemList", {});
-            NotificationService.successNotification("Problem został dodany.");
+            NotificationService.success("Problem został dodany.");
             $scope.cancel();
         }, 
         function(response) {
@@ -48,7 +48,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
         .then(function(response) {
             $scope.cancel();
             $state.go('Problemy', {}, {reload: true}); // redirection from problem page to problemList
-            NotificationService.successNotification("Problem został usunięty.");
+            NotificationService.success("Problem został usunięty.");
         }, function(response) {
             NotificationService.errorFromResponse("Nie udało się usunąć problemu", response);
         });

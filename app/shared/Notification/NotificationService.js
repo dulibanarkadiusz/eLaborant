@@ -26,7 +26,6 @@ angular.module('elaborantNotificationService', []).factory('NotificationService'
         return '<p class="title">'+title+'</p><p>' + text + '</p>';
     }
 
-
     return {
         errorFromResponse: function (text, response){
             console.log(response);
@@ -34,11 +33,11 @@ angular.module('elaborantNotificationService', []).factory('NotificationService'
             
             showNotification(createNotifyContent(text, errorsMessage), 'danger');
         },
-        errorNotification: function (text){
+        error: function (text){
             showNotification(createNotifyContent("Wystąpił błąd", text), 'danger');
         },
 
-        successNotification: function (text) {
+        success: function (text) {
             showNotification(createNotifyContent("Operacja wykonana poprawnie", text), 'success');
         },
 
