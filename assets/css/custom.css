@@ -1,15 +1,3 @@
-ul.last-problems .last-problems a,
-ul.problem .last-problems a,
-ul.users-list .users-list a,
-ul.last-tasks .last-tasks a,
-ul.computers .computers a,
-ul.laboratories .laboratories a,
-ul.laboratory .laboratories a,
-ul.settings .settings a{ 
-	color: #fff !important;
-	background-color:#000 !important;
-}
-
 .problem-desc{
 	max-height: 45px;
 	display: -webkit-box;
@@ -33,7 +21,6 @@ ul.settings .settings a{
 .badge{
 	white-space: normal;
 }
-
 
 #task-list{
 	margin-bottom: 70px;
@@ -226,20 +213,24 @@ ul.settings .settings a{
 	transition: background-color 0.5s ease-out;
 }
 
-.problem-resolved{
+.resolved{
 	background: #fff !important;
 	color: #ccc !important;
 }
 
-.problem-resolved a{
+.resolved a{
 	color: #a9c5de;
 }
 
-.problem-resolved .badge{
-    color: #b1b1b1 !important;
-	background: rgba(241, 241, 241, 0.59) !important;
-    text-shadow: none;
-    font-weight: normal;
+.resolved .badge{
+  color: #b1b1b1 !important;
+  background: rgba(241, 241, 241, 0.59) !important;
+  text-shadow: none;
+  font-weight: normal;
+}
+
+.resolved button, .resolved .label{
+  opacity: 0.4;
 }
 
 .problem-resolved .problemId{
@@ -256,6 +247,16 @@ ul.settings .settings a{
 
 .problem-details .row{
   margin: 7px 0;
+}
+
+[data-notify="container"]{
+  max-width: 400px;
+}
+
+[data-notify="container"] .title{
+  display: block;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .float-left{

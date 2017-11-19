@@ -9,7 +9,7 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
 
     $scope.addNewComputer = function(computerId = null){ 
         var modalInstance = $modal.open({
-            templateUrl: 'modals/addComputerView.html',
+            templateUrl: 'app/components/Computer/AddComputerView.html',
             controller: 'ComputerManagerCtrl',
             backdrop: 'static',
             resolve: {

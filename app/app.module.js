@@ -4,6 +4,9 @@ var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"btorfs.multiselect", 
 												"ui.bootstrap",
 												
+												"elaborantMainPageCtrl",
+												"elaborantNavCtrl",
+												"elaborantCurrentUserCtrl",
 												"elaborantLaboratoryCtrl",
 												"elaborantLaboratoryManagerCtrl",
 												"elaborantLaboratoryService",
@@ -21,6 +24,7 @@ var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"elaborantLoginService",
 												"elaborantTaskService",
 												"elaborantUserService",
+												"elaborantStateService",
 												"elaborantModalService",
 												"elaborantNotificationService"
 												]);

@@ -27,8 +27,8 @@ angular.module('elaborantComputerService', []).factory('ComputerService', functi
                 .success(function (serverResponse) {
                     successCallback(serverResponse)
                 })
-                .error(function(data, status){
-                    errorCallback(status);
+                .error(function(serverResponse, status){
+                    errorCallback(serverResponse, status);
                 });
             }
 		

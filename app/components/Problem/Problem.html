@@ -1,6 +1,9 @@
 
 <div ng-controller="ProblemCtrl" ng-init="getProblem()">
     <div ng-bind-html="errorDataLoaded"></div>
+    <div ng-hide="problemData || errorDataLoaded" class="preloader">
+    </div>
+    
     <div class="panel panel-default" ng-repeat="x in problemData">
         <div class="panel-heading row problemHeader">
             <span class="problemOptions checkbox checkbox-primary checkbox-circle checkbox-lg" data-placement="left" title="{{x.isResolved ? 'Problem oznaczono jako rozwiązany' : 'Kliknij, by oznaczyć problem jako rozwiązany' }}" bs-tooltip style="float:left;">
@@ -21,10 +24,7 @@
         </div>
 
         <div class="problem-details">
-            <div ng-hide="problemDataLoaded || errorDataLoaded!=''" class="preloader">
-            </div>
 
-            
 
             <div class="row">
                 <div class="col-xs-4 col-md-3 col-lg-2 textToRight">
@@ -70,7 +70,7 @@
 
         </div>
     </div>
-    <div id="task-list" ng-controller="TaskCtrl" ng-show="problemDataLoaded" class="panel panel-default">
+    <div id="task-list" ng-controller="TaskCtrl" ng-show="problemData" class="panel panel-default">
         <div class="panel-heading">
             <h4>
                 Zadania

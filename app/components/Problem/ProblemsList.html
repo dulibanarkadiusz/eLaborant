@@ -18,57 +18,57 @@
   			<div class="panel-body">
           <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true">
                       
-            <div ng-hide="dataLoaded || responseError" class="preloader">
+            <div ng-hide="problemsListData || errorMessage" class="preloader">
             </div>
 
-            <div ng-show="responseError" ng-bind-html="errorMessage" class="responseErrorMessage">
+            <div ng-show="errorMessage && !problemsListData" ng-bind-html="errorMessage" class="responseErrorMessage">
             </div>
 
-            <div ng-show="dataLoaded" class="problemList">
+            <div ng-show="problemsListData" class="problemList">
               <div ng-include="'app/shared/paginationPartialView.html'"></div>
-           		<div class="panel panel-default" ng-repeat="x in myData">
-            		<div class="panel-heading" ng-class="(x.isResolved) ? 'problem-resolved' : ''" id="headingOne">
+           		<div class="panel panel-default" ng-repeat="p in problemsListData">
+            		<div class="panel-heading" ng-class="(p.isResolved) ? 'resolved' : ''" id="headingOne">
                   <div class="row panel-title accordion-toggle" aria-expanded="true">
                     <div class="hidden-xs float-left">
-                      <span class="checkbox checkbox-primary checkbox-circle checkbox-lg" data-placement="left" title="{{x.isResolved ? 'Problem oznaczono jako rozwiązany' : 'Kliknij, by oznaczyć problem jako rozwiązany' }}" bs-tooltip>
-                        <input id="checkbox-{{x.id}}" class="styled" type="checkbox" ng-model="x.isResolved" ng-change="editEntity(x.id, x.isResolved)">
-                        <label for="checkbox-{{x.id}}"></label>
+                      <span class="checkbox checkbox-primary checkbox-circle checkbox-lg" data-placement="left" title="{{p.isResolved ? 'Problem oznaczono jako rozwiązany' : 'Kliknij, by oznaczyć problem jako rozwiązany' }}" bs-tooltip>
+                        <input id="checkbox-{{p.id}}" class="styled" type="checkbox" ng-model="p.isResolved" ng-change="editEntity(p.id, p.isResolved)">
+                        <label for="checkbox-{{p.id}}"></label>
                       </span>
                     </div>
            					<div class="col-xs-4 col-sm-4 col-md-2 problemId">
-                      <button ui-sref="Problem({id: '{{x.id}}'})" class="btn btn-xs btn-default btn-preview" title="Przejdź do strony problemu" bs-tooltip>
+                      <button ui-sref="Problem({id: '{{p.id}}'})" class="btn btn-xs btn-default btn-preview" title="Przejdź do strony problemu" bs-tooltip>
                          <i class="fa fa-share fa-1" aria-hidden="true"></i>
                       </button>
-                      <a ui-sref="Problem({id: '{{x.id}}'})">
-                        <strong>#{{x.id}}</strong><br>
+                      <a ui-sref="Problem({id: '{{p.id}}'})">
+                        <strong>#{{p.id}}</strong><br>
                       </a>
                       <span class="badge">
-                        <time am-time-ago="x.dateNotification" title="Zgłoszono: {{x.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
+                        <time am-time-ago="p.dateNotification" title="Zgłoszono: {{p.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
                       </span>
                     </div>
            					<div class="hidden-xs col-sm-2 col-md-2">
-                      <span title="Zgłaszający: {{x.author.firstname}} {{x.author.surname}}" bs-tooltip>
-                        {{x.author.firstname}} {{x.author.surname}}
+                      <span title="Zgłaszający: {{p.author.firstname}} {{p.author.surname}}" bs-tooltip>
+                        {{p.author.firstname}} {{p.author.surname}}
                       </span>
                     </div>
            					<div class="col-xs-6 col-sm-3 col-md-2">
-                      <a ui-sref="Komputer({id: '{{x.computer.id}}'})" ng-click="$event.stopPropagation()" ng-show="x.computer" title="Lokalizacja komputera: {{x.computer.laboratory.building + x.computer.laboratory.roomNo}}" bs-tooltip>
+                      <a ui-sref="Komputer({id: '{{p.computer.id}}'})" ng-click="$event.stopPropagation()" ng-show="p.computer" title="Lokalizacja komputera: {{p.computer.laboratory.building + p.computer.laboratory.roomNo}}" bs-tooltip>
                         <i class="fa fa-desktop"></i>
-                        {{x.computer.name}}
+                        {{p.computer.name}}
                       </a>
 
-                      <a ui-sref="Laboratorium({id: '{{x.laboratory.id}}'})" ng-click="$event.stopPropagation()" ng-show="x.laboratory" title="Sala laboratoryjna" bs-tooltip>
+                      <a ui-sref="Laboratorium({id: '{{p.laboratory.id}}'})" ng-click="$event.stopPropagation()" ng-show="p.laboratory" title="Sala laboratoryjna" bs-tooltip>
                         <i class="fa fa-cube"></i>
-                        {{x.laboratory.building + x.laboratory.roomNo}}
+                        {{p.laboratory.building + p.laboratory.roomNo}}
                       </a>
                     </div>
                     <div class="col-md-1 text-right col-md-push-5">
-                      <button class="btn btn-xs btn-danger btn-preview" ng-click="openRemoveProblemWindow(x.id)">
-                        <i class="fa fa-trash-o fa-1" aria-hidden="true" title="Usuń problem" bs-tooltip></i>
+                      <button class="btn btn-xs btn-danger btn-preview" ng-click="openRemoveProblemWindow(p.id)" title="Usuń problem" bs-tooltip>
+                        <i class="fa fa-trash-o fa-1" aria-hidden="true"></i>
                       </button>
                       &nbsp;
                     </div>
-           					<div class="col-xs-12 col-sm-12 col-md-4 problem-desc "><i>{{x.content}}</i></div>
+           					<div class="col-xs-12 col-sm-12 col-md-4 problem-desc "><i>{{p.content}}</i></div>
             			</div>
             		</div>
             	</div>

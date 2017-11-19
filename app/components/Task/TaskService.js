@@ -1,32 +1,20 @@
-angular.module('elaborantTaskService', []).factory('TaskService', function ($http) {
+angular.module('elaborantTaskService', []).factory('TaskService', function ($http, NotificationService) {
     return {
     	getDataEntity: function (taskId, callback) {
-            $http.get(apiUrl + 'tasks/' + taskId) 
-            .success(function (serverResponse) {
-                var response = serverResponse.response;
+            $http({
+                method: 'GET',
+                url: apiUrl + 'tasks/' + taskId
+            })
+            .then(function (serverResponse) {
+                var response = serverResponse.data.response;
                 response.dateRealization = new Date(response.dateRealization);
                 response.priority = String(response.priority);
 
                 callback(response);
-            })
-            .error(function(data, status){
-                alert("Błąd przy pobieraniu")
+            },
+            function(serverResponse){
+                NotificationService.errorFromResponse("Nie udało się pobrać szczegółów zadania", serverResponse);
             });
         }
-
-/*
-        getDataListEntity: function (problemId, callback){
-            $http({
-                method: 'GET',
-                url: apiUrl + "tasks/?query=idProblem%3D" + problemId + ",page=" ,
-                data: JSON.parse(JSON.stringify(json))
-            })
-            .then(function(response) {
-                $rootScope.$emit("RefreshTaskList", {});
-                $scope.cancel();
-            }, function(response) {
-                alert("Wystąpił błąd!");
-            });
-        }*/
     };
 });
