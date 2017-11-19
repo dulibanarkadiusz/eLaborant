@@ -6,7 +6,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
 
     $scope.init = function(){
         $scope.problem = {};
-        LaboratoryService.getDataListEntity($scope.LoadLabsData, ShowError);
+        LaboratoryService.getDataListEntity($scope.LoadLabsData);
     }
 
     $scope.computersList = function(){
@@ -62,10 +62,6 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     $scope.LoadComputersData = function(serverResponse){
         $scope.computersListData = serverResponse.response;
         $scope.computersDataLoaded = true;
-    }
-
-    function ShowError(){
-        NotificationService.errorFromResponse("Nie udało się pobrać listy laborantów.", response);
     }
 
     function ShowComputersLoadError(response, status){
