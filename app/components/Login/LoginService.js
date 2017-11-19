@@ -2,63 +2,80 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
     //var username, firstName, surname, role;
     return {
 
-	login: function (username, password, callback) {
-		localStorage.removeItem("token");
-		$http({
-			method: 'POST',
-			url: apiUrl + "login",
-			data: { username: username, password: password }
-		}).success(function (data, status, headers, config) {
-			localStorage.setItem('token', headers("Authorization"));
-			userName = username;
-			//alert(headers("Authorization"));
-			callback({ success: true });
+        login: function (username, password, callback) {
+            localStorage.removeItem("token");
+            $http({
+                method: 'POST',
+                url: apiUrl + "login",
+                data: { username: username, password: password }
+            }).success(function (data, status, headers, config) {
 
-		}).error(function () {
-			callback({ success: false });
-		});
+                localStorage.setItem('token', headers("Authorization"));
+                localStorage.setItem('refreshToken', headers("X-Refresh-Token"));
+                userName = username;
+                //alert(headers("Authorization"));
+                callback({ success: true, status: status });
+
+            }).error(function () {
+                callback({ success: false, status: status });
+            });
 
 
-	},
-	checkRole: function (callback) {
-		UserService.getUserWithLogin(userName, function (data) {
+        },
+        refresh: function (callback) {
+            $http({
+                method: 'GET',
+                url: apiUrl + "refresh?refresh_token=" + localStorage.getItem('refreshToken')
 
-			// firstName = data.response[0].firstname;
-			// surname = data.response[0].surname;
-			// role = data.response[0].role.name;
-			localStorage.setItem('firstName', data.response[0].firstname);
-			localStorage.setItem('surname', data.response[0].surname);
-			localStorage.setItem('role', data.response[0].role.name);
-			callback({ success: true });
+            }).success(function (data, status, headers, config) {
+                localStorage.setItem('token', headers("Authorization"));
+                localStorage.setItem('refreshToken', headers("X-Refresh-Token"));
+                callback({ success: true });
 
-		}, function (status) {
-			callback({ success: false });
-		}
-		)
-	},
-	getSurname: function () {
-		return localStorage.getItem('surname');
+            }).error(function () {
+                callback({ success: false });
+            });
 
-	},
-	getFirstName: function () {
-		return localStorage.getItem('firstName');
+        },
+        checkRole: function (callback) {
+            UserService.getUserWithLogin(userName, function (data) {
 
-	},
-	getRole: function () {
-		//return localStorage.getItem('role');
-		return 'admin';
+                // firstName = data.response[0].firstname;
+                // surname = data.response[0].surname;
+                // role = data.response[0].role.name;
+                localStorage.setItem('firstName', data.response[0].firstname);
+                localStorage.setItem('surname', data.response[0].surname);
+                localStorage.setItem('role', data.response[0].role.name);
+                callback({ success: true });
 
-	},
-	isLogged: function () {
-		return localStorage.getItem('token') !== null;
-	},
-	logOut: function () {
-		localStorage.removeItem("token");
-		localStorage.removeItem("firstName");
-		localStorage.removeItem("surname");
-		localStorage.removeItem("role");
+            }, function (status) {
+                callback({ success: false });
+            }
+            )
+        },
+        getSurname: function () {
+            return localStorage.getItem('surname');
 
-	}
+        },
+        getFirstName: function () {
+            return localStorage.getItem('firstName');
+
+        },
+        getRole: function () {
+            //return localStorage.getItem('role');
+            return 'admin';
+
+        },
+        isLogged: function () {
+            return localStorage.getItem('token') !== null;
+        },
+        logOut: function () {
+            localStorage.removeItem("token");
+            localStorage.removeItem("firstName");
+            localStorage.removeItem("surname");
+            localStorage.removeItem("role");
+
+        }
 
     };
 

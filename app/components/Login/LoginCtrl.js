@@ -2,18 +2,20 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
 
     $scope.formSubmit = function () {
         LoginService.login($scope.username, $scope.password, function (response) {
+
             if (response.success) {
                 $scope.error = '';
                 $scope.username = '';
                 $scope.password = '';
+
                 LoginService.checkRole(function (checkUserResponse) {
                     if (checkUserResponse.success)
                         $location.path('/Main');
                     else
                         $scope.error = "Wystąpił błąd !";
+
+                    //LoginService.refresh(function(){});
                 }
-
-
                 );
 
             } else {
