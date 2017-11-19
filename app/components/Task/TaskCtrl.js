@@ -21,15 +21,7 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
             DisplayTasksList(response);
         },
         function (response) {
-            $scope.messageType = messageType.Error;
-            switch(response.status){
-                case 401:
-                    $scope.message = "Bez autoryzacji.";
-                    break;
-                case 404: 
-                    $scope.message = "Brak zadań do wyświetlenia.";
-                    break;
-            }
+            $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(response), GetTypeOfResponse(response)));
         });
     }
 

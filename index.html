@@ -44,20 +44,14 @@
 
 
 <script>
-
     var apiUrl = "http://157.158.16.186:8082/api/";
-    var errorMessage = '<div class="alert alert-warning"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
-    var responseErrorMessage = '<div class="alert alert-danger"><strong>Wystąpił błąd!</strong> Dane nie mogły zostać załadowane.<br><a href="#" ng-click="loadData()">Spróbuj ponownie</a></div>';
-    var dataError = "Wystąpił błąd podczas pobierana danych."
-    function parseErrorInfo(message) {
-        return '<div class="alert alert-danger"><strong>Wystąpił błąd</strong><br>' + message + '</div>';
-    }
 </script>
 
 <script type="text/javascript" src="app/app.module.js"></script>
 <script type="text/javascript" src="app/app.routes.js"></script>
 <script type="text/javascript" src="app/app.interceptor.js"></script>
 
+<script type="text/javascript" src="app/shared/functions.js"></script>
 <script type="text/javascript" src="app/components/Modal/ModalService.js"></script>
 
 <script type="text/javascript" src="app/components/Task/TaskManagerCtrl.js"></script>

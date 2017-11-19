@@ -30,17 +30,8 @@ angular.module('elaborantNotificationService', []).factory('NotificationService'
     return {
         errorFromResponse: function (text, response){
             console.log(response);
-
-            var errorsMessage = "";
-            if (response.data.errors !== undefined){
-                response.data.errors.forEach(function(err){
-                    errorsMessage += err.message + "\n";
-                });
-            }
-            else if (response.data.message !== undefined){
-                errorsMessage += response.data.message;
-            }
-
+            errorsMessage = ParseResponseErrorMessages(response)
+            
             showNotification(createNotifyContent(text, errorsMessage), 'danger');
         },
         errorNotification: function (text){

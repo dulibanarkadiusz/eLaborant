@@ -1,10 +1,5 @@
     var functionRefresh; 
     var defaultPageSize = 10;
-    var messageType = {
-            Info: 0,
-            Warning : 1,
-            Error: 2
-    };
 
     function getPagesArray(pagesCount){
         var array = [];
@@ -22,14 +17,6 @@
 
         return date;
     }
-
-    elaborantApp.controller('assistantList', function ($scope, $http){
-        $scope.dataLoaded = false;
-        $http.get('api/laboranci.html').success(function (response) {
-            $scope.assistantsData = response;
-            $scope.assistantsDataLoaded = true;
-        });
-    });
 
     elaborantApp.controller('nav', function($scope, $state){
       
@@ -213,18 +200,6 @@
             $modalInstance.dismiss('cancel');
         };
     });*/
-
-    function ParseResponseErrorMessages(JSONresponse){
-        if (typeof JSONresponse.status != 'undefined')
-            return JSONresponse.error + " (" + JSONresponse.status + ")";
-
-        var responseString = "";
-        for (var i=0; i < JSONresponse.errors.length; i++ ){
-            responseString += JSONresponse.errors[i].message + "\n";
-        }
-        return responseString.trim();
-    }
-
 
 
     elaborantApp.controller('addProblemByUserFormController', function($scope, $http, $sce, $filter, $stateParams ){

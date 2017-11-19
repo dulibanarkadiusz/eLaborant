@@ -13,19 +13,17 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
     };
 
     $scope.getList = function(pageNumber = 0) {
-        $http.get(apiUrl + 'problems?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-        .success(function (serverResponse) {
-            $scope.myData = serverResponse.response;
+        $http({
+          method: 'GET',
+          url: apiUrl + "problems?query=page=" + pageNumber + ",pageSize=" + $scope.pageSize
+        })
+        .then(function (serverResponse) {
+            $scope.problemsListData = serverResponse.data.response;
             $scope.totalElements = serverResponse.totalElements;
-            $scope.dataLoaded = true;
-
             $scope.pages = getPagesArray(serverResponse.totalPages);
             $scope.currentPage = pageNumber;
-            localStorage.pageSize = $scope.pageSize;
-        })
-        .error(function(data, status){
-            $scope.responseError = true;
-            $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+        }, function(data){
+            $scope.errorMessage = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(data), GetTypeOfResponse(data)));
         });
     };
 
@@ -36,17 +34,16 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
     $scope.getProblem = function(idProblem = $stateParams.id) {
         $scope.problemid = idProblem;
         $scope.message = "";
-        $http.get(apiUrl + 'problems/'+$scope.problemid)
-            .success(function (serverResponse) {
-                $scope.problemData = new Array(serverResponse.response);
-                $scope.problemDataLoaded = true;
-            })
-            .error(function(error, status){
-                if (status==404)
-                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Taki problem nie istnieje.'));
-                else
-                    $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
-            });
+        $http({
+            method: 'GET',
+            url: apiUrl + 'problems/'+$scope.problemid
+        })
+        .then(function (serverResponse) {
+            $scope.problemData = new Array(serverResponse.data.response);
+        },
+        function(serverResponse){
+            $scope.errorDataLoaded = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
+        });
     }
 
     $scope.editEntity = function(problemId, isMarkedAsResolved){
