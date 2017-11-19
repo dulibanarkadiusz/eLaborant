@@ -7,7 +7,7 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
     $scope.addNewLaboratory = function(laboratoryId = null){ 
 	
         var modalInstance = $modal.open({
-            templateUrl: 'modals/addLabView.html',
+            templateUrl: 'app/components/Laboratory/AddLabView.html',
             controller: 'LaboratoryManagerCtrl',
             backdrop: 'static',
             resolve: {

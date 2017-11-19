@@ -6,7 +6,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
     amMoment.changeLocale('pl');
     $scope.addNewProblem = function(){ 
         var options = ModalService.getModalOptions();
-        options.templateUrl = 'modals/addProblemView.html';
+        options.templateUrl = 'app/components/Problem/AddProblemView.html';
         options.controller = 'ProblemManagerCtrl';
 
         var modalInstance = $modal.open(options);

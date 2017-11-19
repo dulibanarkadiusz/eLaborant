@@ -27,7 +27,7 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
 
     $scope.openNewTaskWindow = function(taskId = null) {
         var options = ModalService.getModalOptions(taskId);
-        options.templateUrl = 'modals/addTaskView.html';
+        options.templateUrl = 'app/components/Task/AddTaskView.html';
         options.controller = 'TaskManagerCtrl';
 
         var modalInstance = $modal.open(options);
