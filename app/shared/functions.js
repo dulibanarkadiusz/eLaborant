@@ -50,3 +50,26 @@ function ShowLoadDataError(message, messtype = messageType.Error){
 
     return '<div class="alert alert-'+alertType+'"><h4><strong>'+alertTitle+'</strong></h4> '+alertContent+'</div>';
 }
+
+var defaultPageSize = 10;
+
+function getPagesArray(pagesCount){
+    var array = [];
+    for (var i=0; i<pagesCount; i++){
+        array.push(i);
+    }
+
+    return array;
+}
+
+function roundMinutes(date){
+    date.setSeconds(0);
+    date.setHours(date.getHours() + 1);
+    date.setMinutes(0);
+
+    return date;
+}
+
+$(document).on('click', '.no-collapsable', function(e){
+    e.stopPropagation();
+});
