@@ -30,8 +30,8 @@ angular.module('elaborantUserService', []).factory('UserService', function ($htt
                 errorCallback(status);
             });
         },
-		getUserWithLogin: function(login, successCallback, errorCallback) {
-            $http.get(apiUrl + 'users?query=allItems=true,login=' + login)
+		getMe: function(successCallback, errorCallback) {
+            $http.get(apiUrl + 'users/me')
             .success(function (serverResponse) {
                 successCallback(serverResponse)
             })
