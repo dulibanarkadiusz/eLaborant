@@ -3,7 +3,8 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
     if (param.id) {
         $scope.user.id = param.id;
     }
-
+	
+	$scope.showPassword = param.id ? false : true;
 	$scope.firstStep = true;
 	$scope.next = function(){$scope.firstStep = false;};
 	$scope.back = function(){$scope.firstStep = true;};
