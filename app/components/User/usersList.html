@@ -32,7 +32,7 @@
                     <tr ng-repeat="user in usersListData">
                         <td>{{ user.firstname }} {{user.surname}}</td>
                         <td>{{ user.role.name }}</td>
-						<td>
+						<td >
                             <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj użytkownika" ng-click="editUser(user.id)">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>

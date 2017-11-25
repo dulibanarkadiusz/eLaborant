@@ -46,6 +46,7 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
                 localStorage.setItem('firstName', data.response.firstname);
                 localStorage.setItem('surname', data.response.surname);
                 localStorage.setItem('role', data.response.role.name);
+                //localStorage.setItem('role', 'admin');
                 callback({ success: true });
 
             }, function (status) {
@@ -62,8 +63,7 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
 
         },
         getRole: function () {
-            //return localStorage.getItem('role');
-            return 'admin';
+            return localStorage.getItem('role');
 
         },
         isLogged: function () {

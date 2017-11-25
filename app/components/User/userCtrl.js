@@ -1,4 +1,5 @@
-angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, UserService, $modal, ModalService) {
+angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, UserService, $modal, ModalService, LoginService) {
+	
     $scope.dataLoaded = false;
     $scope.totalElements = 0;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;

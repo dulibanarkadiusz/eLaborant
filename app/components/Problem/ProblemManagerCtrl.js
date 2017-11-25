@@ -1,9 +1,12 @@
-angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, $state, $http, $sce, $filter, $stateParams, $modalInstance, param, NotificationService, LaboratoryService, ComputerService){     
+angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, param, $state, $http, $sce, $filter, $stateParams,  NotificationService, LaboratoryService, ComputerService){     
     $scope.problem = {};
     if (param.id){
         $scope.problem.id = param.id;
     }
-
+	$scope.isModal = function(){
+		return param.modal;
+		
+	};
     $scope.init = function(){
         $scope.problem = {};
         LaboratoryService.getDataListEntity($scope.LoadLabsData);
@@ -74,6 +77,10 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+		if($scope.isModal())
+			$scope.modalInstance.dismiss('cancel');
+		else
+			$scope.problem = {};
+        
     };
 });
