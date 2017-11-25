@@ -21,7 +21,7 @@
                     <input type='datetime-local' ng-blur="updateDateRealization($event)" ng-model-options="{updateOn: 'blur'}" name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control" min="{{minDate}}" required />
                 </div>
                 <div ng-show="addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched" class="help-block with-errors">
-                    Termin musi być poprawną datą i dotyczyć przyszłości
+                    {{dateValidationText}}
                 </div>
             </div>
 
