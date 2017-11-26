@@ -41,5 +41,14 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
 		options.controller = 'UserManagerCtrl';
 
 		var modalInstance = $modal.open(options);
-	}			
+	}
+
+	$scope.openChangePasswordWindow = function(entityId){
+
+		var options = ModalService.getModalOptions(entityId);
+		options.templateUrl = 'app/components/User/changePasswordView.html';
+		options.controller = 'PasswordManagerCtrl';
+
+		var modalInstance = $modal.open(options);
+	}	
     });
