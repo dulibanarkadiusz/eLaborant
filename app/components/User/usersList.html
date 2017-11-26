@@ -34,14 +34,14 @@
                         <td>{{ user.role.name }}</td>
 						<td >
 						
-						<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Zmień hasło" ng-click="openChangePasswordWindow(user.id)">
+						<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Zmień hasło" ng-click="openChangePasswordWindow(user.id)" bs-tooltip>
                                 <i class="fa fa-key" aria-hidden="true"></i>
                             </button>
 						
-                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj użytkownika" ng-click="editUser(user.id)">
+                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj użytkownika" ng-click="editUser(user.id)" bs-tooltip>
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
-							<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń użytkownika" ng-click="openRemoveUserWindow(user.id)">
+							<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń użytkownika" ng-click="openRemoveUserWindow(user.id)" bs-tooltip>
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
 							

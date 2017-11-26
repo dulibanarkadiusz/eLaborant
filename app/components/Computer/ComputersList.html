@@ -36,9 +36,9 @@
                         <td>{{ computer.mac }}</td>
                         <td>{{ computer.laboratory.building + computer.laboratory.roomNo }}</td>
                         <td>
-                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj komputer" ng-click="editComputer(computer.id)">
+                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj komputer" ng-click="editComputer(computer.id)" bs-tooltip>
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
-                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń komputer" ng-click="openRemoveComputerWindow(computer.id)">
+                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń komputer" ng-click="openRemoveComputerWindow(computer.id)" bs-tooltip>
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                         </td>
                     </tr>

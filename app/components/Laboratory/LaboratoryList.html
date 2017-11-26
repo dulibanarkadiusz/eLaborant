@@ -34,10 +34,10 @@
                         <td>{{ lab.roomNo }}</td>
                         <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
                         <td>
-                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj laboratorium" ng-click="editLaboratory(lab.id)">
+                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj laboratorium" ng-click="editLaboratory(lab.id)" bs-tooltip>
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
-							<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń laboratorium" ng-click="openRemoveLaboratoryWindow(lab.id)">
+							<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń laboratorium" ng-click="openRemoveLaboratoryWindow(lab.id)" bs-tooltip>
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
                         </td>
