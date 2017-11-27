@@ -20,10 +20,13 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
         });
     };
 
-	$rootScope.$on("RefreshList", function(){
+
+	var refreshFunction = $rootScope.$on("RefreshList", function(){
 		$scope.getList();
 	});
-
+	$scope.$on('$destroy', function() {
+		refreshFunction(); 
+	});
 	$scope.getList = function(pageNumber = 0) {
 		ComputerService.getDataListEntity(function (serverResponse) {
 			$scope.computersListData = serverResponse.response;

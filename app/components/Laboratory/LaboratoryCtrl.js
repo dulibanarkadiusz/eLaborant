@@ -17,8 +17,11 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
             }
         });
     };
-	$rootScope.$on("RefreshList", function(){
+	var refreshFunction = $rootScope.$on("RefreshList", function(){
 		$scope.getList();
+	});
+	$scope.$on('$destroy', function() {
+		refreshFunction(); 
 	});
 	$scope.getList = function(pageNumber = 0) {
 		LaboratoryService.getDataListEntity(function(serverResponse){

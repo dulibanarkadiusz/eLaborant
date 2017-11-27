@@ -1,4 +1,4 @@
-angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, UserService, $modal, ModalService, LoginService) {
+angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, $rootScope, UserService, $modal, ModalService, LoginService) {
 	
     $scope.dataLoaded = false;
     $scope.totalElements = 0;
@@ -34,6 +34,12 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
 	$scope.editUser = function(userId){
 		$scope.addNewUser(userId);
 	}
+	var refreshFunction = $rootScope.$on("RefreshList", function(){
+		$scope.getList();
+	});
+	$scope.$on('$destroy', function() {
+		refreshFunction(); 
+	});
 	$scope.openRemoveUserWindow = function(entityId){
 
 		var options = ModalService.getModalOptions(entityId);
