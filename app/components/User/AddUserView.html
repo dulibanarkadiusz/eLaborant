@@ -36,20 +36,20 @@
                 <userel for="password" class="control-userel">Hasło:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="password" name="password" class="form-control" ng-model="user.password" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Hasło" required>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" ng-pattern="/^.{2,20}$/" placeholder="Hasło" required>
                 </div>
                 <div ng-show="addUserForm.password.$invalid && addUserForm.password.$touched" class="help-block with-errors">
                     Podaj hasło
                 </div>
             </div>
 			
-			<div class="form-group" ng-show="firstStep && showPassword" ng-class="{'has-error': addUserForm.password2.$invalid || user.password2 != user.password}">
-                <userel for="password2" class="control-userel">Powtórz hasło:</userel>
+			<div class="form-group" ng-show="firstStep && showPassword" ng-class="{'has-error': addUserForm.confirmPassword.$invalid}">
+                <userel for="confirmPassword" class="control-userel">Powtórz hasło:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="password" name="password2" class="form-control" ng-model="user.password2" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Powtórz hasło" required>
+                    <input type="password" name="confirmPassword" class="form-control" ng-model="user.confirmPassword" ng-pattern="user.password" placeholder="Powtórz hasło" required >
                 </div>
-                <div ng-show="(addUserForm.password2.$invalid || user.password2 != user.password)&& addUserForm.password2.$touched" class="help-block with-errors">
+                <div ng-show="addUserForm.confirmPassword.$invalid && addUserForm.confirmPassword.$touched" class="help-block with-errors">
                     Podane hasła różnią się
                 </div>
             </div>
@@ -104,8 +104,8 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Anuluj</button>
 			<button type="button" class="btn btn-default" ng-show="!firstStep" ng-click="back()" data-dismiss="modal">Wstecz</button>
-			<button type="button" class="btn btn-success" ng-show="firstStep" ng-disabled="addUserForm.role.$invalid || addUserForm.login.$invalid || (addUserForm.password.$invalid && showPassword) || (addUserForm.password2.$invalid && showPassword)|| user.password2 != user.password" ng-click="next()" data-dismiss="modal">Dalej</button>
-            <button type="submit" class="btn btn-success" ng-show="!firstStep" ng-disabled="addUserForm.$invalid" ng-click="save()">{{buttonName}}</button>
+			<button type="button" class="btn btn-success" ng-show="firstStep" ng-disabled="addUserForm.role.$invalid || addUserForm.login.$invalid || (addUserForm.password.$invalid && showPassword) || (addUserForm.confirmPassword.$invalid && showPassword) " ng-click="next()" data-dismiss="modal">Dalej</button>
+            <button type="submit" class="btn btn-success" ng-show="!firstStep" ng-disabled="addUserForm.email.$invalid || addUserForm.firstname.$invalid || addUserForm.surname.$invalid || addUserForm.phoneNumber.$invalid" ng-click="save()">{{buttonName}}</button>
         </div>
     </form>
 </div>   
