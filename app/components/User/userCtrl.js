@@ -50,11 +50,17 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
 	}
 
 	$scope.openChangePasswordWindow = function(entityId){
-
-		var options = ModalService.getModalOptions(entityId);
-		options.templateUrl = 'app/components/User/changePasswordView.html';
-		options.controller = 'PasswordManagerCtrl';
-
-		var modalInstance = $modal.open(options);
+			var modalInstance = $modal.open({
+            templateUrl: 'app/components/User/changePasswordView.html',
+            controller: 'PasswordManagerCtrl',
+            backdrop: 'static',
+            resolve: {
+                param: function(){
+                    return {'id':entityId}
+                }
+            }
+        });
+	
+		
 	}	
     });
