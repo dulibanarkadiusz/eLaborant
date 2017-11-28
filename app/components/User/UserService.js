@@ -30,6 +30,15 @@ angular.module('elaborantUserService', []).factory('UserService', function ($htt
                 errorCallback(status);
             });
         },
+		getOwners: function(successCallback, errorCallback) {
+            $http.get(apiUrl + 'users?query=allItems=true,idRole=2')
+            .success(function (serverResponse) {
+                successCallback(serverResponse)
+            })
+            .error(function(status){
+                errorCallback(status);
+            });
+        },
 		getMe: function(successCallback, errorCallback) {
             $http.get(apiUrl + 'users/me')
             .success(function (serverResponse) {

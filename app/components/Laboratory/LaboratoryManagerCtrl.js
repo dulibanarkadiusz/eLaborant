@@ -1,4 +1,4 @@
-angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService, NotificationService) {
+angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService, NotificationService , UserService) {
     $scope.lab = {};
     if (param.id) {
         $scope.lab.id = param.id;
@@ -26,16 +26,15 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 
 
     $scope.usersList = function () {
-        $http.get(apiUrl + 'users')
-        .success(function (serverResponse) {
+		UserService.getOwners(function (serverResponse) {
             $scope.usersListData = serverResponse.response;
             $scope.dataLoaded = true;
 			
-        })
-        .error(function (data, status) {
+        },function (status) {
             $scope.responseError = true;
             $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-        });
+        })
+        
     };
 
     $scope.usersList();
