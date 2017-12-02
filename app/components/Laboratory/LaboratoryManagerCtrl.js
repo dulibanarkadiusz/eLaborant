@@ -27,12 +27,11 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 
     $scope.usersList = function () {
 		UserService.getOwners(function (serverResponse) {
-            $scope.usersListData = serverResponse.response;
+            $scope.usersListData = serverResponse;
             $scope.dataLoaded = true;
 			
         },function (status) {
-            $scope.responseError = true;
-            $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+           
         })
         
     };
@@ -47,16 +46,15 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             url: apiUrl + "laboratories/",
             data: JSON.parse(JSON.stringify($scope.lab))
         })
-        .success(function (success) {		
+        .then(function (success) {		
 			($scope.lab.id) ? NotificationService.success("Laboratorium zostało zmienione!") : NotificationService.success("Laboratorium zostało dodane!");
 			$rootScope.$emit("RefreshList", {});
-            $scope.cancel();
-			
+            $scope.cancel();			
             $scope.lab = {};
             $scope.lab.building = "MS";
-        })
-        .error(function (response) {
+        },function (response) {
             $scope.IsResponseError = true;
+			alert(JSON.stringify(response));
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
 

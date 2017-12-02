@@ -9,7 +9,6 @@ angular.module('elaborantPasswordManagerCtrl', []).controller('PasswordManagerCt
 			}
 		}
     $scope.save = function () {
-       alert('save');
         $http({
             method: 'PATCH',
             url: apiUrl + "users/admin-change-password",

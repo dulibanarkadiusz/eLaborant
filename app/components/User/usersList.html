@@ -2,10 +2,12 @@
     <div class="col-lg-12" ng-controller="UserCtrl" ng-init="getList()">
         <h2>Lista użytkowników</h2>
 
-        <div ng-hide="dataLoaded" class="preloader">
+        <div ng-if="!usersListData && !message" class="preloader">
+        </div>
+        <div ng-if="!usersListData && message" ng-bind-html="message">
         </div>
 
-        <div ng-show="dataLoaded" class="table-responsive">
+        <div ng-if="usersListData" class="table-responsive">
             <div class="row">
                 <div class="col-md-6">
                     Liczba użytkowników: {{totalElements}}
@@ -16,7 +18,7 @@
                     </button>
                 </div>
             </div>
-			
+
 
             <div ng-include="'app/shared/paginationPartialView.html'"></div>
 
@@ -25,27 +27,27 @@
                     <tr>
                         <th>Imię i nazwisko</th>
                         <th>Rola</th>
-						<th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="user in usersListData">
                         <td>{{ user.firstname }} {{user.surname}}</td>
                         <td>{{ user.role.name }}</td>
-						<td >
-						
-						<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Zmień hasło" ng-click="openChangePasswordWindow(user.id)" bs-tooltip>
+                        <td>
+
+                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Zmień hasło" ng-click="openChangePasswordWindow(user.id)" bs-tooltip>
                                 <i class="fa fa-key" aria-hidden="true"></i>
                             </button>
-						
+
                             <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj użytkownika" ng-click="editUser(user.id)" bs-tooltip>
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </button>
-							<button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń użytkownika" ng-click="openRemoveUserWindow(user.id)" bs-tooltip>
+                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń użytkownika" ng-click="openRemoveUserWindow(user.id)" bs-tooltip>
                                 <i class="fa fa-trash-o" aria-hidden="true"></i>
                             </button>
-							
-							
+
+
                         </td>
                     </tr>
                 </tbody>
@@ -63,7 +65,7 @@
                 <h4 class="modal-title">Dodaj użytkownika</h4>
             </div>
             <form name="addUserForm" ng-submit="processForm()">
-                <div class="modal-body"> 
+                <div class="modal-body">
                     <div ng-show="IsResponseError">
                         <div class="alert alert-danger"><strong>Błąd przy dodawaniu użytkownika:</strong>
                             {{ResponseErrorMessage}}
@@ -107,7 +109,7 @@
                         <label for="role" class="control-label">Rola:</label>
                         <div class="input-group" ng-controller='roleList'>
                             <span class="input-group-addon"><i class="fa fa-id-badge" aria-hidden="true"></i></span>
-                            <select class="form-control" name="role" ng-model="user.role" required> 
+                            <select class="form-control" name="role" ng-model="user.role" required>
                                 <option ng-repeat="x in myData" value="{{x.id}}">{{x.name}}</option>
                             </select>
                         </div>
@@ -119,13 +121,13 @@
                     <pre>
                     {{ user | json }}
                     </pre>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
                     <button type="submit" class="btn btn-success" ng-disabled="addUserForm.$invalid">Dodaj</button>
                 </div>
             </form>
-        </div>   
+        </div>
     </div>
 </div>-->

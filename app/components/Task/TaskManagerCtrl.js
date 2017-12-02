@@ -28,7 +28,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     }
 
     function createLaborantsList(dataJSON){
-        var response = dataJSON.response;
+        var response = dataJSON;
         for(var i=0; i < response.length; i++){
             $scope.options.push({ // creates bootstrap dropdown list 
                 "id": response[i].id,

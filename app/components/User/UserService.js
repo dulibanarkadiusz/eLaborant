@@ -1,51 +1,55 @@
-angular.module('elaborantUserService', []).factory('UserService', function ($http) {
+angular.module('elaborantUserService', []).factory('UserService', function ($http, NotificationService) {
     //var username, firstName, surname, role;
     return {
         getDataEntity: function (userId, successCallback, errorCallback) {
             $http.get(apiUrl + 'users/' + userId)
-            .success(function (serverResponse) {
-                var response = serverResponse.response;
+            .then(function (serverResponse) {
+                var response = serverResponse.data.response;
                 //alert(response);
                 successCallback(response);
-            })
-            .error(function (data, status) {
-                errorCallback(status);
+            },function (response) {
+                NotificationService.errorFromResponse("Nie udało się pobrać informacji o użytkowniku", serverResponse);
+                errorCallback(response);
             });
         },
         getDataListEntity: function(successCallback, errorCallback, pageNumber = null, pageSize = null) {
             $http.get(pageNumber == null && pageSize == null ? apiUrl + 'users?query=allItems=true' :apiUrl + 'users?query=page=' + pageNumber + ",pageSize=" + pageSize)
-            .success(function (serverResponse) {
-                successCallback(serverResponse)
-            })
-            .error(function(data, status){
-                errorCallback(status);
+            .then(function (serverResponse) {
+				var response = serverResponse.data.response;
+                successCallback(response)
+            },function(response){
+				NotificationService.errorFromResponse("Nie udało się pobrać użytkowników", response);
+                errorCallback(response);
             });
         },
 		getLaborants: function(successCallback, errorCallback) {
             $http.get(apiUrl + 'users?query=allItems=true,idRole=3')
-            .success(function (serverResponse) {
-                successCallback(serverResponse)
-            })
-            .error(function(status){
-                errorCallback(status);
+            .then(function (serverResponse) {
+                var response = serverResponse.data.response;
+                successCallback(response)
+            },function(response){
+				NotificationService.errorFromResponse("Nie udało się pobrać użytkowników mających rolę laborant", response);
+                errorCallback(response);
             });
         },
 		getOwners: function(successCallback, errorCallback) {
             $http.get(apiUrl + 'users?query=allItems=true,idRole=2')
-            .success(function (serverResponse) {
-                successCallback(serverResponse)
-            })
-            .error(function(status){
-                errorCallback(status);
+            .then(function (serverResponse) {
+                var response = serverResponse.data.response;
+                successCallback(response)
+			},function(response){
+				NotificationService.errorFromResponse("Nie udało się pobrać użytkowników mających rolę opiekun", response);
+                errorCallback(response);
             });
         },
 		getMe: function(successCallback, errorCallback) {
             $http.get(apiUrl + 'users/me')
-            .success(function (serverResponse) {
-                successCallback(serverResponse)
-            })
-            .error(function( status){
-                errorCallback(status);
+            .then(function (serverResponse) {
+                var response = serverResponse.data.response;
+                successCallback(response)
+            },function(response){
+				NotificationService.errorFromResponse("Nie udało się pobrać informacji o użytkowniku", response);
+                errorCallback(response);
             });
         }
         };

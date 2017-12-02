@@ -39,13 +39,14 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
         },
         checkRole: function (callback) {
             UserService.getMe(function (data) {
+				
 				//alert(JSON.stringify(data.response));
                 // firstName = data.response[0].firstname;
                 // surname = data.response[0].surname;
                 // role = data.response[0].role.name;
-                localStorage.setItem('firstName', data.response.firstname);
-                localStorage.setItem('surname', data.response.surname);
-                localStorage.setItem('role', data.response.role.name);
+                localStorage.setItem('firstName', data.firstname);
+                localStorage.setItem('surname', data.surname);
+                localStorage.setItem('role', data.role.name);
                 //localStorage.setItem('role', 'admin');
                 callback({ success: true });
 

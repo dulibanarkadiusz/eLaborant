@@ -24,17 +24,18 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 		refreshFunction(); 
 	});
 	$scope.getList = function(pageNumber = 0) {
-		LaboratoryService.getDataListEntity(function(serverResponse){
+	    $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
+            .then(function (serverResponse) {
+                $scope.labListData = serverResponse.data.response;
+                $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.data.totalElements;
+                $scope.pages = getPagesArray(serverResponse.data.totalPages);
+                $scope.currentPage = pageNumber;
+            },
+            function(serverResponse){
+                $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
+            });
 		
-			$scope.labListData = serverResponse.response;
-			$scope.dataLoaded = true;
-			$scope.totalElements = serverResponse.totalElements;
-			$scope.pages = getPagesArray(serverResponse.totalPages);
-			$scope.currentPage = pageNumber;
-		
-		
-		}, function(status){$scope.responseError = true;
-			$scope.errorMessage = $sce.trustAsHtml(errorMessage);},pageNumber,$scope.pageSize )
    
    
 	};

@@ -44,13 +44,12 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
             url: apiUrl + "computers/",
             data: JSON.parse(JSON.stringify($scope.computer))
         })
-        .success(function (success) {
+        .then(function (success) {
 			($scope.computer.id) ? NotificationService.success("Komputer został zmieniony!") : NotificationService.success("Komputer został dodany!");
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
             $scope.computer = {};
-        })
-        .error(function (response) {
+        },function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });

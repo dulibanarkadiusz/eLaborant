@@ -1,4 +1,4 @@
-angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, $rootScope, UserService, $modal, ModalService, LoginService) {
+angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope, $rootScope, $sce, $http, UserService, $modal, ModalService, LoginService) {
 	
     $scope.dataLoaded = false;
     $scope.totalElements = 0;
@@ -6,17 +6,21 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
     $scope.pages = [];
 	
     $scope.getList = function(pageNumber = 0) {
-        UserService.getDataListEntity(function (serverResponse) {
-            $scope.usersListData = serverResponse.response;
-            $scope.dataLoaded = true;
-            $scope.totalElements = serverResponse.totalElements;
-            $scope.pages = getPagesArray(serverResponse.totalPages);
-            $scope.currentPage = pageNumber;
-            localStorage.pageSize = $scope.pageSize;
-        },function(status){
-            $scope.responseError = true;
-            $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-        }, pageNumber, $scope.pageSize)
+		
+        $http.get(apiUrl + 'users?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
+            .then(function (serverResponse) {
+			
+                $scope.usersListData = serverResponse.data.response;
+                $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.data.totalElements;
+                $scope.pages = getPagesArray(serverResponse.data.totalPages);
+                $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
+            },function(serverResponse){
+                $scope.responseError = true;
+                $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
+            });
+	
     };
 	$scope.addNewUser = function(userId = null){ 
 	

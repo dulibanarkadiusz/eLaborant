@@ -58,17 +58,18 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.LoadLabsData = function(serverResponse){
-        $scope.labListData = serverResponse.response;
+        $scope.labListData = serverResponse;
         $scope.labDataLoaded = true;
     }
 
     $scope.LoadComputersData = function(serverResponse){
-        $scope.computersListData = serverResponse.response;
+		
+        $scope.computersListData = serverResponse;
         $scope.computersDataLoaded = true;
     }
 
-    function ShowComputersLoadError(response, status){
-        if (status == 404){
+    function ShowComputersLoadError(response){
+        if (response.status == 404){
             NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
         }
         else{
