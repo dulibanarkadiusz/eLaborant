@@ -96,4 +96,15 @@ elaborantApp.run([
                 }
             });
         }
-    ])
+    ]);
+elaborantApp.run([
+        '$rootScope', '$location', 'LoginService',
+        function ($rootScope, $location, LoginService) {
+            $rootScope.$on('$stateChangeStart', function (event) {
+                if (!LoginService.isLogged()) {
+                    $location.path('/');
+                }
+            });
+        }
+
+])
