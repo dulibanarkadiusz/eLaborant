@@ -42,11 +42,11 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 
 	$scope.getEntity = function(id = $scope.labid) {
 		$scope.message = "";
-		LaboratoryService.GetEntity(id, function (serverResponse) {
-			$scope.labData = new Array(serverResponse.response);
+		LaboratoryService.getDataEntity(id, function (response) {
+			$scope.labData = new Array(response);
 			$scope.labDataLoaded = true;
-		},function(status){
-			if (status==404){
+		},function(response){
+			if (response.status==404){
 				$scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
 			}
 			else{
