@@ -48,11 +48,11 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
 
 	    $scope.getEntity = function(idComputer = $scope.computerid) {
 	        $scope.message = "";
-	        ComputerService.getDataEntity(idComputer, function (serverResponse) {
-	            $scope.computerData = new Array(serverResponse.response);
+	        ComputerService.getDataEntity(idComputer, function (response) {
+	            $scope.computerData = new Array(response);
 	            $scope.computerDataLoaded = true;
-	        }, function(status){
-	            if (status==404){
+	        }, function(response){
+	            if (response.status==404){
 	                $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Komputer nie został znaleziony.'));
 	            }
 	            else{
