@@ -10,8 +10,17 @@ angular.module('elaborantMainPageCtrl', []).controller('MainPageCtrl', function 
             case 'admin':
                 $state.go("PanelHome");
                 break;
+			case 'opiekun':
+				$state.go("PanelHome");
+                break;
+			case 'laborant':
+				$state.go("Zadania");
+                break;	
+			case 'pracownik':
+				$state.go("UserPanel");
+                break;	
             default:
-                $state.go("UserPanel");
+                $state.go("PanelHome");
                 break;
 
         }

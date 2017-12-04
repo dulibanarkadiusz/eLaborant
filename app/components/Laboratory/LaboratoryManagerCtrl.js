@@ -1,4 +1,4 @@
-angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService, NotificationService) {
+angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, LaboratoryService, NotificationService , UserService) {
     $scope.lab = {};
     if (param.id) {
         $scope.lab.id = param.id;
@@ -26,16 +26,14 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 
 
     $scope.usersList = function () {
-        $http.get(apiUrl + 'users')
-        .success(function (serverResponse) {
-            $scope.usersListData = serverResponse.response;
+		UserService.getOwners(function (serverResponse) {
+            $scope.usersListData = serverResponse;
             $scope.dataLoaded = true;
 			
+        },function (status) {
+           
         })
-        .error(function (data, status) {
-            $scope.responseError = true;
-            $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-        });
+        
     };
 
     $scope.usersList();
@@ -48,16 +46,15 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             url: apiUrl + "laboratories/",
             data: JSON.parse(JSON.stringify($scope.lab))
         })
-        .success(function (success) {		
+        .then(function (success) {		
 			($scope.lab.id) ? NotificationService.success("Laboratorium zostało zmienione!") : NotificationService.success("Laboratorium zostało dodane!");
 			$rootScope.$emit("RefreshList", {});
-            $scope.cancel();
-			
+            $scope.cancel();			
             $scope.lab = {};
             $scope.lab.building = "MS";
-        })
-        .error(function (response) {
+        },function (response) {
             $scope.IsResponseError = true;
+			alert(JSON.stringify(response));
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
 

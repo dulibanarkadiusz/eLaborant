@@ -14,7 +14,9 @@
             <div class="task" ng-repeat="task in taskData">
                 <div class="panel panel-default" ng-class="(task.idState == 5) ? 'resolved' : ''">
                     <div class="panel-heading padding-5" ng-if="!problemid">
-                        <a ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
+					
+                        <a ng-show="canShowProblems"  ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
+						<span ng-hide="canShowProblems"  >Problem #{{task.idProblem}}</span>
                     </div>
                     <div class="panel-body padding-5" >
                         <div class="row">
@@ -52,7 +54,7 @@
                                 <button class="btn btn-warning btn-xs" data-target="#editProblemModal" title="Edytuj zadanie" ng-click="openEditTaskWindow(task.id)" bs-tooltip>
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </button>
-                                <button class="btn btn-danger btn-xs" data-target="#editProblemModal" title="Usuń zadanie" ng-click="openRemoveTaskWindow(task.id)" bs-tooltip>
+                                <button ng-show="showDeleteButton" class="btn btn-danger btn-xs" data-target="#editProblemModal" title="Usuń zadanie" ng-click="openRemoveTaskWindow(task.id)" bs-tooltip>
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>
                                 </button>
                             </div>

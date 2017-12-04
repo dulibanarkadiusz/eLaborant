@@ -17,32 +17,36 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
             }
         });
     };
-	$rootScope.$on("RefreshList", function(){
+	var refreshFunction = $rootScope.$on("RefreshList", function(){
 		$scope.getList();
 	});
+	$scope.$on('$destroy', function() {
+		refreshFunction(); 
+	});
 	$scope.getList = function(pageNumber = 0) {
-		LaboratoryService.getDataListEntity(function(serverResponse){
+	    $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
+            .then(function (serverResponse) {
+                $scope.labListData = serverResponse.data.response;
+                $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.data.totalElements;
+                $scope.pages = getPagesArray(serverResponse.data.totalPages);
+                $scope.currentPage = pageNumber;
+            },
+            function(serverResponse){
+                $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
+            });
 		
-			$scope.labListData = serverResponse.response;
-			$scope.dataLoaded = true;
-			$scope.totalElements = serverResponse.totalElements;
-			$scope.pages = getPagesArray(serverResponse.totalPages);
-			$scope.currentPage = pageNumber;
-		
-		
-		}, function(status){$scope.responseError = true;
-			$scope.errorMessage = $sce.trustAsHtml(errorMessage);},pageNumber,$scope.pageSize )
    
    
 	};
 
 	$scope.getEntity = function(id = $scope.labid) {
 		$scope.message = "";
-		LaboratoryService.GetEntity(id, function (serverResponse) {
-			$scope.labData = new Array(serverResponse.response);
+		LaboratoryService.getDataEntity(id, function (response) {
+			$scope.labData = new Array(response);
 			$scope.labDataLoaded = true;
-		},function(status){
-			if (status==404){
+		},function(response){
+			if (response.status==404){
 				$scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Laboratorium nie zostało znalezione.'));
 			}
 			else{
