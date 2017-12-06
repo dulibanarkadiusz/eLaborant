@@ -54,8 +54,8 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
 
     function DisplayTasksList(serverTaskResponse) { 
         $scope.taskData = serverTaskResponse.data.response;
-        $scope.tasksCount = serverTaskResponse.totalElements;
-        $scope.pages = getPagesArray(serverTaskResponse.totalPages);
+        $scope.tasksCount = serverTaskResponse.data.totalElements;
+        $scope.pages = getPagesArray(serverTaskResponse.data.totalPages);
         $scope.dataLoaded = true;
         
         for (var i = 0; i < $scope.taskData.length; i++ ){
