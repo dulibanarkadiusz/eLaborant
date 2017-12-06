@@ -7,6 +7,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
 	
     $scope.init = function(){   // default values
         $scope.windowTitle = "Dodaj nowe zadanie";
+        $scope.dateValidationText= "Termin realizacji nie może być datą przeszłą!";
         $scope.options = [];
         $scope.minDate = new Date();
 
@@ -44,6 +45,8 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     function createTaskObject(dataEntityJSON){
         $scope.task = dataEntityJSON;
         $scope.task.idState = $scope.task.idState.toString();
+        $scope.minDate = new Date($scope.task.dateNotification);
+        $scope.dateValidationText = "Data realizacji musi być późniejsza niż data dodania zadania ("+moment($scope.minDate).format('D MMMM YYYY H:mm')+")";
     }
 
     $scope.prepareObjectToSave = function(){

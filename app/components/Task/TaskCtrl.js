@@ -5,11 +5,16 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
 
-    $rootScope.$on("RefreshTaskList", function(){
+    var refreshFunction = $rootScope.$on("RefreshTaskList", function(){
         $scope.getList();
     });
     
+    $scope.$on('$destroy', function() {
+        refreshFunction(); 
+    });
+
     $scope.getList = function(pageNumber = 0, problemId = $stateParams.id){
+        console.log("request");
         $scope.dataLoaded = false;
         $scope.message = null;
         var problemIdQuery = (typeof problemId === "undefined") ? '' : 'idProblem%3D'+problemId+',';    // creates query added to URL
