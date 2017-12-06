@@ -32,9 +32,9 @@
                                     <span title="Dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}" am-time-ago="task.dateNotification" bs-tooltip>
                                     </span>
                                 </div>
-                                <div>
+                                <div ng-class="(task.idState != 1 && task.idState != 5) ? '{{task.dateRealization | coloredDate}}' : ''">
                                     <i class="fa fa-bell-o" aria-hidden="true"></i>
-                                    <span title="Termin realizacji: {{task.dateRealization | amDateFormat: 'dddd, D MMMM YYYY H:mm' }} " am-time-ago="task.dateRealization" bs-tooltip>
+                                    <span title="Termin realizacji: {{task.dateRealization| amDateFormat: 'dddd, D MMMM YYYY H:mm'}}""  am-time-ago="task.dateRealization" bs-tooltip>
                                     </span>
                                 </div>
                             </div>
