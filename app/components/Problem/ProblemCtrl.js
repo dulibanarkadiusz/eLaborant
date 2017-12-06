@@ -4,13 +4,26 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
     $scope.pages = [];
 
     amMoment.changeLocale('pl');
+	 
     $scope.addNewProblem = function(){ 
         var options = ModalService.getModalOptions();
+		var modalScope = $rootScope.$new();
+		options.scope = modalScope;
         options.templateUrl = 'app/components/Problem/AddProblemView.html';
-        options.controller = 'ProblemManagerCtrl';
-
-        var modalInstance = $modal.open(options);
+        options.controller = 'ProblemManagerCtrl';		
+		options.resolve = {
+                param: function(){
+                    return {'modal':true}
+                }
+            }
+        modalScope.modalInstance = $modal.open(options);
+		modalScope.modalInstance.result.then(function (result) {
+        // Closed
+    }, function () {
+        // Dismissed
+    });
     };
+	
 
     $scope.getList = function(pageNumber = 0) {
         $http({
@@ -37,6 +50,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
 
     $scope.getProblem = function(idProblem = $stateParams.id) {
         $scope.problemid = idProblem;
+		
         $scope.message = "";
         $http({
             method: 'GET',

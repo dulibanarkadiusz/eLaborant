@@ -20,39 +20,46 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
         });
     };
 
-	$rootScope.$on("RefreshList", function(){
+
+	var refreshFunction = $rootScope.$on("RefreshList", function(){
 		$scope.getList();
 	});
-
+	$scope.$on('$destroy', function() {
+		refreshFunction(); 
+	});
 	$scope.getList = function(pageNumber = 0) {
-		ComputerService.getDataListEntity(function (serverResponse) {
-			$scope.computersListData = serverResponse.response;
-			$scope.dataLoaded = true;
-			$scope.totalElements = serverResponse.totalElements;
-			$scope.pages = getPagesArray(serverResponse.totalPages);
-			$scope.currentPage = pageNumber;
-			localStorage.pageSize = $scope.pageSize;
-		}, function(data, status){
-			$scope.responseError = true;
-			$scope.errorMessage = $sce.trustAsHtml(errorMessage);
-		}, pageNumber, $scope.pageSize);
+		
+	    $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
+            .then(function (serverResponse) {
+               
+                $scope.computersListData = serverResponse.data.response;
+                $scope.dataLoaded = true;
+                $scope.totalElements = serverResponse.data.totalElements;
+                $scope.pages = getPagesArray(serverResponse.data.totalPages);
+                $scope.currentPage = pageNumber;
+                localStorage.pageSize = $scope.pageSize;
+            },function(serverResponse){
+                $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
+            });
+		
+		
 	  
 	};
 
-	$scope.getEntity = function(idComputer = $scope.computerid) {
-		$scope.message = "";
-		ComputerService.getDataEntity(idComputer, function (serverResponse) {
-			$scope.computerData = new Array(serverResponse.response);
-			$scope.computerDataLoaded = true;
-		}, function(status){
-			if (status==404){
-				$scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Komputer nie został znaleziony.'));
-			}
-			else{
-				$scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
-			}
-			return;
-		})}
+	    $scope.getEntity = function(idComputer = $scope.computerid) {
+	        $scope.message = "";
+	        ComputerService.getDataEntity(idComputer, function (response) {
+	            $scope.computerData = new Array(response);
+	            $scope.computerDataLoaded = true;
+	        }, function(response){
+	            if (response.status==404){
+	                $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo('(404) Komputer nie został znaleziony.'));
+	            }
+	            else{
+	                $scope.errorDataLoaded = $sce.trustAsHtml(parseErrorInfo(dataError));
+	            }
+	            return;
+	        })}
 	   
 
                 /* Zgłoszone problemy dla komputera 

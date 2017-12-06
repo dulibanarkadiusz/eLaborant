@@ -3,7 +3,8 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
     if (param.id) {
         $scope.user.id = param.id;
     }
-
+	
+	$scope.showPassword = param.id ? false : true;
 	$scope.firstStep = true;
 	$scope.next = function(){$scope.firstStep = false;};
 	$scope.back = function(){$scope.firstStep = true;};
@@ -49,15 +50,14 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
             url: apiUrl + "users/",
             data: JSON.parse(JSON.stringify($scope.user))
         })
-        .success(function (success) {		
-			($scope.user.id) ? NotificationService.success("Użytkownik został zmieniony!") : NotificationService.success("Użytkownik zostało dodany!");
-			$rootScope.$emit("RefreshList", {});
+        .then(function (success) {
+            ($scope.user.id) ? NotificationService.success("Użytkownik został zmieniony!") : NotificationService.success("Użytkownik zostało dodany!");
+            $rootScope.$emit("RefreshList", {});
             $scope.cancel();
-			
+
             $scope.user = {};
             //$scope.lab.building = "MS";
-        })
-        .error(function (response) {
+        }, function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });

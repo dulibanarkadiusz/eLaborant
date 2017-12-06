@@ -12,7 +12,8 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
                     if (checkUserResponse.success)
                         $location.path('/Main');
                     else
-                        $scope.error = "Wystąpił błąd !";
+						$location.path('/Main');    
+						//$scope.error = "Wystąpił błąd !";
 
                     //LoginService.refresh(function(){});
                 }

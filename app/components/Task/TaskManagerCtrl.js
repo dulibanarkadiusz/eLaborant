@@ -1,9 +1,10 @@
-angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, amMoment, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, TaskService, UserService, StateService, NotificationService){     
+angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, TaskService, UserService, StateService, NotificationService, LoginService){     
     $scope.task = {};
     if (param.id){
         $scope.task.id = param.id;
     }
-
+	$scope.showExecutors = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
+	
     $scope.init = function(){   // default values
         $scope.windowTitle = "Dodaj nowe zadanie";
         $scope.dateValidationText= "Termin realizacji nie może być datą przeszłą!";
@@ -28,7 +29,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     }
 
     function createLaborantsList(dataJSON){
-        var response = dataJSON.response;
+        var response = dataJSON;
         for(var i=0; i < response.length; i++){
             $scope.options.push({ // creates bootstrap dropdown list 
                 "id": response[i].id,

@@ -18,6 +18,10 @@
 	text-align: right;
 }
 
+.important{
+  font-weight: bold;
+}
+
 .badge{
 	white-space: normal;
 }

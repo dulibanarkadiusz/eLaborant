@@ -1,5 +1,5 @@
-<div >
-    <div id="wrapper">
+<div ng-controller="AdminPanelCtrl">
+    <div ng-attr-id="{{showMenu ? 'wrapper': ''}}">
 
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
@@ -9,7 +9,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">eLaborant - panel administracyjny</a>
+                <a class="navbar-brand" href="index.html">{{title}}</a>
             </div>
 
             <ul class="nav navbar-right top-nav" ng-controller="CurrentUserCtrl">
@@ -34,23 +34,23 @@
             </ul>
            
             <div ng-controller="NavCtrl" class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
+                <ul ng-show="showMenu" class="nav navbar-nav side-nav">
                     <li ng-class="{active: $state.is('PanelHome')}">
                         <a ui-sref="PanelHome"><i class="fa fa-fw fa-home"></i> Strona główna</a>
                     </li>
-                    <li ng-class="{active: $state.is('Problemy') || $state.is('Problem')}">
+                    <li ng-show="showProblems" "ng-class="{active: $state.is('Problemy') || $state.is('Problem')}">
                         <a ui-sref="Problemy"><i class="fa fa-fw fa-exclamation-triangle"></i> Problemy</a>                        
                     </li>
-                    <li ng-class="{active: $state.is('Zadania')}">
+                    <li ng-show="showTasks" ng-class="{active: $state.is('Zadania')}">
                         <a ui-sref="Zadania"><i class="fa fa-tasks"></i> Zadania</a>
                     </li>
-                    <li ng-class="{active: $state.is('Uzytkownicy') || $state.is('Uzytkownik')}">
+                    <li ng-show="showUsers" ng-class="{active: $state.is('Uzytkownicy') || $state.is('Uzytkownik')}">
                         <a ui-sref="Uzytkownicy"><i class="fa fa-fw fa-address-book"></i> Lista użytkowników</a>
                     </li>
-                    <li ng-class="{active: $state.is('Laboratorium') || $state.is('Laboratoria')}">
+                    <li ng-show="showLaboratories" ng-class="{active: $state.is('Laboratorium') || $state.is('Laboratoria')}">
                         <a ui-sref="Laboratoria"><i class="fa fa-fw fa-cubes"></i> Laboratoria</a>
                     </li>
-                    <li ng-class="{active: $state.is('Komputer') || $state.is('Komputery')}">
+                    <li ng-show="showComputers" ng-class="{active: $state.is('Komputer') || $state.is('Komputery')}">
                         <a ui-sref="Komputery"><i class="fa fa-fw fa-laptop"></i> Komputery</a>
                     </li>
                 </ul>

@@ -1,9 +1,12 @@
-angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, $state, $http, $sce, $filter, $stateParams, $modalInstance, param, NotificationService, LaboratoryService, ComputerService){     
+angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, param, $state, $http, $sce, $filter, $stateParams,  NotificationService, LaboratoryService, ComputerService){     
     $scope.problem = {};
     if (param.id){
         $scope.problem.id = param.id;
     }
-
+	$scope.isModal = function(){
+		return param.modal;
+		
+	};
     $scope.init = function(){
         $scope.problem = {};
         LaboratoryService.getDataListEntity($scope.LoadLabsData);
@@ -55,17 +58,18 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.LoadLabsData = function(serverResponse){
-        $scope.labListData = serverResponse.response;
+        $scope.labListData = serverResponse;
         $scope.labDataLoaded = true;
     }
 
     $scope.LoadComputersData = function(serverResponse){
-        $scope.computersListData = serverResponse.response;
+		
+        $scope.computersListData = serverResponse;
         $scope.computersDataLoaded = true;
     }
 
-    function ShowComputersLoadError(response, status){
-        if (status == 404){
+    function ShowComputersLoadError(response){
+        if (response.status == 404){
             NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
         }
         else{
@@ -74,6 +78,10 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+		if($scope.isModal())
+			$scope.modalInstance.dismiss('cancel');
+		else
+			$scope.problem = {};
+        
     };
 });

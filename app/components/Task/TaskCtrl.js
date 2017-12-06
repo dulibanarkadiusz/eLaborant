@@ -1,5 +1,7 @@
-angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService) {
+angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService, LoginService) {
     amMoment.changeLocale('pl');
+	$scope.canShowProblems = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
+	$scope.showDeleteButton = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
 
