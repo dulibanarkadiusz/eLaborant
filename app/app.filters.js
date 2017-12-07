@@ -22,6 +22,25 @@ elaborantApp.filter('priortyDescription', function(){
     };
 });
 
+elaborantApp.filter('coloredDate', function(){
+    return function(timestamp){
+        var now = new Date();
+        var receivedDate = new Date(timestamp);
+        var threeDaysLater = new Date(timestamp);
+        threeDaysLater.setDate(receivedDate.getDate() - 3);
+
+        if (receivedDate < now ){
+            return "text-danger important";
+        }
+        else if (threeDaysLater < now){
+            return "text-warning important";
+        }
+        else{
+            return "";
+        }
+    }
+});
+
 elaborantApp.filter('buildingFullname', function(){
     return function(text){
         switch(text){

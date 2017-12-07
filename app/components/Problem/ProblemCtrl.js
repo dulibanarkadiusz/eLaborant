@@ -40,8 +40,12 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
         });
     };
 
-    $rootScope.$on("RefreshProblemList", function(){
+    var refreshFunction = $rootScope.$on("RefreshProblemList", function(){
         $scope.getList();
+    });
+
+    $scope.$on('$destroy', function() {
+        refreshFunction(); 
     });
 
     $scope.getProblem = function(idProblem = $stateParams.id) {
