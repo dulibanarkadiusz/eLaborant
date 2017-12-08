@@ -14,15 +14,14 @@ angular.module('elaborantPasswordManagerCtrl', []).controller('PasswordManagerCt
             url: apiUrl + "users/admin-change-password",
             data: JSON.parse(JSON.stringify($scope.user))
         })
-        .success(function (success) {		
+        .then(function (success) {		
 			 NotificationService.success("Hasło zostało zmienione!");
 			//$rootScope.$emit("RefreshList", {});
             $scope.cancel();
 			
             $scope.user = {};
             //$scope.lab.building = "MS";
-        })
-        .error(function (response) {
+        },function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
