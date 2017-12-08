@@ -54,7 +54,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             $scope.lab.building = "MS";
         },function (response) {
             $scope.IsResponseError = true;
-			alert(JSON.stringify(response));
+			//alert(JSON.stringify(response));
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
 
