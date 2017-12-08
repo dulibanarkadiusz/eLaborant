@@ -7,6 +7,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 
     $scope.init = function () {		
         $scope.windowTitle = "Dodaj nowe laboratorium";
+		$scope.errorMessage = "Błąd przy dodawaniu laboratorium";
         $scope.lab = {};
         $scope.lab.building = "MS";
         $scope.buttonName = "Dodaj";
@@ -14,6 +15,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         if (param.id) { // get details if task exsists
             $scope.lab.id = param.id;
             $scope.windowTitle = "Edycja laboratorium";
+			$scope.errorMessage = "Błąd przy edycji laboratorium";
             LaboratoryService.getDataEntity(param.id, createObject);
             $scope.buttonName = "Edytuj";
         }

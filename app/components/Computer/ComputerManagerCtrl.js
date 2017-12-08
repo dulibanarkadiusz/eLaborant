@@ -7,10 +7,12 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
 
     $scope.init = function () {
         $scope.windowTitle = "Dodaj nowy komputer";
+        $scope.errorMessage = "Błąd przy dodawaniu komputera";
         $scope.computer = {};
         $scope.buttonName = "Dodaj";
         if (param.id) { // get details if task exsists
             $scope.windowTitle = "Edycja komputera";
+			$scope.errorMessage = "Błąd przy edycji komputera";
             ComputerService.getDataEntity(param.id, createObject);
             $scope.buttonName = "Edytuj";
         }

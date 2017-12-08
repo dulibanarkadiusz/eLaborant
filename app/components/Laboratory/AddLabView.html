@@ -6,7 +6,7 @@
     <form name="addLabForm" ng-submit="processForm()">
         <div class="modal-body"> 
             <div ng-show="IsResponseError">
-                <div class="alert alert-danger"><strong>Błąd przy dodawaniu laboratorium:</strong>
+                <div class="alert alert-danger"><strong>{{errorMessage}}:</strong>
                     {{ResponseErrorMessage}}
                 </div>
             </div>
