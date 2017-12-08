@@ -76,7 +76,7 @@
 			
 			
 			
-			<div class="form-group" ng-show="!firstStep" ng-class="{'has-error': addUserForm.email.$invalid}">
+			<div class="form-group" ng-show="(firstStep && !showPassword) || (!firstStep && showPassword)" ng-class="{'has-error': addUserForm.email.$invalid}">
                 <userel for="email" class="control-userel">Adres e-mail:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
@@ -104,8 +104,8 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-default" ng-click="cancel()" data-dismiss="modal">Anuluj</button>
 			<button type="button" class="btn btn-default" ng-show="!firstStep" ng-click="back()" data-dismiss="modal">Wstecz</button>
-			<button type="button" class="btn btn-success" ng-show="firstStep" ng-disabled="addUserForm.role.$invalid || addUserForm.login.$invalid || (addUserForm.password.$invalid && showPassword) || (addUserForm.confirmPassword.$invalid && showPassword) " ng-click="next()" data-dismiss="modal">Dalej</button>
-            <button type="submit" class="btn btn-success" ng-show="!firstStep" ng-disabled="addUserForm.email.$invalid || addUserForm.firstname.$invalid || addUserForm.surname.$invalid || addUserForm.phoneNumber.$invalid" ng-click="save()">{{buttonName}}</button>
+			<button type="button" class="btn btn-success" ng-show="firstStep" ng-disabled="addUserForm.role.$invalid || addUserForm.login.$invalid || (addUserForm.password.$invalid && showPassword) || (addUserForm.confirmPassword.$invalid && showPassword) || (addUserForm.email.$invalid && !showPassword) " ng-click="next()" data-dismiss="modal">Dalej</button>
+            <button type="submit" class="btn btn-success" ng-show="!firstStep" ng-disabled="(addUserForm.email.$invalid && showPassword) || addUserForm.firstname.$invalid || addUserForm.surname.$invalid || addUserForm.phoneNumber.$invalid" ng-click="save()">{{buttonName}}</button>
         </div>
     </form>
 </div>   
