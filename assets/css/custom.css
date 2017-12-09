@@ -313,6 +313,10 @@ div:has(input){
 	display: inline-block;
 }
 
+.center{
+  text-align: center;
+}
+
 .neutral-button{
 	margin-left: 10px;
 	margin-top: -10px;
