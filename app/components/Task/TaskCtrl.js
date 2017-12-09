@@ -14,7 +14,6 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
     });
 
     $scope.getList = function(pageNumber = 0, problemId = $stateParams.id){
-        console.log("request");
         $scope.dataLoaded = false;
         $scope.message = null;
         var problemIdQuery = (typeof problemId === "undefined") ? '' : 'idProblem%3D'+problemId+',';    // creates query added to URL
