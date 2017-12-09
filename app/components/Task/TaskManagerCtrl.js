@@ -1,10 +1,11 @@
-angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, TaskService, UserService, StateService, NotificationService, LoginService){     
+angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, $scope, $http, $sce, amMoment, $filter, $stateParams, $modalInstance, param, TaskService, UserService, StateService, NotificationService, LoginService){     
     $scope.task = {};
     if (param.id){
         $scope.task.id = param.id;
     }
 	$scope.showExecutors = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
 	
+    $scope.availableDeadlinesInDays = [3,5,7,14]; 
     $scope.init = function(){   // default values
         $scope.windowTitle = "Dodaj nowe zadanie";
         $scope.dateValidationText= "Termin realizacji nie może być datą przeszłą!";
@@ -21,6 +22,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
 
         if (param.id){ // get details if task already exsists
             $scope.windowTitle = "Edycja zadania";
+            $scope.isExsistingTask = true;
             TaskService.getDataEntity(param.id, createTaskObject, $scope.showGetTaskDataError);
         }
 
@@ -104,4 +106,17 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');
     };
+
+    $scope.getDaysToCompleteTask = function(days) {
+        var now = moment(new Date);
+        var dateRealization = moment($scope.task.dateRealization);
+
+        return (dateRealization.diff(now, 'days'));
+    };
+
+    $scope.setDateRealization = function(daysToCompleteTask){
+        var now = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm'));
+        $scope.task.dateRealization = new Date(moment(now).add(daysToCompleteTask, 'days'));
+    }
+
 });
