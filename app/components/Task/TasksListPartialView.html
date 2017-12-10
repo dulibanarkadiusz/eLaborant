@@ -12,7 +12,7 @@
             <div ng-include="'app/shared/paginationPartialView.html'"></div>
 
             <div class="task" ng-repeat="task in taskData">
-                <div class="panel panel-default" ng-class="(task.idState == 5) ? 'resolved' : ''">
+                <div class="panel panel-default" ng-class="((task.idState == 5) || task.idState == 1) ? 'resolved' : ''">
                     <div class="panel-heading padding-5" ng-if="!problemid">
 					
                         <a ng-show="canShowProblems"  ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
