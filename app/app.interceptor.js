@@ -12,7 +12,7 @@ elaborantApp.factory('httpRequestInterceptor', function ($q, $injector) {
                 var deferred = $q.defer();
                 LoginService.refresh(function (result) {
                     if (result.success) {
-                        $injector.get("$http")(response.config).then(function (resp) { deferred.resolve(resp); }, function () { NotificationService.error("Wystąpił błąd"); });
+                        $injector.get("$http")(response.config).then(function (resp) { deferred.resolve(resp); }, function () { NotificationService.error("Wystąpił błąd"); deferred.reject(); });
                     }
                     else {
                         deferred.reject();
