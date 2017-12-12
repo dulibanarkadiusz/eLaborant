@@ -1,4 +1,4 @@
-angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, ComputerService, NotificationService) {
+angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, ComputerService, LaboratoryService, NotificationService) {
     $scope.computer = {};
     if (param.id) {
         $scope.computer.id = param.id;
@@ -25,16 +25,23 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
 
 
 
-    $scope.labList = function () {
-        $http.get(apiUrl + 'laboratories')
-        .success(function (serverResponse) {
-            $scope.labListData = serverResponse.response;
+    // $scope.labList = function () {
+		// alert("lista laboratoriów");
+        // $http.get(apiUrl + 'laboratories')
+        // .success(function (serverResponse) {
+            // $scope.labListData = serverResponse.response;
+            // $scope.dataLoaded = true;
+        // })
+        // .error(function (data, status) {
+            // $scope.responseError = true;
+            // $scope.errorMessage = $sce.trustAsHtml(errorMessage);
+        // });
+    // };
+	$scope.labList = function () {
+		LaboratoryService.getDataListEntity(function (serverResponse) {
+            $scope.labListData = serverResponse;
             $scope.dataLoaded = true;
         })
-        .error(function (data, status) {
-            $scope.responseError = true;
-            $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-        });
     };
     $scope.labList();
 
@@ -65,11 +72,11 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
             data: JSON.parse(JSON.stringify(json))
         })
         .then(function (response) {
-			NotificationService.success("Komputer został usunięty!")
+			NotificationService.success("Komputer został usunięty!");
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
         }, function (response) {
-            alert("Wystąpił błąd!");
+            NotificationService.error("Wystąpił błąd!")
         });
     }
     $scope.cancel = function () {
