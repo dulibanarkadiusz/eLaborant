@@ -73,7 +73,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             $scope.cancel();
 			NotificationService.success("Laboratorium zostało usunięte!");
         }, function (response) {
-            alert("Wystąpił błąd!");
+            NotificationService.error("Wystąpił błąd!");
         });
     }
 
