@@ -26,17 +26,17 @@
                 <userel for="login" class="control-userel">Nazwa użytkownika:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="text" name="login" class="form-control" ng-model="user.login" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Nazwa użytkownika" required>
+                    <input type="text" name="login" class="form-control" ng-model="user.login" ng-pattern="/^[0-9A-zÀ-ž\s]{1,50}$/" placeholder="Nazwa użytkownika" required>
                 </div>
                 <div ng-show="addUserForm.login.$invalid && addUserForm.login.$touched" class="help-block with-errors">
-                    Podaj poprawną nazwę użytkownika od 2 do 20 znaków
+                    Podaj poprawną nazwę użytkownika od 1 do 50 znaków
                 </div>
             </div>
 			<div class="form-group" ng-show="firstStep && showPassword" ng-class="{'has-error': addUserForm.password.$invalid}">
                 <userel for="password" class="control-userel">Hasło:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="password" name="password" class="form-control" ng-model="user.password" ng-pattern="/^.{2,20}$/" placeholder="Hasło" required>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" ng-pattern="/^.{1,}$/" placeholder="Hasło" required>
                 </div>
                 <div ng-show="addUserForm.password.$invalid && addUserForm.password.$touched" class="help-block with-errors">
                     Podaj hasło
@@ -57,20 +57,20 @@
                 <userel for="firstname" class="control-userel">Imię użytkownika:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="text" name="firstname" class="form-control" ng-model="user.firstname" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Imię użytkownika" required>
+                    <input type="text" name="firstname" class="form-control" ng-model="user.firstname" ng-pattern="/^[0-9A-zÀ-ž\s]{1,50}$/" placeholder="Imię użytkownika" required>
                 </div>
                 <div ng-show="addUserForm.firstname.$invalid && addUserForm.firstname.$touched" class="help-block with-errors">
-                    Podaj poprawne imię użytkownika od 2 do 20 znaków
+                    Podaj poprawne imię użytkownika od 1 do 50 znaków
                 </div>
             </div>
 			<div class="form-group" ng-show="!firstStep" ng-class="{'has-error': addUserForm.surname.$invalid}">
                 <userel for="surname" class="control-userel">Nazwisko użytkownika:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="text" name="surname" class="form-control" ng-model="user.surname" ng-pattern="/^[0-9A-zÀ-ž\s]{2,20}$/" placeholder="Nazwisko użytkownika" required>
+                    <input type="text" name="surname" class="form-control" ng-model="user.surname" ng-pattern="/^[0-9A-zÀ-ž\s\-]{1,50}$/" placeholder="Nazwisko użytkownika" required>
                 </div>
                 <div ng-show="addUserForm.surname.$invalid && addUserForm.surname.$touched" class="help-block with-errors">
-                    Podaj poprawne nazwisko użytkownika od 2 do 20 znaków
+                    Podaj poprawne nazwisko użytkownika od 1 do 50 znaków
                 </div>
             </div>
 			
@@ -80,7 +80,7 @@
                 <userel for="email" class="control-userel">Adres e-mail:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="email" name="email" class="form-control" ng-model="user.email" placeholder="Adres e-mail" required>
+                    <input type="email" name="email" class="form-control" ng-model="user.email" ng-pattern="/^.{1,50}$/" placeholder="Adres e-mail" required>
                 </div>
                 <div ng-show="addUserForm.email.$invalid && addUserForm.email.$touched" class="help-block with-errors">
                     Podaj poprawny adres e-mail
@@ -92,7 +92,7 @@
                 <userel for="phoneNumber" class="control-userel">Nr telefonu:</userel>
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></span>
-                    <input type="text" name="phoneNumber" class="form-control" ng-model="user.phoneNumber" ng-pattern="/^[0-9]{9,20}$/" placeholder="Numer telefonu użytkownika" required>
+                    <input type="text" name="phoneNumber" class="form-control" ng-model="user.phoneNumber" ng-pattern="/^[0-9]{1,10}$/" placeholder="Numer telefonu użytkownika" required>
                 </div>
                 <div ng-show="addUserForm.phoneNumber.$invalid && addUserForm.phoneNumber.$touched" class="help-block with-errors">
                     Podaj poprawny numer telefonu
