@@ -41,8 +41,6 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
 
         $scope.labels = {
             "itemsSelected": " wykonawców",
-            "selectAll": "Wybierz wszystkich",
-            "unselectAll": "Wyczyść zaznaczenie",
             "search": "Szukaj...",
             "select": "Kliknij, aby dodać wykonawców zadania"
         }

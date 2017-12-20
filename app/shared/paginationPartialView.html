@@ -1,7 +1,6 @@
 <div class="row pagination-container">
-    <div class="col-xs-12 col-sm-9">
+    <div class="col-xs-12 col-sm-8">
         <ul class="pagination pagination-sm" ng-show="pages.length > 1">
-
             <!-- Go to previous page -->
             <li ng-class="currentPage==0 ? 'disabled' : ''">
                 <a href="#" ng-click="(currentPage>0) ? getList(currentPage - 1) : ''">
@@ -43,10 +42,12 @@
 
         </ul>
     </div>
-    <!--
-    <div class="col-xs-12 col-sm-3 form-group paginationPageSize">
+    <div class="col-xs-12 col-sm-4 form-group paginationPageSize">
         Wyników na stronę:
-        <select class="form-control" ng-model="pageSize" ng-change="getList(0)" ng-options="v for v in [5,10,25,50,100]">
-        </select>
-    </div>-->
+        <div ng-controller="PaginationCtrl">
+            <select class="form-control" ng-model="pageSize" ng-change="pageSizeChanged()">
+                <option ng-repeat="size in availablePageSizes" value={{size}}>{{size}}</option>
+            </select>
+        </div>
+    </div>
 </div>

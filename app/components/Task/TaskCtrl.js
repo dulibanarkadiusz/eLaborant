@@ -2,7 +2,7 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
     amMoment.changeLocale('pl');
 	$scope.canShowProblems = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
 	$scope.showDeleteButton = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
-    $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
+
     $scope.pages = [];
 
     var refreshFunction = $rootScope.$on("RefreshTaskList", function(){
@@ -20,7 +20,7 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         
         $http({
             method: 'GET',
-            url: apiUrl + 'tasks/?query='+problemIdQuery+'page=' + pageNumber + ",pageSize=" + $scope.pageSize,
+            url: apiUrl + 'tasks/?query='+problemIdQuery+'page=' + pageNumber + ",pageSize=" + localStorage.pageSize,
         })
         .then(function (response) {
             $scope.currentPage = pageNumber;

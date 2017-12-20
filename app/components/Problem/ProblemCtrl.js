@@ -28,7 +28,7 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
     $scope.getList = function(pageNumber = 0) {
         $http({
           method: 'GET',
-          url: apiUrl + "problems?query=page=" + pageNumber + ",pageSize=" + $scope.pageSize
+          url: apiUrl + "problems?query=page=" + pageNumber + ",pageSize=" + localStorage.pageSize
         })
         .then(function (serverResponse) {
             $scope.problemsListData = serverResponse.data.response;
