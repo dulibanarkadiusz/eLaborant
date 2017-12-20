@@ -32,8 +32,8 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
         })
         .then(function (serverResponse) {
             $scope.problemsListData = serverResponse.data.response;
-            $scope.totalElements = serverResponse.totalElements;
-            $scope.pages = getPagesArray(serverResponse.totalPages);
+            $scope.totalElements = serverResponse.data.totalElements;
+            $scope.pages = getPagesArray(serverResponse.data.totalPages);
             $scope.currentPage = pageNumber;
         }, function(data){
             $scope.errorMessage = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(data), GetTypeOfResponse(data)));

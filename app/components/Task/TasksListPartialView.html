@@ -12,7 +12,7 @@
             <div ng-include="'app/shared/paginationPartialView.html'"></div>
 
             <div class="task" ng-repeat="task in taskData">
-                <div class="panel panel-default" ng-class="(task.idState == 5) ? 'resolved' : ''">
+                <div class="panel panel-default" ng-class="((task.idState == 5) || task.idState == 1) ? 'resolved' : ''">
                     <div class="panel-heading padding-5" ng-if="!problemid">
 					
                         <a ng-show="canShowProblems"  ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
@@ -38,9 +38,16 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="col-xs-3 col-sm-3 col-md-2">
-                                <a ng-show="task.userExecuteTasksById.length>0" data-toggle="modal" role="button" title="Kliknij, by przejrzeć listę" data-target="#addUser-{{task.id}}">
-                                    <i title="{{task.executorsString}}" bs-tooltip><span class="badge">{{task.userExecuteTasksById.length}} wykonuje</span></i>
+                            <div class="col-xs-3 col-sm-3 col-md-2 center">
+                                <a ng-show="task.userExecuteTasksById.length>0" data-toggle="modal" role="button" data-target="#addUser-{{task.id}}">
+                                    <i class="badge" >
+                                        <span ng-if="task.userExecuteTasksById.length > 1" title="{{task.executorsString}}" bs-tooltip>
+                                            {{task.userExecuteTasksById.length}} wykonuje
+                                        </span>
+                                        <span ng-if="task.userExecuteTasksById.length == 1">
+                                            {{task.userExecuteTasksById[0].firstname + " " + task.userExecuteTasksById[0].surname}}
+                                        </span>
+                                    </i>
                                 </a>
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-3" title="Bieżący status: {{task.state}}"> 

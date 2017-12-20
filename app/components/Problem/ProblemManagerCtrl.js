@@ -1,4 +1,4 @@
-angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, param, $state, $http, $sce, $filter, $stateParams,  NotificationService, LaboratoryService, ComputerService){     
+angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl', function($rootScope, $scope, param, $state, $http, $sce, $filter, $modalInstance, $stateParams,  NotificationService, LaboratoryService, ComputerService){     
     $scope.problem = {};
     if (param.id){
         $scope.problem.id = param.id;
@@ -78,10 +78,6 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.cancel = function () {
-		if($scope.isModal())
-			$scope.modalInstance.dismiss('cancel');
-		else
-			$scope.problem = {};
-        
+		$modalInstance.dismiss('cancel');
     };
 });

@@ -14,7 +14,6 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
     });
 
     $scope.getList = function(pageNumber = 0, problemId = $stateParams.id){
-        console.log("request");
         $scope.dataLoaded = false;
         $scope.message = null;
         var problemIdQuery = (typeof problemId === "undefined") ? '' : 'idProblem%3D'+problemId+',';    // creates query added to URL
@@ -54,8 +53,8 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
 
     function DisplayTasksList(serverTaskResponse) { 
         $scope.taskData = serverTaskResponse.data.response;
-        $scope.tasksCount = serverTaskResponse.totalElements;
-        $scope.pages = getPagesArray(serverTaskResponse.totalPages);
+        $scope.tasksCount = serverTaskResponse.data.totalElements;
+        $scope.pages = getPagesArray(serverTaskResponse.data.totalPages);
         $scope.dataLoaded = true;
         
         for (var i = 0; i < $scope.taskData.length; i++ ){
