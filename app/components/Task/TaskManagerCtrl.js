@@ -38,6 +38,14 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
                 "name": response[i].firstname + " " + response[i].surname
             });
         }
+
+        $scope.labels = {
+            "itemsSelected": " wykonawców",
+            "selectAll": "Wybierz wszystkich",
+            "unselectAll": "Wyczyść zaznaczenie",
+            "search": "Szukaj...",
+            "select": "Kliknij, aby dodać wykonawców zadania"
+        }
     }
 
     function createStateList(dataJSON){

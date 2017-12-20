@@ -92,6 +92,14 @@
 	margin-bottom: 5px;
 }
 
+.multiselect{
+  padding: 0;
+}
+
+.multiselect > .btn-group{
+  margin-top: -1px;
+}
+
 .counter{
 	margin-top: -20px;
 	margin-left: -10px;
