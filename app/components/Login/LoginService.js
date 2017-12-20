@@ -8,16 +8,13 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
                 method: 'POST',
                 url: apiUrl + "login",
                 data: { username: username, password: password }
-            }).success(function (data, status, headers, config) {
-
-                localStorage.setItem('token', headers("Authorization"));
-                localStorage.setItem('refreshToken', headers("X-Refresh-Token"));
-                userName = username;
-                //alert(headers("Authorization"));
-                callback({ success: true, status: status });
-
-            }).error(function () {
-                callback({ success: false, status: status });
+            }).then(function (response) {
+                localStorage.setItem('token', response.headers("Authorization"));
+                localStorage.setItem('refreshToken', response.headers("X-Refresh-Token"));
+                callback({ success: true, status: response.status});
+			}
+            ,function (response) {
+                callback({ success: false, status:response.status});
             });
 
 
@@ -27,23 +24,19 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
                 method: 'GET',
                 url: apiUrl + "refresh?refresh_token=" + localStorage.getItem('refreshToken')
 
-            }).success(function (data, status, headers, config) {
-                localStorage.setItem('token', headers("Authorization"));
-                localStorage.setItem('refreshToken', headers("X-Refresh-Token"));
+            }).then(function (response) {
+                localStorage.setItem('token', response.headers("Authorization"));
+                localStorage.setItem('refreshToken', response.headers("X-Refresh-Token"));
                 callback({ success: true });
 
-            }).error(function () {
+            },function (response) {
                 callback({ success: false });
             });
 
         },
         checkRole: function (callback) {
             UserService.getMe(function (data) {
-				
-				//alert(JSON.stringify(data.response));
-                // firstName = data.response[0].firstname;
-                // surname = data.response[0].surname;
-                // role = data.response[0].role.name;
+
                 localStorage.setItem('firstName', data.firstname);
                 localStorage.setItem('surname', data.surname);
                 localStorage.setItem('role', data.role.name);

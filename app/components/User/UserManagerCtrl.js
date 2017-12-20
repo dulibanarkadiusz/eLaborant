@@ -10,12 +10,14 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
 	$scope.back = function(){$scope.firstStep = true;};
     $scope.init = function () {		
         $scope.windowTitle = "Dodaj nowego użytkownika";
+        $scope.errorMessage = "Błąd przy dodawaniu użytkownika";
         $scope.user = {};
         $scope.buttonName = "Dodaj";
 
         if (param.id) { // get details if task exsists
             $scope.user.id = param.id;
             $scope.windowTitle = "Edycja użytkownika";
+			$scope.errorMessage = "Błąd przy edycji użytkownika";
             UserService.getDataEntity(param.id, createObject);
             $scope.buttonName = "Edytuj";
         }

@@ -6,18 +6,17 @@ elaborantApp.factory('httpRequestInterceptor', function ($q, $injector) {
         },
         responseError: function (response) {
             var LoginService = $injector.get('LoginService');
-
+            var NotificationService = $injector.get('NotificationService');
             if (response.status === 401 && LoginService.isLogged()) {
 
                 var deferred = $q.defer();
-
                 LoginService.refresh(function (result) {
                     if (result.success) {
-                        $injector.get("$http")(response.config).then(function (resp) { deferred.resolve(resp); });
+                        $injector.get("$http")(response.config).then(function (resp) { deferred.resolve(resp); }, function () { NotificationService.error("Wystąpił błąd"); deferred.reject(); });
                     }
                     else {
                         deferred.reject();
-                        alert("Wystąpił błąd");
+                        NotificationService.error("Wystąpił błąd");
                     }
                 });
                 return deferred.promise;
