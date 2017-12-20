@@ -92,6 +92,14 @@
 	margin-bottom: 5px;
 }
 
+.multiselect{
+  padding: 0;
+}
+
+.multiselect > .btn-group{
+  margin-top: -1px;
+}
+
 .counter{
 	margin-top: -20px;
 	margin-left: -10px;
@@ -169,21 +177,48 @@
 	max-width: 120px;
 }
 
-.problem-source{
+.radio-buttons{
 	margin: 0 auto;
 }
 
-.problem-source input[type=radio]{
+.radio-buttons input[type=radio]{
 	display: none;
 }
 
-.problem-source label{
+.radio-buttons label{
 	width: 170px;
 	margin: 4px;
 	border-radius: 4px;
-	overflow: auto;
 	border: 1px solid #ccc;
 	color: #333;
+}
+
+.radio-buttons span{
+  text-align: center;
+  display: block;
+}
+
+.radio-buttons span{
+  padding: 13px 0;
+}
+
+.radio-buttons input:checked + span{
+  background-color: #337ab7;
+  color: #F7F7F7;
+  transition: background-color 0.5s ease-out;
+}
+
+.realization-time label{
+  width: 110px;
+  margin: 3px 4px 3px 0;
+}
+
+.realization-time label:last-child{
+  margin-right: 0px;
+}
+
+.realization-time span{
+  padding: 5px;
 }
 
 .problemHeader .problemOptions{
@@ -200,21 +235,9 @@
 }
 
 @media screen and (max-width: 410px){
-	.problem-source label{
+	.radio-buttons label{
 		width: 100%;
 	}
-}
-
-.problem-source span{
-	text-align: center;
-	padding: 13px 0;
-	display: block;
-}
-
-.problem-source input:checked + span{
-	background-color: #337ab7;
-	color: #F7F7F7;
-	transition: background-color 0.5s ease-out;
 }
 
 .resolved{
@@ -298,6 +321,10 @@ div:has(input){
 	display: inline-block;
 }
 
+.center{
+  text-align: center;
+}
+
 .neutral-button{
 	margin-left: 10px;
 	margin-top: -10px;
@@ -320,6 +347,49 @@ div:has(input){
   text-align: center;
   padding: 5px;
 }
+
+
+
+/* --- Login page --- */
+.login-icon{
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  color: #424242;
+  font-size: 100px !important;
+}
+
+.login-appname{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 1em;
+}
+
+.login-iconContainer{
+    text-align: center;
+    margin: 30px;
+    margin-bottom: 50px;
+}
+
+.login-container {
+  max-width: 350px;
+  background-color: #F7F7F7;
+  padding: 10px 30px 10px;
+  margin: 100px auto;
+  border-radius: 5px;
+}
+
+.login-container input, .login-container button{
+  margin-bottom: 10px;
+  font-size: 16px;
+} 
+
+.btn-login{
+  margin-top: 20px;
+  height: 40px;
+}
+
 
 /* --- bootstrap toggle button */
 .switch {

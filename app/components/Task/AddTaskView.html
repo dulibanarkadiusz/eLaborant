@@ -14,6 +14,17 @@
 
             <div class="form-group" ng-class="{'has-error': addTaskForm.dateRealization.$invalid}">
                 <label for="dateRealization" class="control-label">Termin realizacji:</label>
+
+                <div class="input-group radio-buttons realization-time" ng-if="!isExsistingTask">
+                    <label role="button" ng-repeat="deadLineInDays in availableDeadlinesInDays">
+                        <input type="radio" ng-checked="deadLineInDays == getDaysToCompleteTask()" ng-click="setDateRealization(deadLineInDays)" value="computer" name="source" class="ng-pristine ng-untouched ng-valid ng-empty" >
+                        <span>{{deadLineInDays}} dni</span>
+                    </label>
+                    <label role="button">
+                        <input type="radio" ng-checked="availableDeadlinesInDays.indexOf(getDaysToCompleteTask()) === -1" value="laboratory" name="source" class="ng-pristine ng-untouched ng-valid ng-empty">
+                        <span>inny</span>
+                    </label>
+                </div>
                 <div class="input-group">
                     <span class="input-group-addon">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
@@ -63,7 +74,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-wrench" aria-hidden="true"></i>
                     </span>
-                    <multiselect class="form-control" name="userExecuteTasksById" id="selected" ng-model="task.userExecuteTasksById" options="options" search-filter="searchFilter" show-search="true" id-prop="id" display-prop="name">
+                    <multiselect class="form-control multiselect" name="userExecuteTasksById" id="selected" ng-model="task.userExecuteTasksById" options="options" labels="labels" search-filter="searchFilter" show-search="true" id-prop="id" display-prop="name">
                     </multiselect>
                 </div>
             </div>

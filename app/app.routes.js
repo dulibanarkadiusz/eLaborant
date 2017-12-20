@@ -85,7 +85,9 @@ elaborantApp.run(function($rootScope, $state) {
 elaborantApp.run([
         '$rootScope', '$modalStack',
         function ($rootScope, $modalStack) {
-            $rootScope.$on('$locationChangeStart', function (event) {
+            $rootScope.$on('$locationChangeStart', function (event) { // on locations changes
+                $.notifyClose(); // close all notifications
+
                 var top = $modalStack.getTop();
                 if (top) {
                     if( confirm("Czy chcesz wrócić na poprzednią stronę?\nNiezapisane zmiany zostaną utracone.") ){
