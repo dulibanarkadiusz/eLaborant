@@ -7,6 +7,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 
     $scope.init = function () {		
         $scope.windowTitle = "Dodaj nowe laboratorium";
+		$scope.errorMessage = "Błąd przy dodawaniu laboratorium";
         $scope.lab = {};
         $scope.lab.building = "MS";
         $scope.buttonName = "Dodaj";
@@ -14,6 +15,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         if (param.id) { // get details if task exsists
             $scope.lab.id = param.id;
             $scope.windowTitle = "Edycja laboratorium";
+			$scope.errorMessage = "Błąd przy edycji laboratorium";
             LaboratoryService.getDataEntity(param.id, createObject);
             $scope.buttonName = "Edytuj";
         }
@@ -54,7 +56,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             $scope.lab.building = "MS";
         },function (response) {
             $scope.IsResponseError = true;
-			alert(JSON.stringify(response));
+			//alert(JSON.stringify(response));
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
 
@@ -71,7 +73,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
             $scope.cancel();
 			NotificationService.success("Laboratorium zostało usunięte!");
         }, function (response) {
-            alert("Wystąpił błąd!");
+            NotificationService.error("Wystąpił błąd!");
         });
     }
 

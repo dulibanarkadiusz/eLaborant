@@ -1,17 +1,11 @@
-angular.module('elaborantPasswordManagerCtrl', []).controller('PasswordManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, param, NotificationService ) {
+angular.module('elaborantOwnPasswordManagerCtrl', []).controller('OwnPasswordManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, NotificationService ) {
    $scope.user = {};
    
-	$scope.init = function () {		
-		
-			if (param.id) { 
-				$scope.user.idUser = param.id;
-				
-			}
-		}
+	
     $scope.save = function () {
         $http({
             method: 'PATCH',
-            url: apiUrl + "users/admin-change-password",
+            url: apiUrl + "users/change-password",
             data: JSON.parse(JSON.stringify($scope.user))
         })
         .then(function (success) {		
@@ -21,7 +15,8 @@ angular.module('elaborantPasswordManagerCtrl', []).controller('PasswordManagerCt
 			
             $scope.user = {};
             //$scope.lab.building = "MS";
-        },function (response) {
+        },
+        function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });

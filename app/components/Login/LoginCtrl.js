@@ -2,28 +2,24 @@ angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scop
 
     $scope.formSubmit = function () {
         LoginService.login($scope.username, $scope.password, function (response) {
-
             if (response.success) {
                 $scope.error = '';
                 $scope.username = '';
                 $scope.password = '';
-
                 LoginService.checkRole(function (checkUserResponse) {
                     if (checkUserResponse.success)
                         $location.path('/Main');
-                    else
-						$location.path('/Main');    
-						//$scope.error = "Wystąpił błąd !";
-
-                    //LoginService.refresh(function(){});
+                    else						
+						$scope.error = "Wystąpił błąd !";
                 }
                 );
-
             } else {
-                $scope.error = "Niepoprawny login/hasło !";
+                if(response.status == 401)
+					$scope.error = "Niepoprawny login/hasło !";
+				else
+					$scope.error = "Wystąpił błąd !";
             }
         });
-
     }
 
 });
