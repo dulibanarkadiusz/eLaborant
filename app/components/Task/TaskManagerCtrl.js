@@ -26,7 +26,10 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
             TaskService.getDataEntity(param.id, createTaskObject, $scope.showGetTaskDataError);
         }
 
-        UserService.getLaborants(createLaborantsList);
+        if($scope.showExecutors)
+		{
+			UserService.getLaborants(createLaborantsList);
+		}
         StateService.getDataEntity(createStateList);
     }
 
