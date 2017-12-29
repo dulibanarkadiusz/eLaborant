@@ -55,7 +55,7 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 			return;
 		});
 		ComputerService.getComputersFromLab($scope.labid,function (serverResponse) {
-			alert(JSON.stringify(serverResponse));
+			//alert(JSON.stringify(serverResponse));
 			$scope.computersCount = serverResponse.length;
 			$scope.computersData = serverResponse;
 			$scope.dataLoaded = true;
