@@ -1,4 +1,5 @@
-elaborantApp.factory('httpRequestInterceptor', function ($q, $injector) {
+var module = require("./app.module.js");
+module.elaborantApp.factory('httpRequestInterceptor', function ($q, $injector) {
     return {
         request: function (config) {
             config.headers['Authorization'] = localStorage.getItem('token');
@@ -26,6 +27,6 @@ elaborantApp.factory('httpRequestInterceptor', function ($q, $injector) {
     };
 });
 
-elaborantApp.config(function ($httpProvider) {
+module.elaborantApp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('httpRequestInterceptor');
 });
