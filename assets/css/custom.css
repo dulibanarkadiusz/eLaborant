@@ -68,7 +68,7 @@
 }
 
 .task-content, .margin-top{
-	margin-top: 10px;
+	margin-top: 15px;
 }
 
 .input-group-addon{
@@ -268,6 +268,19 @@
 
 .problem-resolved .problemId button{
 	color: #ccc;
+}
+
+.source-details{
+  margin: 1px;
+}
+
+.source-details hr{
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.source-details > .row{
+  margin-top: 0;
 }
 
 .problem-details{
