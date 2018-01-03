@@ -26,7 +26,10 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
             TaskService.getDataEntity(param.id, createTaskObject, $scope.showGetTaskDataError);
         }
 
-        UserService.getLaborants(createLaborantsList);
+        if($scope.showExecutors)
+		{
+			UserService.getLaborants(createLaborantsList);
+		}
         StateService.getDataEntity(createStateList);
     }
 
@@ -77,6 +80,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
           data: JSON.parse(JSON.stringify(dataTask))
         })
         .success(function (success) {
+			($scope.task.id) ? NotificationService.success("Zadanie zostało zmienione.") : NotificationService.success("Zadanie zostało dodane.");
             $rootScope.$emit("RefreshTaskList", {});
             $scope.cancel();
         })
