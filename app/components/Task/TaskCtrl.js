@@ -1,4 +1,3 @@
-var moment = require('moment');
 angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService, LoginService) {
     amMoment.changeLocale('pl');
 	$scope.canShowProblems = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';

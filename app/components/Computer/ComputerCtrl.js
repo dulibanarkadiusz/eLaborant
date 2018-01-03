@@ -1,4 +1,3 @@
-require('angular-moment');
 angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function($rootScope, $scope, $sce, amMoment, $stateParams, $http, $modal, ModalService, ComputerService) {
     $scope.computerid = $stateParams.id;
     $scope.computerDataLoaded = false;

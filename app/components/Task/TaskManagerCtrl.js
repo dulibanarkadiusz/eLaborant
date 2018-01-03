@@ -1,4 +1,3 @@
-var moment = require('moment');
 angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', function($rootScope, $scope, $http, $sce, amMoment, $filter, $stateParams, $modalInstance, param, TaskService, UserService, StateService, NotificationService, LoginService){     
     $scope.task = {};
     if (param.id){
