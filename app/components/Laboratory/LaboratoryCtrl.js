@@ -1,4 +1,4 @@
-angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', function($rootScope, $scope, $sce, $stateParams, $http, $modal, ModalService, LaboratoryService) {
+angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', function($rootScope, $scope, $sce, $stateParams, $http, $modal, ModalService, LaboratoryService, ComputerService) {
     $scope.labid = $stateParams.id;
     $scope.labDataLoaded = false;
     $scope.computersCount = 0;
@@ -55,8 +55,9 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 			return;
 		});
 		ComputerService.getComputersFromLab($scope.labid,function (serverResponse) {
-			$scope.computersCount = serverResponse.totalElements;
-			$scope.computersData = serverResponse.response;
+			//alert(JSON.stringify(serverResponse));
+			$scope.computersCount = serverResponse.length;
+			$scope.computersData = serverResponse;
 			$scope.dataLoaded = true;
 		}, function(status) {
 			switch(status){

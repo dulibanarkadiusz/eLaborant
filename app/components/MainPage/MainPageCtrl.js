@@ -8,10 +8,10 @@ angular.module('elaborantMainPageCtrl', []).controller('MainPageCtrl', function 
 
         switch (LoginService.getRole()) {
             case 'admin':
-                $state.go("PanelHome");
+                $state.go("Problemy");
                 break;
 			case 'opiekun':
-				$state.go("PanelHome");
+				$state.go("Problemy");
                 break;
 			case 'laborant':
 				$state.go("Zadania");
