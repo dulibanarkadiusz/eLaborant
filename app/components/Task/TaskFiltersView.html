@@ -1,0 +1,51 @@
+<div class="panel panel-default" ng-init="restoreFilters()">
+    <div class="panel-heading" data-toggle="collapse" href="#filter-settings" role="button" ng-init="loadFiltersValues()">
+        <h4 class="panel-title">
+            <i class="fa fa-filter" aria-hidden="true"></i> Filtry
+        </h4>
+    </div>
+    <div id="filter-settings" class="panel-collapse collapse" ng-class="(filtersActive) ? 'in' : '' ">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-6">
+                        <label for="idState">
+                            Status zadania:
+                        </label>
+                        <select class="form-control" name="idState" ng-model="filtersSelectedValues.idState">
+                            <option value="-1"></option>
+                            <option ng-repeat="status in filtersAvailableValues.statesList" value="{{status.id}}">{{status.name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label for="idState">
+                            Autor:
+                        </label>
+                        <select class="form-control" name="idState" ng-model="filtersSelectedValues.idAuthor">
+                            <option value="-1"></option>
+                            <option ng-repeat="author in filtersAvailableValues.authorsList" value="{{author.id}}">{{author.firstname + " " + author.surname}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-6">
+                        <label for="idState">
+                            Priorytet co najmniej:
+                        </label>
+                        <select class="form-control smaller-padding" name="priority" ng-model="filtersSelectedValues.priority">
+                            <option ng-repeat="n in [] | range:5" value="{{n}}">{{n+1}} - {{n+1 | priortyDescription}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="textToRight padding-5 margin-top">
+                <button class="btn btn-danger" ng-click="resetFilters()">Wyczyść wszystkie filtry</button>
+                <button class="btn btn-success" ng-click="applyFilters()">Zastosuj filtry</button>
+            </div>
+        </div>
+    </div>
+</div>

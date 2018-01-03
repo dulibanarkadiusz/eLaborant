@@ -1,4 +1,4 @@
-angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService, LoginService) {
+angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService, LoginService, StateService, UserService) {
     amMoment.changeLocale('pl');
 	$scope.canShowProblems = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
 	$scope.showDeleteButton = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
@@ -17,7 +17,11 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         $scope.dataLoaded = false;
         $scope.message = null;
         var problemIdQuery = (typeof problemId === "undefined") ? '' : 'idProblem%3D'+problemId+',';    // creates query added to URL
-        
+        var taskQueryString = sessionStorage.taskQueryString;
+        if (taskQueryString !== undefined){
+            problemIdQuery += sessionStorage.taskQueryString;
+        }
+
         $http({
             method: 'GET',
             url: apiUrl + 'tasks/?query='+problemIdQuery+'page=' + pageNumber + ",pageSize=" + localStorage.pageSize,
@@ -65,4 +69,72 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
             }
         }
     }
+
+    $scope.applyFilters = function(){
+        var taskQueryString = "";
+
+        // filtry są dodawanie do query stringa - tylko te pola, w których użytkownik wybrał pewną wartość
+        if ($scope.filtersSelectedValues.idState != "-1"){
+            taskQueryString += "idState%3D" + $scope.filtersSelectedValues.idState + ",";
+        }
+        if ($scope.filtersSelectedValues.idAuthor != "-1"){
+            taskQueryString += "idAuthor%3D" + $scope.filtersSelectedValues.idAuthor + ",";
+        }
+        taskQueryString += "priority%3E" + $scope.filtersSelectedValues.priority + ",";
+
+        sessionStorage.taskQueryString = taskQueryString; // zapis do session storage by móc odtworzyć filtry
+        $scope.getList(0); // pobranie rekordów po zmianach
+    }
+
+    $scope.restoreFilters = function(){
+        var taskQueryString = sessionStorage.taskQueryString;
+        $scope.filtersActive = false;
+
+        $scope.filtersSelectedValues = { // domyślne wartości filtrowania
+            idState: "-1",
+            idAuthor: "-1",
+            priority: "0"
+        };
+
+        if (taskQueryString !== undefined){
+            $scope.filtersActive = true;
+            console.log(queryStringToJSON(taskQueryString));
+            $scope.filtersSelectedValues = Object.assign({}, $scope.filtersSelectedValues, queryStringToJSON(taskQueryString));
+                // konkatenacja wartości domyślnych oraz wartości występujących w query stringu zapisanym w session storage
+        }
+
+    }
+
+    $scope.resetFilters = function(){ // czyszczenie bieżących filtrów
+        sessionStorage.removeItem("taskQueryString"); // usuwanie bieżącej konfiguracji z pamięci w session storage
+        $scope.filtersActive = false;
+        $scope.restoreFilters(); // przywracanie (pustej) konfiguracji
+        $scope.getList(0);
+    }
+
+    $scope.loadFiltersValues = function(){ // Ładowanie list encji - możliwe do wyboru z list select
+        $scope.filtersAvailableValues = {};
+
+        StateService.getDataEntity(function(dataJSON){
+             $scope.filtersAvailableValues.statesList = dataJSON.data.response;
+        });
+
+        UserService.getDataListEntity(function(dataJSON){
+            $scope.filtersAvailableValues.authorsList = dataJSON;
+        });
+    }
+
+    function queryStringToJSON(queryString) { // Query string przekształcany jest do obiektu
+        queryString = queryString.replace("%3E", "%3D"); // priority in query string uses a 'greater than' opearator so it must be replaced with '='
+        var pairs = queryString.split(',');
+        var result = {};
+
+        pairs.forEach(function(pair) {
+            pair = pair.split('%3D');
+            result[pair[0]] = decodeURIComponent(pair[1] || '');
+        });
+      
+        return result;
+    }
+
 });

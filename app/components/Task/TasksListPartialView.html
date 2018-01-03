@@ -1,6 +1,9 @@
 <div class=" tasks panel-body">
     <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='TaskCtrl' ng-init='getList()'>
     
+        <div ng-include="'app/components/Task/TaskFiltersView.html'">
+        </div>
+
         <div ng-if="!taskData && !message" class="preloader">
         </div>
 

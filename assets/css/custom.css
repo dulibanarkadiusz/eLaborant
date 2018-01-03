@@ -114,6 +114,14 @@
 	padding: 5px;
 }
 
+.smaller-padding{
+  padding: 6px;
+}
+
+.padding-left-right{
+  padding: 0 5px
+}
+
 .panel-task{
 	margin-bottom: 5px;
 	border-bottom: 1px solid #d8d8d8;
@@ -363,6 +371,10 @@ div:has(input){
   padding: 5px;
 }
 
+.no-padding{
+  margin: 0;
+  padding: 0;
+}
 
 
 /* --- Login page --- */
@@ -592,4 +604,8 @@ input[type="radio"] .styled:checked + label::after {
 .modal-content .text{
 	margin-top: 5px;
 	font-size: 12px;
+}
+
+.no-margin{
+  margin: 0 !important;
 }
