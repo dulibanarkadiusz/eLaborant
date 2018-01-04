@@ -1,9 +1,10 @@
-angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService) {
+angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($scope, $rootScope, $injector, $sce, amMoment, $stateParams, $http, $modal, ModalService, NotificationService, LoginService) {
     $scope.dataLoaded = false;
     $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
 
     amMoment.changeLocale('pl');
+    $scope.isUser = (LoginService.getRole() == 'pracownik');
 	 
     $scope.addNewProblem = function(){ 
         var options = ModalService.getModalOptions();
@@ -26,9 +27,11 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
 	
 
     $scope.getList = function(pageNumber = 0) {
+        var endPointName = ($scope.isUser) ? 'problems/own' : 'problems';
+
         $http({
           method: 'GET',
-          url: apiUrl + "problems?query=page=" + pageNumber + ",pageSize=" + localStorage.pageSize
+          url: apiUrl + endPointName +"?query=page=" + pageNumber + ",pageSize=" + localStorage.pageSize
         })
         .then(function (serverResponse) {
             $scope.problemsListData = serverResponse.data.response;

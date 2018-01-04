@@ -60,15 +60,7 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
 		.state('UserPanel', {
 		    url: '/UserPanel',
 			parent: "Panel",
-			controller: 'ProblemManagerCtrl',
-			resolve:{
-
-         
-			param:  function(){
-            return {modal: false};
-			}},
-		    templateUrl: 'app/components/Problem/AddProblemByEmployeeView.html',
-			
+			templateUrl: "app/components/Problem/Problem.html"
 		})
 		 .state('Main', {
 		     url: '/',

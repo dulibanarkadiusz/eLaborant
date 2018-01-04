@@ -609,3 +609,13 @@ input[type="radio"] .styled:checked + label::after {
 .no-margin{
   margin: 0 !important;
 }
+
+.disabled-link, .disabled-link:hover{
+  color: black;
+  text-decoration: none;
+}
+
+.resolved .disabled-link{
+  color: #999;
+  text-decoration: none;
+}
