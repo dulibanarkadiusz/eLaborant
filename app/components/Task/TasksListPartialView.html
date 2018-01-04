@@ -12,7 +12,7 @@
 
         <div ng-if="dataLoaded">
 
-            <div ng-include="'app/shared/paginationPartialView.html'"></div>
+            <div ng-include="'app/shared/Pagination/paginationPartialView.html'"></div>
 
             <div class="task" ng-repeat="task in taskData">
                 <div class="panel panel-default" ng-class="((task.idState == 5) || task.idState == 1) ? 'resolved' : ''">

@@ -25,7 +25,7 @@
             </div>
 
             <div ng-show="problemsListData" class="problemList">
-              <div ng-include="'app/shared/paginationPartialView.html'"></div>
+              <div ng-include="'app/shared/Pagination/paginationPartialView.html'"></div>
            		<div class="panel panel-default" ng-repeat="p in problemsListData">
             		<div class="panel-heading" ng-class="(p.isResolved) ? 'resolved' : ''" id="headingOne">
                   <div class="row panel-title accordion-toggle" aria-expanded="true">
