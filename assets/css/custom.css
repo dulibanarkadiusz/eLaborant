@@ -619,3 +619,25 @@ input[type="radio"] .styled:checked + label::after {
   color: #999;
   text-decoration: none;
 }
+
+.panel-group .filters-panel{
+  margin-top: -20px;
+  margin-bottom: 40px;
+}
+
+#task-list .panel-group .filters-panel{
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.expandStatus-icon i{
+  color: #797979;
+  font-size: 16px;
+}
+
+div[aria-expanded=true] .no-expanded {
+   display: none;
+}
+div[aria-expanded=false] .expanded {
+   display: none;
+}
