@@ -7,7 +7,7 @@
         <div ng-if="!taskData && !message" class="preloader">
         </div>
 
-        <div ng-if="message && !taskData" ng-bind-html="message">
+        <div ng-if="(message && !taskData) || !dataLoaded" ng-bind-html="message">
         </div>
 
         <div ng-if="dataLoaded">
