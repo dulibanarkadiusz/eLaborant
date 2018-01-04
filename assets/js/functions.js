@@ -75,3 +75,20 @@ function roundMinutes(date){
 $(document).on('click', '.no-collapsable', function(e){
     e.stopPropagation();
 });
+
+
+function queryStringToJSON(queryString) { // Query string przekształcany jest do obiektu
+    queryString = queryString.replace("idState>1,idState<5", "hideClosedTask%3Dtrue");
+    queryString = queryString.replace("%3E", "%3D"); // priority in query string uses a 'greater than' opearator so it must be replaced with '='
+    var pairs = queryString.split(',');
+    var result = {};
+
+    pairs.forEach(function(pair) {
+        pair = pair.split('%3D');
+
+        var value = decodeURIComponent(pair[1] || '')
+        result[pair[0]] = (value == "true" || value == "false") ? (value=="true") : value;
+    });
+  
+    return result;
+}

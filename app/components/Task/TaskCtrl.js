@@ -80,6 +80,9 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         if ($scope.filtersSelectedValues.idAuthor != "-1"){
             taskQueryString += "idAuthor%3D" + $scope.filtersSelectedValues.idAuthor + ",";
         }
+        if ($scope.filtersSelectedValues.hideClosedTask){
+            taskQueryString += "idState>1,idState<5,";
+        }
         taskQueryString += "priority%3E" + $scope.filtersSelectedValues.priority + ",";
 
         sessionStorage.taskQueryString = taskQueryString; // zapis do session storage by móc odtworzyć filtry
@@ -93,12 +96,12 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         $scope.filtersSelectedValues = { // domyślne wartości filtrowania
             idState: "-1",
             idAuthor: "-1",
-            priority: "0"
+            priority: "0",
+            hideClosedTask: false
         };
 
         if (taskQueryString !== undefined){
             $scope.filtersActive = true;
-            console.log(queryStringToJSON(taskQueryString));
             $scope.filtersSelectedValues = Object.assign({}, $scope.filtersSelectedValues, queryStringToJSON(taskQueryString));
                 // konkatenacja wartości domyślnych oraz wartości występujących w query stringu zapisanym w session storage
         }
@@ -122,19 +125,6 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
         UserService.getDataListEntity(function(dataJSON){
             $scope.filtersAvailableValues.authorsList = dataJSON;
         });
-    }
-
-    function queryStringToJSON(queryString) { // Query string przekształcany jest do obiektu
-        queryString = queryString.replace("%3E", "%3D"); // priority in query string uses a 'greater than' opearator so it must be replaced with '='
-        var pairs = queryString.split(',');
-        var result = {};
-
-        pairs.forEach(function(pair) {
-            pair = pair.split('%3D');
-            result[pair[0]] = decodeURIComponent(pair[1] || '');
-        });
-      
-        return result;
     }
 
 });

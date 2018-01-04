@@ -17,38 +17,40 @@
     <div id="filter-settings" class="panel-collapse collapse" ng-class="(filtersActive) ? 'in' : '' ">
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-12 col-md-6">
-                    <div class="col-sm-12 col-md-6">
-                        <label for="idState">
-                            Status zadania:
-                        </label>
-                        <select class="form-control" name="idState" ng-model="filtersSelectedValues.idState">
-                            <option value="-1"></option>
-                            <option ng-repeat="status in filtersAvailableValues.statesList" value="{{status.id}}">{{status.name}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        <label for="idState">
-                            Autor:
-                        </label>
-                        <select class="form-control" name="idState" ng-model="filtersSelectedValues.idAuthor">
-                            <option value="-1"></option>
-                            <option ng-repeat="author in filtersAvailableValues.authorsList" value="{{author.id}}">{{author.firstname + " " + author.surname}}</option>
-                        </select>
-                    </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="idState">
+                        Status zadania:
+                    </label>
+                    <select class="form-control" name="idState" ng-model="filtersSelectedValues.idState">
+                        <option value="-1"></option>
+                        <option ng-repeat="status in filtersAvailableValues.statesList" value="{{status.id}}">{{status.name}}</option>
+                    </select>
                 </div>
-                <div class="col-sm-12 col-md-6">
-                    <div class="col-sm-12 col-md-6">
-                        <label for="idState">
-                            Minimalny priorytet:
-                        </label>
-                        <select class="form-control smaller-padding" name="priority" ng-model="filtersSelectedValues.priority">
-                            <option ng-repeat="n in [] | range:5" value="{{n}}">{{n+1}} - {{n+1 | priortyDescription}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-6">
-                        
-                    </div>
+                <div class="col-sm-12 col-md-4">
+                    <label for="idState">
+                        Autor:
+                    </label>
+                    <select class="form-control" name="idState" ng-model="filtersSelectedValues.idAuthor">
+                        <option value="-1"></option>
+                        <option ng-repeat="author in filtersAvailableValues.authorsList" value="{{author.id}}">{{author.firstname + " " + author.surname}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="idState">
+                        Minimalny priorytet:
+                    </label>
+                    <select class="form-control smaller-padding" name="priority" ng-model="filtersSelectedValues.priority">
+                        <option ng-repeat="n in [] | range:5" value="{{n}}">{{n+1}} - {{n+1 | priortyDescription}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="checkbox checkbox-primary checkbox-sm">
+                        <input id="hideClosedTask" class="styled ng-pristine ng-untouched ng-valid ng-not-empty" type="checkbox" name="hideClosedTask" ng-model="filtersSelectedValues.hideClosedTask">
+                        <label for="hideClosedTask">ukryj anulowane i ukończone zadania</label>
+                    </span>
                 </div>
             </div>
 
