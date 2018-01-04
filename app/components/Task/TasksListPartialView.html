@@ -4,7 +4,7 @@
         <div ng-include="'app/components/Task/TaskFiltersView.html'">
         </div>
 
-        <div ng-if="!taskData && !message" class="preloader">
+        <div ng-if="(!taskData || !dataLoaded) && !message" class="preloader">
         </div>
 
         <div ng-if="(message && !taskData) || !dataLoaded" ng-bind-html="message">
