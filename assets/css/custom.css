@@ -650,6 +650,10 @@ div[aria-expanded=false] .expanded {
    display: none;
 }
 
+.dropdown-menu{
+  padding: 0;
+}
+
 /*! 
  * Start Bootstrap - SB Admin (http://startbootstrap.com/)
  * Copyright 2013-2016 Start Bootstrap
@@ -727,6 +731,11 @@ body {
     white-space: normal;
 }
 
+.nav .dropdown-menu li > a{
+    padding: 10px;
+    min-width: 150px;
+  }
+
 /* Side Navigation */
 
 @media(min-width:768px) {
@@ -748,6 +757,25 @@ body {
     .side-nav>li>a {
         width: 225px;
     }
+}
+
+@media(max-width: 768px){
+  .top-nav {
+    padding: 0;
+  }
+
+  li.dropdown{
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav .dropdown-menu{
+    width: 100%;
+  }
+
+  .nav .dropdown-menu li > a{
+    padding: 15px;
+  }
 }
 
 .side-nav>li>ul {
