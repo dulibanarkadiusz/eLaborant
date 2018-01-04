@@ -53,7 +53,7 @@ function ShowLoadDataError(message, messtype = messageType.Error){
     return '<div class="alert alert-'+alertType+'"><h4><strong>'+alertTitle+'</strong></h4> '+alertContent+'</div>';
 }
 
-var defaultPageSize = 10;
+var defaultPageSize = "10";
 
 function getPagesArray(pagesCount){
     var array = [];
