@@ -21,18 +21,18 @@ angular.module('elaborantComputerService', []).factory('ComputerService', functi
                 errorCallback(serverResponse);
             });
         },
-            //TODO zmienić nazwę?
-            getComputersFromLab: function(labId, successCallback, errorCallback) {
-                $http.get(apiUrl + 'computers?query=allItems=true,idLaboratory%3D'+labId)
-                .then(function (serverResponse) {
-                    var response = serverResponse.data.response;
-                    successCallback(response);
-                },function(serverResponse){
-                    //NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
-                    errorCallback(serverResponse);
-                });
-            }
-		
-        };
+
+        getComputersFromLab: function(labId, successCallback, errorCallback) {
+            $http.get(apiUrl + 'computers?query=allItems=true,idLaboratory%3D'+labId)
+            .then(function (serverResponse) {
+                var response = serverResponse.data.response;
+                successCallback(response);
+            },function(serverResponse){
+                //NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
+                errorCallback(serverResponse);
+            });
+        }
+	
+    };
 
 });
