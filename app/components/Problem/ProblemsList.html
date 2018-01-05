@@ -14,11 +14,15 @@
         </div>
       </div>
 
+      <div ng-include="'app/components/Problem/ProblemFiltersView.html'">
+
+      </div>
+
   		<div class="panel">
   			<div class="panel-body">
           <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true">
                       
-            <div ng-hide="problemsListData || errorMessage" class="preloader">
+            <div ng-hide="(problemsListData && dataLoaded) || errorMessage" class="preloader">
             </div>
 
             <div ng-show="errorMessage && !problemsListData" ng-bind-html="errorMessage" class="responseErrorMessage">

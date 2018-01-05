@@ -87,7 +87,8 @@ function queryStringToJSON(queryString) { // Query string przekształcany jest d
         pair = pair.split('%3D');
 
         var value = decodeURIComponent(pair[1] || '')
-        result[pair[0]] = (value == "true" || value == "false") ? (value=="true") : value;
+        var keyName = pair[0];
+        result[keyName] = (value == "true" || value == "false") ? (value=="true") : value;
     });
   
     return result;

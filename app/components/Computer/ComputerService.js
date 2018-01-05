@@ -30,7 +30,7 @@ angular.module('elaborantComputerService', []).factory('ComputerService', functi
                     NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
                 }
                 else{
-                    NotificationService.errorFromResponse("", response);
+                    NotificationService.errorFromResponse("", serverResponse);
                 }
             });
         }
