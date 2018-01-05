@@ -17,7 +17,7 @@
     <div id="filter-settings" class="panel-collapse collapse" ng-class="(filtersActive) ? 'in' : '' ">
         <div class="panel-body">
             <div class="row">
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 {{canShowProblems ? 'col-md-4' : 'col-md-6'}}">
                     <label for="idState">
                         Status zadania:
                     </label>
@@ -26,7 +26,7 @@
                         <option ng-repeat="status in filtersAvailableValues.statesList" value="{{status.id}}">{{status.name}}</option>
                     </select>
                 </div>
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 col-md-4" ng-if="canShowProblems">
                     <label for="idState">
                         Autor:
                     </label>
@@ -36,7 +36,7 @@
                     </select>
                 </div>
 
-                <div class="col-sm-12 col-md-4">
+                <div class="col-sm-12 {{canShowProblems ? 'col-md-4' : 'col-md-6'}}">
                     <label for="idState">
                         Minimalny priorytet:
                     </label>

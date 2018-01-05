@@ -122,6 +122,11 @@ angular.module('elaborantTaskCtrl', []).controller('TaskCtrl', function ($scope,
              $scope.filtersAvailableValues.statesList = dataJSON.data.response;
         });
 
+
+        if (!$scope.canShowProblems){
+            return; // zalogowany użytkownik nie ma pełnych praw - nie wyswietlamy użytkowników
+        }
+
         UserService.getDataListEntity(function(dataJSON){
             $scope.filtersAvailableValues.authorsList = dataJSON;
         });
