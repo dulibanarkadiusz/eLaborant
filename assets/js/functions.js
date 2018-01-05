@@ -8,13 +8,25 @@ var messageType = {
 
 function ParseResponseErrorMessages(response){
     var errorsMessage = "";
-    if (response.data.errors !== undefined){
-        response.data.errors.forEach(function(err){
-            errorsMessage += err.message + "\n";
-        });
+
+    if (response.status == -1){
+        errorsMessage += "Problem z wysłaniem żądania do serwera API. Proszę sprawdzić połączenie internetowe."
     }
-    else if (response.data.message !== undefined){
-        errorsMessage += response.data.message + "\n";
+    else if (response.data != null){
+        if (response.data.errors != undefined){
+            response.data.errors.forEach(function(err){
+                errorsMessage += err.message + "\n";
+            });
+        }
+        else if (response.data.message !== undefined){
+            errorsMessage += response.data.message + "\n";
+        }
+        else{
+            errorsMessage += "Problem z odebraniem danych z serwera"
+        }
+    }
+    else{
+        errorsMessage += "Kod błędu: " + response.status;
     }
 
     return errorsMessage.trim();
