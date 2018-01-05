@@ -29,7 +29,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
                     </span>
-                    <input type='datetime-local' ng-blur="updateDateRealization($event)" ng-model-options="{updateOn: 'blur'}" name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control" min="{{minDate}}" required />
+                    <input type='text' ng-blur="updateDateRealization($event)" ng-model-options="{updateOn: 'blur'}" name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control" required />
                 </div>
                 <div ng-show="addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched" class="help-block with-errors">
                     {{dateValidationText}}
@@ -105,6 +105,6 @@
     datetimepicker.datetimepicker({
         locale: 'pl',
         sideBySide: true,
-        format: 'YYYY-MM-DDTHH:mm'
+        format: 'YYYY-MM-DD HH:mm'
     });
 </script>
