@@ -1,6 +1,6 @@
 angular.module('elaborantStateService', []).factory('StateService', function ($http, NotificationService) {
     return {
-    	getDataEntity: function (successCallback, errorCallback) {
+    	getDataEntity: function (successCallback) {
             $http({
                 method: 'GET',
                 url: apiUrl + "states/",

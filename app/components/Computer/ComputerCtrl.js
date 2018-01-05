@@ -1,7 +1,6 @@
 angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function($rootScope, $scope, $sce, amMoment, $stateParams, $http, $modal, ModalService, ComputerService) {
     $scope.computerid = $stateParams.id;
     $scope.computerDataLoaded = false;
-    $scope.pageSize = (localStorage.pageSize) ? parseInt(localStorage.pageSize) : defaultPageSize;
     $scope.pages = [];
     $scope.errorDataLoaded = '';
     $scope.problemsCount = 0;
@@ -29,7 +28,7 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
 	});
 	$scope.getList = function(pageNumber = 0) {
 		
-	    $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + $scope.pageSize)
+	    $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + localStorage.pageSize)
             .then(function (serverResponse) {
                
                 $scope.computersListData = serverResponse.data.response;
@@ -37,7 +36,6 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
                 $scope.totalElements = serverResponse.data.totalElements;
                 $scope.pages = getPagesArray(serverResponse.data.totalPages);
                 $scope.currentPage = pageNumber;
-                localStorage.pageSize = $scope.pageSize;
             },function(serverResponse){
                 $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
             });

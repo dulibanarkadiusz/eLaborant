@@ -1,24 +1,26 @@
 <div class=" tasks panel-body">
     <div class="panel-group" id="filter-menu" role="tablist" aria-multiselectable="true" ng-controller='TaskCtrl' ng-init='getList()'>
     
-        <div ng-if="!taskData && !message" class="preloader">
+        <div ng-include="'app/components/Task/TaskFiltersView.html'">
         </div>
 
-        <div ng-if="message && !taskData" ng-bind-html="message">
+        <div ng-if="(!taskData || !dataLoaded) && !message" class="preloader">
+        </div>
+
+        <div ng-if="(message && !taskData) || !dataLoaded" ng-bind-html="message">
         </div>
 
         <div ng-if="dataLoaded">
 
-            <div ng-include="'app/shared/paginationPartialView.html'"></div>
+            <div ng-include="'app/shared/Pagination/paginationPartialView.html'"></div>
 
             <div class="task" ng-repeat="task in taskData">
                 <div class="panel panel-default" ng-class="((task.idState == 5) || task.idState == 1) ? 'resolved' : ''">
                     <div class="panel-heading padding-5" ng-if="!problemid">
-					
-                        <a ng-show="canShowProblems"  ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
-						<span ng-hide="canShowProblems"  >Problem #{{task.idProblem}}</span>
+                        <a ng-show="canShowProblems" ui-sref="Problem({id: '{{task.idProblem}}'})">Problem #{{task.idProblem}}</a>
+						<span ng-hide="canShowProblems">Problem #{{task.idProblem}}</span>
                     </div>
-                    <div class="panel-body padding-5" >
+                    <div class="panel-body padding-5">
                         <div class="row">
                             <div class="col-xs-1 cols-sm-1 col-md-1">
                                 <span class="label {{task.priority | labelPriority}}" title="Priorytet zadania: {{task.priority | priortyDescription}}" bs-tooltip>
@@ -27,7 +29,6 @@
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-3">
                                 <div>
-
                                     <i class="fa fa-calendar-plus-o" aria-hidden="true"></i>
                                     <span title="Dodano: {{task.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm' }}" am-time-ago="task.dateNotification" bs-tooltip>
                                     </span>
@@ -68,6 +69,36 @@
                             <div class="row">
                                 <div class="col-md-12 task-content">
                                     {{task.content}}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="source-details" ng-hide="canShowProblems">
+                            
+                            <hr>
+
+                            <div class="row">
+                                <div class="col-sm-4 col-md-2">
+                                    <div class="legend-item">
+                                        <small>Lokalizacja:</small>
+                                    </div>
+                                    <span class="center" ng-if="task.problem.computer" title="Lokalizacja komputera: {{task.problem.computer.laboratory.building + task.problem.computer.laboratory.roomNo}}" bs-tooltip>
+                                        <i class="fa fa-desktop"></i>
+                                        {{task.problem.computer.name}} ({{task.problem.computer.laboratory.building + task.problem.computer.laboratory.roomNo}})
+                                    </span>
+
+                                    <span ng-if="task.problem.laboratory" title="Sala laboratoryjna" bs-tooltip>
+                                        <i class="fa fa-cube"></i>
+                                        {{task.problem.laboratory.building + task.problem.laboratory.roomNo}}
+                                    </span>
+                                </div>
+
+                                <div class="col-sm-8 col-md-10">
+                                    <div class="legend-item">
+                                        <small>Treść zgłaszanego problemu:</small>
+                                    </div>
+                                    {{task.problem.content}}
                                 </div>
                             </div>
                         </div>
