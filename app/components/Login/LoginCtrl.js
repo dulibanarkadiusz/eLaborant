@@ -1,9 +1,10 @@
 angular.module('elaborantLoginCtrl', []).controller('LoginCtrl', function ($scope, $rootScope, $stateParams, $state, $location, LoginService) {
 
     $scope.formSubmit = function () {
+        $scope.error = '';
+
         LoginService.login($scope.username, $scope.password, function (response) {
             if (response.success) {
-                $scope.error = '';
                 $scope.username = '';
                 $scope.password = '';
                 LoginService.checkRole(function (checkUserResponse) {
