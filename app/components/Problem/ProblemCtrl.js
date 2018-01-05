@@ -27,6 +27,8 @@ angular.module('elaborantProblemCtrl', []).controller('ProblemCtrl', function ($
 
     $scope.getList = function(pageNumber = 0) {
         $scope.dataLoaded = false;
+        $scope.errorMessage = "";
+        $scope.problemsListData = [];
         var endPointName = ($scope.isUser) ? 'problems/own' : 'problems';
         var queryString = sessionStorage.problemQueryString;
         var problemQueryString = "";
