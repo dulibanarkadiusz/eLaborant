@@ -19,8 +19,7 @@
                     <label role="button" ng-repeat="deadLineInDays in availableDeadlinesInDays">
                         <input type="radio" ng-checked="deadLineInDays == getDaysToCompleteTask()" ng-click="setDateRealization(deadLineInDays)" value="computer" name="source" class="ng-pristine ng-untouched ng-valid ng-empty" >
                         <span>{{deadLineInDays}} dni</span>
-                    </label>
-                    <label role="button">
+                    </label><label role="button">
                         <input type="radio" ng-checked="availableDeadlinesInDays.indexOf(getDaysToCompleteTask()) === -1" value="laboratory" name="source" class="ng-pristine ng-untouched ng-valid ng-empty">
                         <span>inny</span>
                     </label>
