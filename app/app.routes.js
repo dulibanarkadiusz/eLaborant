@@ -79,6 +79,7 @@ elaborantApp.run([
         function ($rootScope, $modalStack) {
             $rootScope.$on('$locationChangeStart', function (event) { // on locations changes
                 $.notifyClose(); // close all notifications
+                $("div[data-notify='container']").remove();
 
                 var top = $modalStack.getTop();
                 if (top) {

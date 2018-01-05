@@ -15,11 +15,6 @@ angular.module('elaborantNotificationService', []).factory('NotificationService'
             delay: 5000,
             timer: 1000,
             z_index: 2000,
-            animate: {
-                enter: 'animated fadeInDown',
-                exit: 'animated fadeOutUp'
-            },
-
         });
     }
     function createNotifyContent(title, text){
@@ -28,7 +23,6 @@ angular.module('elaborantNotificationService', []).factory('NotificationService'
 
     return {
         errorFromResponse: function (text, response){
-            console.log(response);
             errorsMessage = ParseResponseErrorMessages(response)
             
             showNotification(createNotifyContent(text, errorsMessage), 'danger');

@@ -89,6 +89,10 @@ $(document).on('click', '.no-collapsable', function(e){
 });
 
 
+$("body").on('click', 'div[data-notify="container"]', function(e){
+    $(this).remove();
+})
+
 function queryStringToJSON(queryString) { // Query string przekształcany jest do obiektu
     queryString = queryString.replace("idState>1,idState<5", "hideClosedTask%3Dtrue");
     queryString = queryString.replace("%3E", "%3D"); // priority in query string uses a 'greater than' opearator so it must be replaced with '='
