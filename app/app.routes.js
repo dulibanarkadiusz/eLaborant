@@ -50,7 +50,7 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
         })
     	.state('Panel', {
     		url: '/Panel',
-    		templateUrl: 'admin-panel.html'
+    		templateUrl: 'app/shared/AdminPanel/AdminPanel.html'
     	})
 		.state('PanelHome', {
     		url: '/Home',
@@ -60,15 +60,7 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
 		.state('UserPanel', {
 		    url: '/UserPanel',
 			parent: "Panel",
-			controller: 'ProblemManagerCtrl',
-			resolve:{
-
-         
-			param:  function(){
-            return {modal: false};
-			}},
-		    templateUrl: 'app/components/Problem/AddProblemByEmployeeView.html',
-			
+			templateUrl: "app/components/Problem/Problem.html"
 		})
 		 .state('Main', {
 		     url: '/',
@@ -87,6 +79,7 @@ elaborantApp.run([
         function ($rootScope, $modalStack) {
             $rootScope.$on('$locationChangeStart', function (event) { // on locations changes
                 $.notifyClose(); // close all notifications
+                $("div[data-notify='container']").remove();
 
                 var top = $modalStack.getTop();
                 if (top) {

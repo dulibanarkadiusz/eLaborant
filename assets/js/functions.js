@@ -8,13 +8,25 @@ var messageType = {
 
 function ParseResponseErrorMessages(response){
     var errorsMessage = "";
-    if (response.data.errors !== undefined){
-        response.data.errors.forEach(function(err){
-            errorsMessage += err.message + "\n";
-        });
+
+    if (response.status == -1){
+        errorsMessage += "Problem z wysłaniem żądania do serwera API. Proszę sprawdzić połączenie internetowe."
     }
-    else if (response.data.message !== undefined){
-        errorsMessage += response.data.message + "\n";
+    else if (response.data != null){
+        if (response.data.errors != undefined){
+            response.data.errors.forEach(function(err){
+                errorsMessage += err.message + "\n";
+            });
+        }
+        else if (response.data.message !== undefined){
+            errorsMessage += response.data.message + "\n";
+        }
+        else{
+            errorsMessage += "Problem z odebraniem danych z serwera"
+        }
+    }
+    else{
+        errorsMessage += "Kod błędu: " + response.status;
     }
 
     return errorsMessage.trim();
@@ -53,7 +65,7 @@ function ShowLoadDataError(message, messtype = messageType.Error){
     return '<div class="alert alert-'+alertType+'"><h4><strong>'+alertTitle+'</strong></h4> '+alertContent+'</div>';
 }
 
-var defaultPageSize = 10;
+var defaultPageSize = "10";
 
 function getPagesArray(pagesCount){
     var array = [];
@@ -75,3 +87,25 @@ function roundMinutes(date){
 $(document).on('click', '.no-collapsable', function(e){
     e.stopPropagation();
 });
+
+
+$("body").on('click', 'div[data-notify="container"]', function(e){
+    $(this).remove();
+})
+
+function queryStringToJSON(queryString) { // Query string przekształcany jest do obiektu
+    queryString = queryString.replace("idState>1,idState<5", "hideClosedTask%3Dtrue");
+    queryString = queryString.replace("%3E", "%3D"); // priority in query string uses a 'greater than' opearator so it must be replaced with '='
+    var pairs = queryString.split(',');
+    var result = {};
+
+    pairs.forEach(function(pair) {
+        pair = pair.split('%3D');
+
+        var value = decodeURIComponent(pair[1] || '')
+        var keyName = pair[0];
+        result[keyName] = (value == "true" || value == "false") ? (value=="true") : value;
+    });
+  
+    return result;
+}

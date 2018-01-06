@@ -13,7 +13,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.computersList = function(){
-        ComputerService.getComputersFromLab($scope.problem.idLaboratory, $scope.LoadComputersData, ShowComputersLoadError);
+        ComputerService.getComputersFromLab($scope.problem.idLaboratory, $scope.LoadComputersData);
     }
 
     $scope.save = function(){
@@ -66,15 +66,6 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
 		
         $scope.computersListData = serverResponse;
         $scope.computersDataLoaded = true;
-    }
-
-    function ShowComputersLoadError(response){
-        if (response.status == 404){
-            NotificationService.info("W tym laboratorium nie znaleziono komputerów.");
-        }
-        else{
-            NotificationService.errorFromResponse("", response);
-        }
     }
 
     $scope.cancel = function () {

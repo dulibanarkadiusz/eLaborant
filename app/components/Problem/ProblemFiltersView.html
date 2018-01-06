@@ -1,0 +1,65 @@
+<div class="panel panel-default filters-panel margin-top-10" ng-init="restoreFilters()" ng-if="!isUser">
+    <div class="panel-heading" aria-expanded="{{filtersActive}}" data-toggle="collapse" href="#filter-settings" role="button" ng-init="loadFiltersValues()">
+        <div class="row no-margin">
+            <div class="col-sm-11">
+                <h4 class="panel-title">
+                    <i class="fa fa-filter" aria-hidden="true"></i> Filtry
+                </h4>
+            </div>
+            <div class="col-sm-1 textToRight">
+                <span class="expandStatus-icon">
+                    <i class="no-expanded fa fa-chevron-circle-down" aria-hidden="true"></i>
+                    <i class="expanded fa fa-chevron-circle-up" aria-hidden="true"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div id="filter-settings" class="panel-collapse collapse" ng-class="(filtersActive) ? 'in' : '' ">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-12 col-md-4">
+                    <label for="idState">
+                        Osoba zgłaszająca:
+                    </label>
+                    <select class="form-control" name="idState" ng-model="filtersSelectedValues.idAuthor">
+                        <option value="-1"></option>
+                        <option ng-repeat="author in filtersAvailableValues.authorsList" value="{{author.id}}">{{author.firstname + " " + author.surname}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="idState">
+                        Laboratorium:
+                    </label>
+                    <select class="form-control" name="idState" ng-model="filtersSelectedValues.idLaboratory" ng-change="loadComputersList()">
+                        <option value="-1"></option>
+                        <option ng-repeat="lab in filtersAvailableValues.laboratoriesList" value="{{lab.id}}">{{lab.building + lab.roomNo}}</option>
+                    </select>
+                </div>
+
+                <div class="col-sm-12 col-md-4">
+                    <label for="idState">
+                        Komputer:
+                    </label>
+                    <select class="form-control" name="idState" ng-model="filtersSelectedValues.idComputer">
+                        <option value="-1"></option>
+                        <option ng-repeat="status in filtersAvailableValues.computersList" value="{{status.id}}">{{status.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <span class="checkbox checkbox-primary checkbox-sm">
+                        <input id="hideClosedTask" class="styled ng-pristine ng-untouched ng-valid ng-not-empty" type="checkbox" name="hideClosedTask" ng-model="filtersSelectedValues.hideResolved">
+                        <label for="hideClosedTask">ukryj zamknięte zgłoszenia problemów</label>
+                    </span>
+                </div>
+            </div>
+
+            <div class="textToRight padding-5 margin-top">
+                <button class="btn btn-danger" ng-click="resetFilters()">Wyczyść wszystkie filtry</button>
+                <button class="btn btn-success" ng-click="applyFilters()">Zastosuj filtry</button>
+            </div>
+        </div>
+    </div>
+</div>
