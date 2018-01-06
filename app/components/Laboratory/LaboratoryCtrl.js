@@ -55,16 +55,11 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 			return;
 		});
 		ComputerService.getComputersFromLab($scope.labid,function (serverResponse) {
-			//alert(JSON.stringify(serverResponse));
+		
 			$scope.computersCount = serverResponse.length;
 			$scope.computersData = serverResponse;
 			$scope.dataLoaded = true;
-		}, function(status) {
-			switch(status){
-				case 404: 
-					$scope.message = "Brak komputerów w laboratorium";
-					break;
-		} })
+		})
 		
 
 	}
