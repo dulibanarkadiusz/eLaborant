@@ -4,6 +4,6 @@ angular.module('elaborantNavCtrl', []).controller('NavCtrl', function ($scope, $
 	$scope.showProblems = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
 	$scope.showTasks = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
 	$scope.showUsers = LoginService.getRole() == 'admin';
-	$scope.showLaboratories = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
+	$scope.showLaboratories = LoginService.getRole() == 'admin';
 	$scope.showComputers = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';	
 });
