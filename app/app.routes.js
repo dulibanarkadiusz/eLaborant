@@ -52,11 +52,6 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
     		url: '/Panel',
     		templateUrl: 'app/shared/AdminPanel/AdminPanel.html'
     	})
-		.state('PanelHome', {
-    		url: '/Home',
-			parent: "Panel",
-    		templateUrl: 'app/components/Home/Home.html'
-    	})
 		.state('UserPanel', {
 		    url: '/UserPanel',
 			parent: "Panel",

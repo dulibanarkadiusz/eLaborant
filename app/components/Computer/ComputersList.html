@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="clickable" ui-sref="Komputer({id: '{{computer.id}}'})" ng-repeat="computer in computersListData">
+                    <tr ng-repeat="computer in computersListData">
                         <td>{{ computer.barcode}}</td>
                         <td>{{ computer.name }}</td>
                         <td>{{ computer.ip }}</td>

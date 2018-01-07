@@ -3,7 +3,6 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     if (param.id){
         $scope.task.id = param.id;
     }
-	$scope.showExecutors = LoginService.getRole() == 'admin' || LoginService.getRole() == 'opiekun';
 	
     $scope.availableDeadlinesInDays = [3,5,7,14]; 
     $scope.init = function(){   // default values
@@ -25,11 +24,8 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
             $scope.isExsistingTask = true;
             TaskService.getDataEntity(param.id, createTaskObject, $scope.showGetTaskDataError);
         }
-
-        if($scope.showExecutors)
-		{
-			UserService.getLaborants(createLaborantsList);
-		}
+		UserService.getLaborants(createLaborantsList);
+       
         StateService.getDataEntity(createStateList);
     }
 
