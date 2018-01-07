@@ -22,9 +22,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
         if ($scope.problem.source == 'computer'){
             $scope.data.idComputer = parseInt($scope.problem.idComputer);
         }
-        else{
-            $scope.data.idLaboratory = parseInt($scope.problem.idLaboratory);
-        }
+        $scope.data.idLaboratory = parseInt($scope.problem.idLaboratory);
 
         $http({
           method: 'POST',
