@@ -1,4 +1,6 @@
 var apiUrl = "http://157.158.16.186:8082/api/";
+var defaultPageSize = "10";
+var dateFormat = "YYYY-MM-DD HH:mm";
 
 var messageType = {
         Info: 0,
@@ -64,8 +66,6 @@ function ShowLoadDataError(message, messtype = messageType.Error){
 
     return '<div class="alert alert-'+alertType+'"><h4><strong>'+alertTitle+'</strong></h4> '+alertContent+'</div>';
 }
-
-var defaultPageSize = "10";
 
 function getPagesArray(pagesCount){
     var array = [];

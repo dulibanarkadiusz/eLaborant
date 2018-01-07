@@ -15,7 +15,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
         $scope.task.problemid = $stateParams.id;
         $scope.task.priority = "3";
         $scope.task.idState = "2";
-        $scope.task.dateRealization = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm')); // set current date rounded to the nearest hour (ex. 12:43 -> 13:00)
+        $scope.task.dateRealization = moment(roundMinutes(new Date())).format(dateFormat); // set current date rounded to the nearest hour (ex. 12:43 -> 13:00)
         $scope.task.userExecuteTasksById = {};
 
 
@@ -53,6 +53,7 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
         $scope.task = dataEntityJSON;
         $scope.task.idState = $scope.task.idState.toString();
         $scope.minDate = new Date($scope.task.dateNotification);
+        $scope.task.dateRealization = moment($scope.task.dateRealization).format(dateFormat);
         $scope.dateValidationText = "Data realizacji musi być późniejsza niż data dodania zadania ("+moment($scope.minDate).format('D MMMM YYYY H:mm')+")";
     }
 
@@ -102,11 +103,16 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     }
 
     $scope.updateDateRealization = function($event){
-        $scope.task.dateRealization = new Date($event.target.value);
+        $scope.task.dateRealization = moment($event.target.value).format(dateFormat);
+        $scope.validateDateRealization();
     }
 
     $scope.showGetTaskDataError = function (serverResponse){
         NotificationService.errorFromResponse("Nie udało się pobrać szczegółów zadania", serverResponse);
+    }
+
+    $scope.validateDateRealization = function(){
+        $scope.addTaskForm.dateRealization.$setValidity("isPastDate", moment($scope.task.dateRealization).isAfter($scope.minDate));
     }
 
     $scope.cancel = function () {
@@ -121,8 +127,10 @@ angular.module('elaborantTaskManagerCtrl', []).controller('TaskManagerCtrl', fun
     };
 
     $scope.setDateRealization = function(daysToCompleteTask){
-        var now = new Date(moment(roundMinutes(new Date())).format('YYYY-MM-DD HH:mm'));
-        $scope.task.dateRealization = new Date(moment(now).add(daysToCompleteTask, 'days'));
+        var now = roundMinutes(new Date());
+        $scope.task.dateRealization = moment(moment(now).add(daysToCompleteTask, 'days')).format(dateFormat);
+
+        $scope.validateDateRealization();
     }
 
 });
