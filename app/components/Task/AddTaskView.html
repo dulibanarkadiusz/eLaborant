@@ -19,8 +19,7 @@
                     <label role="button" ng-repeat="deadLineInDays in availableDeadlinesInDays">
                         <input type="radio" ng-checked="deadLineInDays == getDaysToCompleteTask()" ng-click="setDateRealization(deadLineInDays)" value="computer" name="source" class="ng-pristine ng-untouched ng-valid ng-empty" >
                         <span>{{deadLineInDays}} dni</span>
-                    </label>
-                    <label role="button">
+                    </label><label role="button">
                         <input type="radio" ng-checked="availableDeadlinesInDays.indexOf(getDaysToCompleteTask()) === -1" value="laboratory" name="source" class="ng-pristine ng-untouched ng-valid ng-empty">
                         <span>inny</span>
                     </label>
@@ -29,7 +28,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-bell-o" aria-hidden="true"></i>
                     </span>
-                    <input type='datetime-local' ng-blur="updateDateRealization($event)" ng-model-options="{updateOn: 'blur'}" name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control" min="{{minDate}}" required />
+                    <input type='text' ng-blur="updateDateRealization($event)" ng-model-options="{updateOn: 'blur'}" name='dateRealization' id='dateRealization' ng-model="task.dateRealization" class="form-control" required />
                 </div>
                 <div ng-show="addTaskForm.dateRealization.$invalid && addTaskForm.dateRealization.$touched" class="help-block with-errors">
                     {{dateValidationText}}
@@ -105,6 +104,6 @@
     datetimepicker.datetimepicker({
         locale: 'pl',
         sideBySide: true,
-        format: 'YYYY-MM-DDTHH:mm'
+        format: 'YYYY-MM-DD HH:mm'
     });
 </script>
