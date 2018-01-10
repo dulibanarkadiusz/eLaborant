@@ -780,6 +780,11 @@ body {
   .nav .dropdown-menu li > a{
     padding: 15px;
   }
+
+  .container-fluid{
+    padding-right: 0px;
+    padding-left: 0px;
+  }
 }
 
 .side-nav>li>ul {
