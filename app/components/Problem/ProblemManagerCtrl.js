@@ -13,6 +13,7 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.computersList = function(){
+        $scope.computersListData = []; // reset poprzednio załadowanych wartości
         ComputerService.getComputersFromLab($scope.problem.idLaboratory, $scope.LoadComputersData);
     }
 
@@ -61,7 +62,6 @@ angular.module('elaborantProblemManagerCtrl', []).controller('ProblemManagerCtrl
     }
 
     $scope.LoadComputersData = function(serverResponse){
-		
         $scope.computersListData = serverResponse;
         $scope.computersDataLoaded = true;
     }
