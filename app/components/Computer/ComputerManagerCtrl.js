@@ -57,7 +57,7 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
 			($scope.computer.id) ? NotificationService.success("Komputer został zmieniony!") : NotificationService.success("Komputer został dodany!");
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
-            $scope.computer = {};
+           // $scope.computer = {};
         },function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
