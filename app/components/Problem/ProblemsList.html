@@ -33,35 +33,43 @@
            		<div class="panel panel-default" ng-repeat="p in problemsListData">
             		<div class="panel-heading" ng-class="(p.isResolved) ? 'resolved' : ''" id="headingOne">
                   <div class="row panel-title accordion-toggle" aria-expanded="true">
+                    
                     <div class="hidden-xs float-left">
                       <span class="checkbox checkbox-primary checkbox-circle checkbox-lg" data-placement="top" title="{{p.isResolved ? 'Problem oznaczono jako rozwiązany' : ((isUser) ? 'Problem został zgłoszony' : 'Kliknij, by oznaczyć problem jako rozwiązany') }}" bs-tooltip>
                         <input id="checkbox-{{p.id}}" class="styled" type="checkbox" ng-model="p.isResolved" ng-change="editEntity(p.id, p.isResolved)" ng-disabled="isUser">
                         <label for="checkbox-{{p.id}}"></label>
                       </span>
                     </div>
-           					<div ng-if="!isUser" class="col-xs-4 col-sm-4 col-md-2 problemId">
-                      <button ui-sref="Problem({id: '{{p.id}}'})" class="btn btn-xs btn-default btn-preview" title="Przejdź do strony problemu" bs-tooltip>
-                         <i class="fa fa-share fa-1" aria-hidden="true"></i>
-                      </button>
-                      <a ui-sref="Problem({id: '{{p.id}}'})">
-                        <strong>#{{p.id}}</strong><br>
-                      </a>
-                      <span class="badge">
-                        <time am-time-ago="p.dateNotification" title="Zgłoszono: {{p.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
-                      </span>
+
+           					<div ng-if="!isUser" class="col-xs-6 col-sm-3 col-md-2 problemId">
+                      <div class="col-xs-6 col-sm-12">
+                        <button ui-sref="Problem({id: '{{p.id}}'})" class="btn btn-xs btn-default btn-preview" title="Przejdź do strony problemu" bs-tooltip>
+                           <i class="fa fa-share fa-1" aria-hidden="true"></i>
+                        </button>
+                        <a ui-sref="Problem({id: '{{p.id}}'})">
+                          <strong>#{{p.id}}</strong><br>
+                        </a>
+                      </div>
+                      <div class="col-xs-6 col-sm-12">
+                        <span class="badge">
+                          <time am-time-ago="p.dateNotification" title="Zgłoszono: {{p.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
+                        </span>
+                      </div>
                     </div>
-                    <div ng-if="isUser" class="col-xs-4 col-sm-4 col-md-2 problemId">
+                    <div ng-if="isUser" class="col-xs-6 col-sm-3 col-md-2 problemId">
                       <strong>Problem #{{p.id}}</strong><br>
                       <span class="badge">
                         <time am-time-ago="p.dateNotification" title="Zgłoszono: {{p.dateNotification | amDateFormat: 'dddd, D MMMM YYYY H:mm'}}" bs-tooltip></time>
                       </span>
                     </div>
-           					<div class="hidden-xs col-sm-2 col-md-2">
+
+           					<div class="hidden-xs col-sm-6 col-md-2">
                       <span title="Zgłaszający: {{p.author.firstname}} {{p.author.surname}}" bs-tooltip>
                         {{p.author.firstname}} {{p.author.surname}}
                       </span>
                     </div>
-           					<div class="col-xs-6 col-sm-3 col-md-2" ng-if="!isUser">
+
+           					<div class="col-xs-4 col-sm-6 col-md-2" ng-if="!isUser">
                       <div>
                         <a ui-sref="Komputer({id: '{{p.computer.id}}'})" ng-click="$event.stopPropagation()" ng-if="p.computer" title="Lokalizacja komputera: {{p.computer.laboratory.building + p.computer.laboratory.roomNo}}" bs-tooltip>
                           <i class="fa fa-desktop"></i>
@@ -74,7 +82,7 @@
                         </a>
                       </div>
                     </div>
-                    <div class="col-xs-6 col-sm-4 col-md-3" ng-if="isUser">
+                    <div class="col-xs-4 col-sm-6 col-md-2" ng-if="isUser">
                         <span ng-if="p.computer" title="Lokalizacja komputera: {{p.computer.laboratory.building + p.computer.laboratory.roomNo}}" bs-tooltip>
                           <i class="fa fa-desktop"></i>
                           {{p.computer.name}}
@@ -86,13 +94,15 @@
                         </span>
                     </div>
 
-                    <div ng-if="!isUser" class="col-md-1 text-right col-md-push-5">
+                    <div ng-if="!isUser" class="col-xs-2 col-sm-2 col-md-1 text-right col-md-push-5">
                       <button class="btn btn-xs btn-danger btn-preview" ng-click="openRemoveProblemWindow(p.id)" title="Usuń problem" bs-tooltip>
                         <i class="fa fa-trash-o fa-1" aria-hidden="true"></i>
                       </button>
                       &nbsp;
                     </div>
-           					<div class="col-xs-12 col-sm-12 col-md-4 problem-desc "><i>{{p.content}}</i></div>
+
+           					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 problem-desc "><i>{{p.content}}</i></div>
+
             			</div>
             		</div>
             	</div>
