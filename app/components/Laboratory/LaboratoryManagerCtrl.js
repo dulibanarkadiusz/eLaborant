@@ -52,8 +52,8 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 			($scope.lab.id) ? NotificationService.success("Laboratorium zostało zmienione!") : NotificationService.success("Laboratorium zostało dodane!");
 			$rootScope.$emit("RefreshList", {});
             $scope.cancel();			
-            $scope.lab = {};
-            $scope.lab.building = "MS";
+            //$scope.lab = {};
+            //$scope.lab.building = "MS";
         },function (response) {
             $scope.IsResponseError = true;
 			//alert(JSON.stringify(response));

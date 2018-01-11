@@ -5,7 +5,7 @@ angular.module('elaborantUserCtrl', []).controller('UserCtrl', function ($scope,
     $scope.pages = [];
 	
     $scope.getList = function(pageNumber = 0) {
-		
+		$scope.usersListData = null;
         $http.get(apiUrl + 'users?query=page=' + pageNumber + ",pageSize=" + localStorage.pageSize)
             .then(function (serverResponse) {
 			

@@ -24,6 +24,9 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 		refreshFunction(); 
 	});
 	$scope.getList = function(pageNumber = 0) {
+		$scope.labDataLoaded = false;
+		 $scope.errorDataLoaded = '';
+		 $scope.labListData = null;
 	    $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + localStorage.pageSize)
             .then(function (serverResponse) {
                 $scope.labListData = serverResponse.data.response;
