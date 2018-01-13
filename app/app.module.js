@@ -1,8 +1,7 @@
 var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"angularMoment", 
 												"btorfs.multiselect", 
-												"ui.bootstrap",
-												
+												"ui.bootstrap",									
 												"elaborantMainPageCtrl",
 												"elaborantNavCtrl",
 												"elaborantCurrentUserCtrl",

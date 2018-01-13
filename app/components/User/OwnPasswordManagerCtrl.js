@@ -1,6 +1,5 @@
 angular.module('elaborantOwnPasswordManagerCtrl', []).controller('OwnPasswordManagerCtrl', function ($rootScope, $scope, $http, $sce, $filter, $stateParams, $modalInstance, NotificationService ) {
-   $scope.user = {};
-   
+	$scope.user = {};
 	
     $scope.save = function () {
         $http({
@@ -10,19 +9,13 @@ angular.module('elaborantOwnPasswordManagerCtrl', []).controller('OwnPasswordMan
         })
         .then(function (success) {		
 			 NotificationService.success("Hasło zostało zmienione!");
-			//$rootScope.$emit("RefreshList", {});
-            $scope.cancel();
-			
-            $scope.user = {};
-            //$scope.lab.building = "MS";
+			 $scope.cancel();
         },
         function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
-
-    };
-   
+    };   
 
     $scope.cancel = function () {
         $modalInstance.dismiss('cancel');

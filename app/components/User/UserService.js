@@ -1,5 +1,5 @@
 angular.module('elaborantUserService', []).factory('UserService', function ($http, NotificationService) {
-    //var username, firstName, surname, role;
+
     return {
         getDataEntity: function (userId, successCallback) {
             $http.get(apiUrl + 'users/' + userId)

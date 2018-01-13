@@ -1,11 +1,11 @@
 angular.module('elaborantLaboratoryService', []).factory('LaboratoryService', function ($http, NotificationService) {
-    //var username, firstName, surname, role;
+
     return {
         getDataEntity: function (laboratoryId, successCallback) {
             $http.get(apiUrl + 'laboratories/' + laboratoryId)
             .then(function (serverResponse) {
                 var response = serverResponse.data.response;
-                //alert(response);
+
                 successCallback(response);
             },function (serverResponse) {
                 NotificationService.errorFromResponse("Nie udało się pobrać informacji o laboratorium", serverResponse);

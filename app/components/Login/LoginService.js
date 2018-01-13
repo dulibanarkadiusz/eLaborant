@@ -1,5 +1,4 @@
 angular.module('elaborantLoginService', []).factory('LoginService', function ($http, $rootScope, UserService) {
-    //var username, firstName, surname, role;
     return {
 
         login: function (username, password, callback) {
@@ -40,7 +39,6 @@ angular.module('elaborantLoginService', []).factory('LoginService', function ($h
                 localStorage.setItem('firstName', data.firstname);
                 localStorage.setItem('surname', data.surname);
                 localStorage.setItem('role', data.role.name);
-                //localStorage.setItem('role', 'admin');
                 callback({ success: true });
 
             }, function (status) {
