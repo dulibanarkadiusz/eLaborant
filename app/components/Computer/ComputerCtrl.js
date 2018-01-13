@@ -19,7 +19,6 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
         });
     };
 
-
 	var refreshFunction = $rootScope.$on("RefreshList", function(){
 		$scope.getList();
 	});
@@ -40,9 +39,7 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
                 $scope.currentPage = pageNumber;
             },function(serverResponse){
                 $scope.message = $sce.trustAsHtml(ShowLoadDataError(ParseResponseErrorMessages(serverResponse), GetTypeOfResponse(serverResponse)));
-            });
-		
-		
+            });			
 	  
 	};
 
@@ -60,29 +57,7 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
 	            }
 	            return;
 	        })}
-	   
-
-                /* Zgłoszone problemy dla komputera 
-                computerProblemsData = function(pageNumber = 0) { 
-                    $http.get(apiUrl + 'problems/?query=idComputer%3D'+$scope.computerid+',page=' + pageNumber + ",pageSize=" + $scope.pageSize)
-                        .success(function (serverResponse) {
-                            $scope.problemsCount = serverResponse.totalElements;
-                            $scope.problemsData = serverResponse.response;
-                            $scope.dataLoaded = true;
-                            $scope.pages = getPagesArray(serverResponse.totalPages);
-                            $scope.currentPage = pageNumber;
-                            localStorage.pageSize = $scope.pageSize;
-                        })
-                        .error(function(error, status) {
-                            switch(status){
-                                case 404: 
-                                    $scope.message = "Brak zgłoszonych problemów dla tego komputera";
-                                break;
-                            }
-                        });
-                }
-                computerProblemsData();*/
-           
+	             
 	$scope.editComputer = function(computerId){
 
 		$scope.addNewComputer(computerId);

@@ -1,5 +1,4 @@
 angular.module('elaborantMainPageCtrl', []).controller('MainPageCtrl', function ($scope, $state, LoginService) {
-    //$state.go("Login");
     if (!LoginService.isLogged()) {
 
         $state.go("Login");
