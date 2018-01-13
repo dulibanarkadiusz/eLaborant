@@ -19,7 +19,7 @@ angular.module('elaborantPasswordManagerCtrl', []).controller('PasswordManagerCt
 			//$rootScope.$emit("RefreshList", {});
             $scope.cancel();
 			
-            $scope.user = {};
+            //$scope.user = {};
             //$scope.lab.building = "MS";
         },function (response) {
             $scope.IsResponseError = true;

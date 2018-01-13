@@ -13,7 +13,7 @@ angular.module('elaborantOwnPasswordManagerCtrl', []).controller('OwnPasswordMan
 			//$rootScope.$emit("RefreshList", {});
             $scope.cancel();
 			
-            $scope.user = {};
+            //$scope.user = {};
             //$scope.lab.building = "MS";
         },
         function (response) {
