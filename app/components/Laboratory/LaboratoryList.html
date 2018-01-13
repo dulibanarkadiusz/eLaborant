@@ -16,7 +16,7 @@
         <div ng-if="!labListData && message" ng-bind-html="message">
         </div>
 
-        <div ng-if="labListData" class="table-responsive">
+        <div ng-if="labListData">
 
             <div class="row">
                 <div class="col-md-6">
@@ -29,34 +29,36 @@
 
             <div ng-include="'app/shared/Pagination/paginationPartialView.html'"></div>
 
-            <table class="table table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Budynek</th>
-                        <th>Numer</th>
-                        <th>Opiekun</th>
-                        <th>&nbsp </th>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Budynek</th>
+                            <th>Numer</th>
+                            <th>Opiekun</th>
+                            <th>&nbsp; </th>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="clickable" ui-sref="Laboratorium({id: '{{lab.id}}'})" ng-repeat="lab in labListData">
-                        <td>{{ lab.building }}</td>
-                        <td>{{ lab.roomNo }}</td>
-                        <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
-                        <td>
-                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj laboratorium" ng-click="editLaboratory(lab.id);$event.stopPropagation()" bs-tooltip>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </button>
-                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń laboratorium" ng-click="openRemoveLaboratoryWindow(lab.id);$event.stopPropagation()" bs-tooltip>
-                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            </button>
-                        </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="clickable" ui-sref="Laboratorium({id: '{{lab.id}}'})" ng-repeat="lab in labListData">
+                            <td>{{ lab.building }}</td>
+                            <td>{{ lab.roomNo }}</td>
+                            <td>{{ lab.owner.firstname + " " + lab.owner.surname }}</td>
+                            <td>
+                                <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj laboratorium" ng-click="editLaboratory(lab.id);$event.stopPropagation()" bs-tooltip>
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </button>
+                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń laboratorium" ng-click="openRemoveLaboratoryWindow(lab.id);$event.stopPropagation()" bs-tooltip>
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </td>
 
 
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

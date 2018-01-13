@@ -78,6 +78,9 @@ elaborantApp.run([
                 $.notifyClose(); // close all notifications
                 $("div[data-notify='container']").remove();
 
+                // close collapsable bootstrap navbar menu 
+                $(".navbar-ex1-collapse").collapse("hide");
+
                 var top = $modalStack.getTop();
                 if (top) {
                     if( confirm("Czy chcesz wrócić na poprzednią stronę?\nNiezapisane zmiany zostaną utracone.") ){

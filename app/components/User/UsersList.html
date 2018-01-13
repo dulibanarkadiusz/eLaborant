@@ -15,7 +15,7 @@
         <div ng-if="!usersListData && message" ng-bind-html="message">
         </div>
 
-        <div ng-if="usersListData" class="table-responsive">
+        <div ng-if="usersListData">
             <div class="row">
                 <div class="col-md-6">
                     Liczba użytkowników: {{totalElements}}
@@ -28,40 +28,40 @@
 
             <div ng-include="'app/shared/Pagination/paginationPartialView.html'"></div>
 
-            <table class="table table-hover table-striped">
-                <thead>
-                    <tr>
-                        <th>Imię i nazwisko</th>
-						<th>Nazwa użytkownika</th>
-                        <th>Rola</th>
-						<th>Nr telefonu</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="user in usersListData">
-                        <td>{{ user.firstname }} {{user.surname}}</td>
-						<td>{{ user.login}}</td>
-                        <td>{{ user.role.name }}</td>
-						<td>{{ user.phoneNumber }}</td>
-                        <td>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>Imię i nazwisko</th>
+                            <th>Rola</th>
+    						<th>Nr telefonu</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="user in usersListData">
+                            <td>{{ user.firstname }} {{user.surname}}</td>
+                            <td>{{ user.role.name }}</td>
+    						<td>{{ user.phoneNumber }}</td>
+                            <td>
 
-                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Zmień hasło" ng-click="openChangePasswordWindow(user.id)" bs-tooltip>
-                                <i class="fa fa-key" aria-hidden="true"></i>
-                            </button>
+                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Zmień hasło" ng-click="openChangePasswordWindow(user.id)" bs-tooltip>
+                                    <i class="fa fa-key" aria-hidden="true"></i>
+                                </button>
 
-                            <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj użytkownika" ng-click="editUser(user.id)" bs-tooltip>
-                                <i class="fa fa-pencil" aria-hidden="true"></i>
-                            </button>
-                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń użytkownika" ng-click="openRemoveUserWindow(user.id)" bs-tooltip>
-                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            </button>
+                                <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Edytuj użytkownika" ng-click="editUser(user.id)" bs-tooltip>
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </button>
+                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#editProblemModal" title="Usuń użytkownika" ng-click="openRemoveUserWindow(user.id)" bs-tooltip>
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
 
 
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
