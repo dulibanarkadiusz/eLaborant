@@ -12,7 +12,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         $scope.lab.building = "MS";
         $scope.buttonName = "Dodaj";
 
-        if (param.id) { // get details if task exsists
+        if (param.id) { 
             $scope.lab.id = param.id;
             $scope.windowTitle = "Edycja laboratorium";
 			$scope.errorMessage = "Błąd przy edycji laboratorium";
@@ -23,7 +23,7 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
     function createObject(dataEntityJSON) {
         $scope.lab = dataEntityJSON;
         $scope.lab.idOwner = $scope.lab.owner.id.toString();
-        //$scope.lab.owner = {};		
+		
     }
 
 
@@ -34,12 +34,9 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
 			
         },function (status) {
            
-        })
-        
+        })        
     };
-
     $scope.usersList();
-
 
     $scope.save = function () {
         var dataAddTask = jQuery.extend({}, $scope.task);
@@ -51,12 +48,10 @@ angular.module('elaborantLaboratoryManagerCtrl', []).controller('LaboratoryManag
         .then(function (success) {		
 			($scope.lab.id) ? NotificationService.success("Laboratorium zostało zmienione!") : NotificationService.success("Laboratorium zostało dodane!");
 			$rootScope.$emit("RefreshList", {});
-            $scope.cancel();			
-            //$scope.lab = {};
-            //$scope.lab.building = "MS";
+            $scope.cancel();		
+
         },function (response) {
             $scope.IsResponseError = true;
-			//alert(JSON.stringify(response));
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
         });
 

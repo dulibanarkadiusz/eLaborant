@@ -4,7 +4,6 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
         $scope.computer.id = param.id;
     }
 
-
     $scope.init = function () {
         $scope.windowTitle = "Dodaj nowy komputer";
         $scope.errorMessage = "Błąd przy dodawaniu komputera";
@@ -20,23 +19,9 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
     function createObject(dataEntityJSON) {
         $scope.computer = dataEntityJSON;
         $scope.computer.idLaboratory = $scope.computer.laboratory.id.toString();
-        //$scope.lab.owner = {};		
+        	
     }
-
-
-
-    // $scope.labList = function () {
-		// alert("lista laboratoriów");
-        // $http.get(apiUrl + 'laboratories')
-        // .success(function (serverResponse) {
-            // $scope.labListData = serverResponse.response;
-            // $scope.dataLoaded = true;
-        // })
-        // .error(function (data, status) {
-            // $scope.responseError = true;
-            // $scope.errorMessage = $sce.trustAsHtml(errorMessage);
-        // });
-    // };
+   
 	$scope.labList = function () {
 		LaboratoryService.getDataListEntity(function (serverResponse) {
             $scope.labListData = serverResponse;
@@ -44,7 +29,6 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
         })
     };
     $scope.labList();
-
 
     $scope.save = function () {
         var dataAddTask = jQuery.extend({}, $scope.task);
@@ -57,7 +41,6 @@ angular.module('elaborantComputerManagerCtrl', []).controller('ComputerManagerCt
 			($scope.computer.id) ? NotificationService.success("Komputer został zmieniony!") : NotificationService.success("Komputer został dodany!");
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
-           // $scope.computer = {};
         },function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));

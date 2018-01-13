@@ -1,5 +1,4 @@
 angular.module('elaborantComputerService', []).factory('ComputerService', function ($http, NotificationService) {
-    //var username, firstName, surname, role;
     return {
         getDataEntity: function (computerId, successCallback) {
             $http.get(apiUrl + 'computers/' + computerId)

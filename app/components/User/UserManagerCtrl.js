@@ -14,7 +14,7 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
         $scope.user = {};
         $scope.buttonName = "Dodaj";
 
-        if (param.id) { // get details if task exsists
+        if (param.id) { 
             $scope.user.id = param.id;
             $scope.windowTitle = "Edycja użytkownika";
 			$scope.errorMessage = "Błąd przy edycji użytkownika";
@@ -58,8 +58,6 @@ angular.module('elaborantUserManagerCtrl', []).controller('UserManagerCtrl', fun
             $rootScope.$emit("RefreshList", {});
             $scope.cancel();
 
-            //$scope.user = {};
-            //$scope.lab.building = "MS";
         }, function (response) {
             $scope.IsResponseError = true;
             $scope.ResponseErrorMessage = $sce.trustAsHtml(ParseResponseErrorMessages(response));
