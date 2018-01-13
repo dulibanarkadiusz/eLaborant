@@ -42,6 +42,14 @@
 	padding: 0 2%;
 }
 
+.task-priority{
+  width: 40px;
+}
+
+.task-dates{
+  min-width: 140px;
+}
+
 .problem-tasks:first-child{
 	margin-top: 10px;
 }
