@@ -1,4 +1,5 @@
-elaborantApp.filter('labelPriority', function(){
+var module = require("./app.module.js");
+module.elaborantApp.filter('labelPriority', function(){
         return function(text){
             switch(text){
                 case 1: return "label-info"; 
@@ -10,7 +11,7 @@ elaborantApp.filter('labelPriority', function(){
         };
     });
 
-elaborantApp.filter('priortyDescription', function(){
+module.elaborantApp.filter('priortyDescription', function(){
     return function(text){
         switch(text){
             case 1: return "Najniższy"; 
@@ -22,7 +23,7 @@ elaborantApp.filter('priortyDescription', function(){
     };
 });
 
-elaborantApp.filter('coloredDate', function(){
+module.elaborantApp.filter('coloredDate', function(){
     return function(timestamp){
         var now = new Date();
         var receivedDate = new Date(timestamp);
@@ -41,7 +42,7 @@ elaborantApp.filter('coloredDate', function(){
     }
 });
 
-elaborantApp.filter('buildingFullname', function(){
+module.elaborantApp.filter('buildingFullname', function(){
     return function(text){
         switch(text){
             case 'MS': return "Wydział Matematyki Stosowanej"; 
@@ -51,7 +52,7 @@ elaborantApp.filter('buildingFullname', function(){
     };
 });
 
-elaborantApp.filter('executorsIntToString', function(){
+module.elaborantApp.filter('executorsIntToString', function(){
     return function(text){
         switch (text){
             case 1: return "1 laborant";
@@ -60,7 +61,7 @@ elaborantApp.filter('executorsIntToString', function(){
     };
 });
 
-elaborantApp.filter('range', function() {
+module.elaborantApp.filter('range', function() {
     return function(input, total) {
     total = parseInt(total);
 

@@ -31,3 +31,6 @@ var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"elaborantModalService",
 												"elaborantNotificationService"
 												]);
+module.exports = {
+  elaborantApp: elaborantApp
+};

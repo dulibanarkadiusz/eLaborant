@@ -1,3 +1,5 @@
+require('angular-ui-router');
+
 var elaborantApp = angular.module('elaborantRouter', ["ui.router"]);
 
 elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
