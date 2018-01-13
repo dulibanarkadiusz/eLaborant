@@ -27,7 +27,9 @@ angular.module('elaborantComputerCtrl', []).controller('ComputerCtrl', function(
 		refreshFunction(); 
 	});
 	$scope.getList = function(pageNumber = 0) {
-		
+		$scope.computerDataLoaded = false;
+		$scope.errorDataLoaded = '';
+		$scope.computersListData = null;
 	    $http.get(apiUrl + 'computers?query=page=' + pageNumber + ",pageSize=" + localStorage.pageSize)
             .then(function (serverResponse) {
                

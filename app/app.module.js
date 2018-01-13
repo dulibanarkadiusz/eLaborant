@@ -1,5 +1,4 @@
 var elaborantApp = angular.module('elaborant', ["elaborantRouter",
-												"elaborantChart",
 												"angularMoment", 
 												"btorfs.multiselect", 
 												"ui.bootstrap",
@@ -32,3 +31,6 @@ var elaborantApp = angular.module('elaborant', ["elaborantRouter",
 												"elaborantModalService",
 												"elaborantNotificationService"
 												]);
+module.exports = {
+  elaborantApp: elaborantApp
+};

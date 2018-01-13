@@ -1,3 +1,5 @@
+require('angular-ui-router');
+
 var elaborantApp = angular.module('elaborantRouter', ["ui.router"]);
 
 elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -51,11 +53,6 @@ elaborantApp.config(function ($stateProvider, $urlRouterProvider, $locationProvi
     	.state('Panel', {
     		url: '/Panel',
     		templateUrl: 'app/shared/AdminPanel/AdminPanel.html'
-    	})
-		.state('PanelHome', {
-    		url: '/Home',
-			parent: "Panel",
-    		templateUrl: 'app/components/Home/Home.html'
     	})
 		.state('UserPanel', {
 		    url: '/UserPanel',

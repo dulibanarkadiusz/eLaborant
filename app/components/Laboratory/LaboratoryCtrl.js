@@ -24,6 +24,9 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 		refreshFunction(); 
 	});
 	$scope.getList = function(pageNumber = 0) {
+		$scope.labDataLoaded = false;
+		 $scope.errorDataLoaded = '';
+		 $scope.labListData = null;
 	    $http.get(apiUrl + 'laboratories?query=page=' + pageNumber + ",pageSize=" + localStorage.pageSize)
             .then(function (serverResponse) {
                 $scope.labListData = serverResponse.data.response;
@@ -55,16 +58,11 @@ angular.module('elaborantLaboratoryCtrl', []).controller('LaboratoryCtrl', funct
 			return;
 		});
 		ComputerService.getComputersFromLab($scope.labid,function (serverResponse) {
-			//alert(JSON.stringify(serverResponse));
+		
 			$scope.computersCount = serverResponse.length;
 			$scope.computersData = serverResponse;
 			$scope.dataLoaded = true;
-		}, function(status) {
-			switch(status){
-				case 404: 
-					$scope.message = "Brak komputerów w laboratorium";
-					break;
-		} })
+		})
 		
 
 	}
